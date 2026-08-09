@@ -15,6 +15,11 @@ import { useToast, ToastRenderer } from '../hooks/useToast';
 import aiWhitepaper from '../assets/resources/ai_whitepaper.png';
 import campusGuide from '../assets/resources/campus_guide.png';
 import universityScaling from '../assets/resources/university_scaling.png';
+import eleanorAvatar from '../assets/eleanor_avatar.png';
+import janeAvatar from '../assets/jane_avatar.png';
+import robertAvatar from '../assets/robert_avatar.png';
+import studentAvatar from '../assets/student_avatar.png';
+import devonAvatar from '../assets/devon_avatar.png';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -61,7 +66,31 @@ const Home = () => {
   ];
 
   return (
-    <div style={{ backgroundColor: isDark ? '#0f172a' : '#ffffff', minHeight: '100vh', overflowX: 'hidden', color: isDark ? '#cbd5e0' : '#1e293b', fontFamily: 'var(--font-main)', transition: 'background-color 0.3s ease, color 0.3s ease' }}>
+    <div className="home-page-container" style={{ backgroundColor: isDark ? '#0f172a' : '#ffffff', minHeight: '100vh', overflowX: 'hidden', color: isDark ? '#cbd5e0' : '#1e293b', fontFamily: 'var(--font-main)', transition: 'background-color 0.3s ease, color 0.3s ease' }}>
+      <style>{`
+        @media (max-width: 992px) {
+          .home-page-container [style*="grid-template-columns: 1.2fr 0.8fr"],
+          .home-page-container [style*="grid-template-columns: 0.8fr 1.2fr"],
+          .home-page-container [style*="grid-template-columns: repeat(4, 1fr)"],
+          .home-page-container [style*="grid-template-columns: repeat(3, 1fr)"] {
+             grid-template-columns: 1fr 1fr !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .home-page-container [style*="grid-template-columns"] {
+             grid-template-columns: 1fr !important;
+          }
+          .home-page-container section {
+             padding: 80px 20px !important;
+          }
+          .home-page-container .nav-link, .home-page-container .btn-demo-minimal, .home-page-container .btn-hero-secondary {
+             display: none !important;
+          }
+          .home-page-container h1 { font-size: 3rem !important; }
+          .home-page-container h2 { font-size: 2.5rem !important; }
+          .home-page-container h3 { font-size: 2rem !important; }
+        }
+      `}</style>
       
       {/* Scroll Progress Bar */}
       <motion.div 
@@ -205,8 +234,10 @@ const Home = () => {
 
             <div style={{ marginTop: '60px', display: 'flex', alignItems: 'center', gap: '20px' }}>
                <div style={{ display: 'flex' }}>
-                 {[...Array(5)].map((_, i) => (
-                   <div key={i} style={{ width: '40px', height: '40px', borderRadius: '50%', border: isDark ? '3px solid #0f172a' : '3px solid white', backgroundColor: isDark ? '#1e293b' : '#e2e8f0', marginLeft: i === 0 ? 0 : '-15px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 800, transition: 'border 0.3s ease, background-color 0.3s ease' }}>U{i}</div>
+                 {[eleanorAvatar, janeAvatar, robertAvatar, studentAvatar, devonAvatar].map((avatarSrc, i) => (
+                   <div key={i} style={{ width: '40px', height: '40px', borderRadius: '50%', border: isDark ? '3px solid #0f172a' : '3px solid white', backgroundColor: isDark ? '#1e293b' : '#e2e8f0', marginLeft: i === 0 ? 0 : '-15px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'border 0.3s ease, background-color 0.3s ease', overflow: 'hidden' }}>
+                     <img src={avatarSrc} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                   </div>
                  ))}
                </div>
                <p style={{ margin: 0, fontSize: '0.95rem', color: isDark ? '#94a3b8' : '#64748b', fontWeight: 600, transition: 'color 0.3s ease' }}>

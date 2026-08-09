@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'; // Verified Sidebar 
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, GraduationCap, BookOpen, CalendarDays, FileText, 
-  CreditCard, Settings, Library, Bus, Megaphone, Clock, User, Brain, 
+  CreditCard, Settings, Library, Bus, Megaphone, Clock, User, Brain, X,
   Home, Send, Calendar, Shield, ShieldCheck, LogOut, Activity, ChevronRight, ChevronDown,
   Building, Briefcase, MonitorPlay, Fingerprint, Key,
   List, UserPlus, UserX, Tags, ClipboardCheck, Wallet, TrendingDown, History, Grid, Edit, Plus,

@@ -4,3 +4,5 @@ dist
 .vscode
 *.log
 .firebase
+*.docx
+*.pptx
