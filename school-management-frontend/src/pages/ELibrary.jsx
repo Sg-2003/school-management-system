@@ -10,18 +10,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 const ELibrary = () => {
   // Core Books Dataset
   const [books] = useState([
-    { id: 1, title: 'Advanced Calculus & Logic', author: 'Dr. Leonard Euler', category: 'Science', size: '12.4 MB', type: 'PDF', rating: 4.9 },
-    { id: 2, title: 'English Literature: The Classics', author: 'William Shakespeare', category: 'Arts', size: '8.1 MB', type: 'EPUB', rating: 4.7 },
-    { id: 3, title: 'Introduction to Modern Physics', author: 'Isaac Newton', category: 'Science', size: '15.8 MB', type: 'PDF', rating: 4.8 },
-    { id: 4, title: 'World History: Ancient Civilizations', author: 'Herodotus', category: 'History', size: '22.3 MB', type: 'PDF', rating: 4.6 },
-    { id: 5, title: 'Data Structures & Algorithms', author: 'Thomas Cormen', category: 'Technology', size: '18.2 MB', type: 'PDF', rating: 4.9 },
-    { id: 6, title: 'Organic Chemistry Principles', author: 'Linus Pauling', category: 'Science', size: '14.5 MB', type: 'PDF', rating: 4.5 },
-    { id: 7, title: 'Nature: Quantum Computing 2026', author: 'Various Authors', category: 'Journals', size: '4.2 MB', type: 'Journal', rating: 4.9 },
-    { id: 8, title: 'AI in Modern Healthcare', author: 'Stanford Research', category: 'Technology', size: '5.1 MB', type: 'Paper', rating: 4.8 },
-    { id: 9, title: 'The Industrial Revolution', author: 'Adam Smith', category: 'History', size: '12.8 MB', type: 'PDF', rating: 4.7 },
-    { id: 10, title: 'Sustainable Energy Systems', author: 'MIT Press', category: 'Science', size: '18.5 MB', type: 'Paper', rating: 4.9 },
-    { id: 11, title: 'IEEE: Neural Networks Vol 12', author: 'IEEE Publishing', category: 'Journals', size: '6.7 MB', type: 'Journal', rating: 4.8 },
-    { id: 12, title: 'Macbeth: A Deep Analysis', author: 'Harold Bloom', category: 'Arts', size: '3.9 MB', type: 'PDF', rating: 4.6 },
+    { id: 1, title: 'Advanced Calculus & Logic', author: 'Dr. Leonard Euler', category: 'Science', size: '12.4 MB', type: 'PDF', rating: 4.9, isbn: '9780130504174' },
+    { id: 2, title: 'English Literature: The Classics', author: 'William Shakespeare', category: 'Arts', size: '8.1 MB', type: 'EPUB', rating: 4.7, isbn: '9780141396316' },
+    { id: 3, title: 'Introduction to Modern Physics', author: 'Isaac Newton', category: 'Science', size: '15.8 MB', type: 'PDF', rating: 4.8, isbn: '9780521406622' },
+    { id: 4, title: 'World History: Ancient Civilizations', author: 'Herodotus', category: 'History', size: '22.3 MB', type: 'PDF', rating: 4.6, isbn: '9780140449082' },
+    { id: 5, title: 'Data Structures & Algorithms', author: 'Thomas Cormen', category: 'Technology', size: '18.2 MB', type: 'PDF', rating: 4.9, isbn: '9780262033848' },
+    { id: 6, title: 'Organic Chemistry Principles', author: 'Linus Pauling', category: 'Science', size: '14.5 MB', type: 'PDF', rating: 4.5, isbn: '9780486254641' },
+    { id: 7, title: 'Nature: Quantum Computing 2026', author: 'Various Authors', category: 'Journals', size: '4.2 MB', type: 'Journal', rating: 4.9, isbn: '' },
+    { id: 8, title: 'AI in Modern Healthcare', author: 'Stanford Research', category: 'Technology', size: '5.1 MB', type: 'Paper', rating: 4.8, isbn: '' },
+    { id: 9, title: 'The Industrial Revolution', author: 'Adam Smith', category: 'History', size: '12.8 MB', type: 'PDF', rating: 4.7, isbn: '9780553585971' },
+    { id: 10, title: 'Sustainable Energy Systems', author: 'MIT Press', category: 'Science', size: '18.5 MB', type: 'Paper', rating: 4.9, isbn: '9780262017473' },
+    { id: 11, title: 'IEEE: Neural Networks Vol 12', author: 'IEEE Publishing', category: 'Journals', size: '6.7 MB', type: 'Journal', rating: 4.8, isbn: '' },
+    { id: 12, title: 'Macbeth: A Deep Analysis', author: 'Harold Bloom', category: 'Arts', size: '3.9 MB', type: 'PDF', rating: 4.6, isbn: '9780791098424' },
   ]);
 
   // Filtering & UI State
@@ -319,17 +319,34 @@ const ELibrary = () => {
                    className="card hover-card" 
                    style={{ padding: '24px', borderRadius: '32px', display: 'flex', flexDirection: 'column', position: 'relative', background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
                 >
-                   <div style={{ backgroundColor: 'var(--bg-body)', height: '160px', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', position: 'relative', border: '1px solid var(--border-color)' }}>
-                      <Book size={56} color="var(--primary)" style={{ filter: 'drop-shadow(0 4px 12px rgba(72, 128, 255, 0.2))' }} />
+                   <div style={{ backgroundColor: 'var(--primary)', height: '180px', borderRadius: '4px 24px 24px 4px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', position: 'relative', overflow: 'hidden', flexShrink: 0, boxShadow: 'inset 4px 0 10px rgba(0,0,0,0.2), inset -1px 0 2px rgba(255,255,255,0.4), 6px 6px 15px rgba(0,0,0,0.15)', borderLeft: '6px solid rgba(255,255,255,0.25)' }}>
+                      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', textAlign: 'center', color: 'white' }}>
+                        <Book size={32} style={{ marginBottom: '12px', opacity: 0.8 }} />
+                        <span style={{ fontSize: '0.9rem', fontWeight: 800, lineHeight: 1.2 }}>{book.title}</span>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 600, opacity: 0.8, marginTop: '8px' }}>{book.author}</span>
+                      </div>
+                      
+                      {book.isbn && (
+                        <img 
+                          src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} 
+                          alt={book.title}
+                          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
+                          onError={(e) => e.target.style.display = 'none'}
+                        />
+                      )}
+                      
+                      {/* Book Glare Overlay */}
+                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 20%)', zIndex: 3, pointerEvents: 'none' }} />
+
                       <button 
                         onClick={() => toggleBookmark(book.id, book.title)}
-                        style={{ position: 'absolute', top: '12px', right: '12px', backgroundColor: 'white', width: '32px', height: '32px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', boxShadow: 'var(--shadow-sm)', color: isBookmarked ? '#F59E0B' : 'var(--text-muted)', cursor: 'pointer', transition: 'transform 0.15s' }}
+                        style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 10, backgroundColor: 'white', width: '32px', height: '32px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', boxShadow: 'var(--shadow-sm)', color: isBookmarked ? '#F59E0B' : 'var(--text-muted)', cursor: 'pointer', transition: 'transform 0.15s' }}
                         onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                         onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
                          <Bookmark size={18} fill={isBookmarked ? '#F59E0B' : 'none'} />
                       </button>
-                      <div style={{ position: 'absolute', bottom: '12px', left: '12px', backgroundColor: 'rgba(255,255,255,0.9)', padding: '4px 10px', borderRadius: '8px', fontSize: '0.65rem', fontWeight: 900, color: 'var(--primary)', boxShadow: 'var(--shadow-sm)' }}>
+                      <div style={{ position: 'absolute', bottom: '12px', left: '12px', zIndex: 10, backgroundColor: 'rgba(255,255,255,0.95)', padding: '4px 10px', borderRadius: '8px', fontSize: '0.65rem', fontWeight: 900, color: 'var(--primary)', boxShadow: 'var(--shadow-sm)' }}>
                          {book.type}
                       </div>
                    </div>
