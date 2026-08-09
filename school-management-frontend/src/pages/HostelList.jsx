@@ -6,7 +6,6 @@ import {
   MapPin, Shield, Phone, ArrowRight, Activity, Grid, List, X,
   SlidersHorizontal
 } from 'lucide-react';
-import { HostelApi } from '../services/service';
 import { 
   RoomAppearanceModal, getRoomAppearance, applyRoomAppearanceStyles 
 } from '../components/RoomAppearanceModal';
@@ -54,30 +53,37 @@ const HostelList = () => {
 
   const fetchHostels = async () => {
     try {
-      const data = await HostelApi.getAll();
-      if (data.length === 0) {
-        setHostels([
+      const storedVersion = localStorage.getItem('hostel_buildings_version');
+      if (storedVersion !== '2026-v2') {
+        localStorage.removeItem('hostel_buildings');
+        localStorage.setItem('hostel_buildings_version', '2026-v2');
+      }
+      const saved = localStorage.getItem('hostel_buildings');
+      if (saved) {
+        setHostels(JSON.parse(saved));
+      } else {
+        const initialBuildings = [
           { 
             id: 'HST-001', name: 'Elite Boys Residency', type: 'Boys', 
             address: 'North Campus, Block A', rooms: 45, capacity: 180, 
-            occupied: 142, warden: 'Mr. David Smith', contact: '+1 234 567 890',
+            occupied: 142, warden: 'Mr. Rajesh Kumar', contact: '+91 98765 43201',
             status: 'Active', rating: 4.8, color: '#4f46e5'
           },
           { 
             id: 'HST-002', name: 'Starlight Girls Wing', type: 'Girls', 
             address: 'East Campus, Block B', rooms: 38, capacity: 152, 
-            occupied: 148, warden: 'Mrs. Sarah Connor', contact: '+1 234 567 891',
+            occupied: 148, warden: 'Mrs. Sunita Sharma', contact: '+91 98765 43202',
             status: 'Nearly Full', rating: 4.9, color: '#ec4899'
           },
           { 
             id: 'HST-003', name: 'Premium Faculty Lodge', type: 'Staff', 
             address: 'South Campus, Block C', rooms: 20, capacity: 20, 
-            occupied: 15, warden: 'Dr. Robert Brown', contact: '+1 234 567 892',
+            occupied: 15, warden: 'Dr. Anand Joshi', contact: '+91 98765 43203',
             status: 'Active', rating: 4.7, color: '#10b981'
           }
-        ]);
-      } else {
-        setHostels(data);
+        ];
+        localStorage.setItem('hostel_buildings', JSON.stringify(initialBuildings));
+        setHostels(initialBuildings);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -98,14 +104,16 @@ const HostelList = () => {
       rating: 5.0,
       color: colors[hostels.length % colors.length]
     };
-    setHostels([addedHostel, ...hostels]);
+    const updated = [addedHostel, ...hostels];
+    setHostels(updated);
+    localStorage.setItem('hostel_buildings', JSON.stringify(updated));
     setShowAddModal(false);
     setNewHostel({ name: '', type: 'Boys', address: '', rooms: '', capacity: '', warden: '', contact: '' });
   };
 
   const handleUpdateHostel = (e) => {
     e.preventDefault();
-    setHostels(hostels.map(h => h.id === editingHostel.id ? {
+    const updated = hostels.map(h => h.id === editingHostel.id ? {
       ...h,
       name: newHostel.name,
       type: newHostel.type,
@@ -114,7 +122,9 @@ const HostelList = () => {
       rooms: newHostel.rooms,
       warden: newHostel.warden,
       contact: newHostel.contact
-    } : h));
+    } : h);
+    setHostels(updated);
+    localStorage.setItem('hostel_buildings', JSON.stringify(updated));
     setEditingHostel(null);
     setNewHostel({ name: '', type: 'Boys', address: '', rooms: '', capacity: '', warden: '', contact: '' });
   };
@@ -144,8 +154,10 @@ const HostelList = () => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
   const filteredHostels = hostels.filter(h => {
-    const matchesSearch = h.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          (h.warden && h.warden.toLowerCase().includes(searchTerm.toLowerCase()));
+    const name = h.name || '';
+    const warden = h.warden || '';
+    const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          warden.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = typeFilter === 'All' || h.type === typeFilter;
     return matchesSearch && matchesType;
   });

@@ -41,9 +41,9 @@ const AcademicSetup = () => {
   ]);
 
   const [classes, setClasses] = useState([
-    { id: 1, name: 'Grade 10', sections: ['A', 'B', 'C'], students: 120, head: 'Mr. Smith' },
-    { id: 2, name: 'Grade 11', sections: ['A', 'B'], students: 85, head: 'Ms. Johnson' },
-    { id: 3, name: 'Grade 12', sections: ['A', 'B', 'C', 'D'], students: 150, head: 'Dr. Brown' }
+    { id: 1, name: 'Grade 10', sections: ['A', 'B', 'C'], students: 120, head: 'Mr. Amit Sharma' },
+    { id: 2, name: 'Grade 11', sections: ['A', 'B'], students: 85, head: 'Ms. Priya Patel' },
+    { id: 3, name: 'Grade 12', sections: ['A', 'B', 'C', 'D'], students: 150, head: 'Dr. Sanjay Gupta' }
   ]);
 
   const [subjects, setSubjects] = useState([

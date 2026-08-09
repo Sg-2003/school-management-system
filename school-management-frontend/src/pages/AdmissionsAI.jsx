@@ -11,29 +11,29 @@ import {
 const AdmissionsAI = () => {
   // 1. Dynamic Pool States (Local CRM Database)
   const [inquiriesPool, setInquiriesPool] = useState([
-    { name: "Julian Vance", grade: "Grade 9", channel: "Organic Search", date: "May 24", message: "Interested in the high-school Science & Robotics AP program.", propensity: 76 },
-    { name: "Elena Rostova", grade: "Grade 11", channel: "Meta Ads", date: "May 23", message: "Inquiry about Advanced Biology and campus lab availability.", propensity: 68 },
-    { name: "Damian Clark", grade: "Grade 10", channel: "Referral Link", date: "May 23", message: "Transfer requirements for high school basketball team coaching.", propensity: 84 },
-    { name: "Victoria Thorne", grade: "Grade 12", channel: "Google Search", date: "May 22", message: "Looking for scholarship quotas for classical music majors.", propensity: 59 }
+    { name: "Karan Verma", grade: "Grade 9", channel: "Organic Search", date: "May 24", message: "Interested in the high-school Science & Robotics AP program.", propensity: 76 },
+    { name: "Ananya Sen", grade: "Grade 11", channel: "Meta Ads", date: "May 23", message: "Inquiry about Advanced Biology and campus lab availability.", propensity: 68 },
+    { name: "Aman Das", grade: "Grade 10", channel: "Referral Link", date: "May 23", message: "Transfer requirements for high school basketball team coaching.", propensity: 84 },
+    { name: "Riya Banerjee", grade: "Grade 12", channel: "Google Search", date: "May 22", message: "Looking for scholarship quotas for classical music majors.", propensity: 59 }
   ]);
 
   const [applicationsPool, setApplicationsPool] = useState([
-    { name: "Sophia Martinez", grade: "Grade 10", major: "Pre-Engineering", date: "May 22" },
-    { name: "Liam O'Connor", grade: "Grade 9", major: "General Studies", date: "May 21" },
-    { name: "Aria Sterling", grade: "Grade 12", major: "English Honors", date: "May 20" },
-    { name: "Nathan Drake", grade: "Grade 11", major: "World History AP", date: "May 19" }
+    { name: "Sneha Patel", grade: "Grade 10", major: "Pre-Engineering", date: "May 22" },
+    { name: "Rahul Kapoor", grade: "Grade 9", major: "General Studies", date: "May 21" },
+    { name: "Aditi Nair", grade: "Grade 12", major: "English Honors", date: "May 20" },
+    { name: "Arjun Reddy", grade: "Grade 11", major: "World History AP", date: "May 19" }
   ]);
 
   const [interviewsPool, setInterviewsPool] = useState([
-    { name: "Mateo Rodriguez", grade: "Grade 11", time: "May 26, 10:00 AM", format: "In-Person Panel", interviewer: "Dr. Clara Vance" },
-    { name: "Chantal Dupont", grade: "Grade 12", time: "May 27, 2:00 PM", format: "Virtual Tele-Link", interviewer: "Prof. James Miller" },
-    { name: "Hiroshi Sato", grade: "Grade 10", time: "May 28, 11:30 AM", format: "In-Person Panel", interviewer: "Dr. Sarah Wilson" }
+    { name: "Karan Mehta", grade: "Grade 11", time: "May 26, 10:00 AM", format: "In-Person Panel", interviewer: "Dr. Sunita Rao" },
+    { name: "Ananya Rao", grade: "Grade 12", time: "May 27, 2:00 PM", format: "Virtual Tele-Link", interviewer: "Prof. Amit Bose" },
+    { name: "Aman Joshi", grade: "Grade 10", time: "May 28, 11:30 AM", format: "In-Person Panel", interviewer: "Dr. Sunita Sharma" }
   ]);
 
   const [admittedPool, setAdmittedPool] = useState([
-    { name: "Isabella Rossi", grade: "Grade 9", scholarship: "Full Merit", portalAccess: "Registered", date: "May 18", hash: "0x8fa2e412bc902" },
-    { name: "Arthur Pendelton", grade: "Grade 10", scholarship: "None", portalAccess: "Pending Fee", date: "May 17", hash: null },
-    { name: "Nadia Belkin", grade: "Grade 11", scholarship: "Sports Waiver", portalAccess: "Registered", date: "May 15", hash: "0x3e17b840fb01e" }
+    { name: "Ishaanvi Bose", grade: "Grade 9", scholarship: "Full Merit", portalAccess: "Registered", date: "May 18", hash: "0x8fa2e412bc902" },
+    { name: "Atharv Singh", grade: "Grade 10", scholarship: "None", portalAccess: "Pending Fee", date: "May 17", hash: null },
+    { name: "Aadya Sharma", grade: "Grade 11", scholarship: "Sports Waiver", portalAccess: "Registered", date: "May 15", hash: "0x3e17b840fb01e" }
   ]);
 
   // Base Offsets to reflect realistic aggregate counts
@@ -94,7 +94,7 @@ const AdmissionsAI = () => {
   const [newProspectMessage, setNewProspectMessage] = useState('');
 
   // 10. Interview Scheduler Form
-  const [scheduleInterviewer, setScheduleInterviewer] = useState('Dr. Clara Vance');
+  const [scheduleInterviewer, setScheduleInterviewer] = useState('Dr. Sunita Rao');
   const [scheduleTime, setScheduleTime] = useState('May 30, 10:00 AM');
   const [scheduleFormat, setScheduleFormat] = useState('In-Person Panel');
 
@@ -140,37 +140,37 @@ const AdmissionsAI = () => {
 
   // Chat Dialogues Database
   const CHAT_DIALOGUES = {
-    "Julian Vance": [
-      { sender: "parent", text: "Hello! Julian is interested in the Grade 9 Robotics program. What facilities do you host?" },
+    "Karan Verma": [
+      { sender: "parent", text: "Hello! Karan is interested in the Grade 9 Robotics program. What facilities do you host?" },
       { sender: "ai", text: "Hello! We offer a state-of-the-art Makerspace equipped with double-extrusion 3D printers, precision CNC routers, and a VEX Robotics competition arena. Our robotics team finished 3rd nationally last year!" },
       { sender: "parent", text: "That is amazing. Are there any prior coding portfolio requirements?" },
-      { sender: "ai", text: "For Grade 9, no portfolios are strictly mandatory. However, listing Julian's science activities will prioritize his file. Would you like me to schedule a direct campus lab tour?" },
+      { sender: "ai", text: "For Grade 9, no portfolios are strictly mandatory. However, listing Karan's science activities will prioritize his file. Would you like me to schedule a direct campus lab tour?" },
       { sender: "parent", text: "Yes, please! That would be fantastic. Next Tuesday morning works best for us." },
-      { sender: "ai", text: "Perfect! I've booked your lab tour for Tuesday at 10:00 AM under Dr. Vance. I've also pushed a registration form link directly to your portal. We are ready to proceed!" }
+      { sender: "ai", text: "Perfect! I've booked your lab tour for Tuesday at 10:00 AM under Dr. Sunita Rao. I've also pushed a registration form link directly to your portal. We are ready to proceed!" }
     ],
-    "Elena Rostova": [
+    "Ananya Sen": [
       { sender: "parent", text: "Hello, does the Grade 11 pathway support students looking at pre-medical programs?" },
       { sender: "ai", text: "Greetings! Yes, our pre-med honors track features AP Biology, AP Chemistry, and a unique partnership with the Coastal Health Center for weekend clinical internships." },
       { sender: "parent", text: "Partnered internships? That is wonderful. How do we apply?" },
-      { sender: "ai", text: "Elena can register for the internship credits once enrolled, provided she maintains a 3.5 GPA. Let's advance her inquiry to the official application so we can map out her advisory schedule." },
+      { sender: "ai", text: "Ananya can register for the internship credits once enrolled, provided she maintains a 3.5 GPA. Let's advance her inquiry to the official application so we can map out her advisory schedule." },
       { sender: "parent", text: "Perfect. Please push the transcript portal details so I can submit her high school file." },
-      { sender: "ai", text: "Absolutely! Pushing Elena's AP registration and transcript submission panel link. We are ready to move to Applications!" }
+      { sender: "ai", text: "Absolutely! Pushing Ananya's AP registration and transcript submission panel link. We are ready to move to Applications!" }
     ],
-    "Damian Clark": [
-      { sender: "parent", text: "Hello! We are looking at varsity athletic facilities. Damian plays competitive basketball." },
+    "Aman Das": [
+      { sender: "parent", text: "Hello! We are looking at varsity athletic facilities. Aman plays competitive basketball." },
       { sender: "ai", text: "Welcome! Our basketball team trains in our new triple-court sports arena with professional maple flooring and AI performance mapping. We actually sponsor outstanding talent." },
       { sender: "parent", text: "Do you offer tuition waivers or athletic scholarships?" },
-      { sender: "ai", text: "Yes, up to 40% tuition waivers for athletic excellence! I can register Damian's profile today so Coach Miller can review his match tapes." },
+      { sender: "ai", text: "Yes, up to 40% tuition waivers for athletic excellence! I can register Aman's profile today so Coach Rajesh Yadav can review his match tapes." },
       { sender: "parent", text: "Wonderful. Let's schedule the video reel submission and complete the application." },
-      { sender: "ai", text: "Superb! Pushing Damian's athletic registration link and scheduling Coach Miller's review. You are ready to submit the application!" }
+      { sender: "ai", text: "Superb! Pushing Aman's athletic registration link and scheduling Coach Rajesh Yadav's review. You are ready to submit the application!" }
     ],
-    "Victoria Thorne": [
+    "Riya Banerjee": [
       { sender: "parent", text: "Hello, are there scholarship options for classical music majors in Grade 12?" },
       { sender: "ai", text: "Greetings! Yes, our Fine Arts department sponsors classical piano and violin cohorts, providing up to 50% merit-based awards based on audition portfolios." },
       { sender: "parent", text: "Splendid. We have a digital studio recording ready. Who evaluates it?" },
-      { sender: "ai", text: "Our Conservatory Panel, led by Prof. James Miller, handles all reviews. I'll link Victoria's audition portal directly to your application now so she can upload her studio files." },
+      { sender: "ai", text: "Our Conservatory Panel, led by Prof. Amit Bose, handles all reviews. I'll link Riya's audition portal directly to your application now so she can upload her studio files." },
       { sender: "parent", text: "Excellent! Let's submit her profile and get this rolling." },
-      { sender: "ai", text: "Fabulous! Pushed the conservatory audition link and advanced Victoria's file. Let's transition her to an active Application stage!" }
+      { sender: "ai", text: "Fabulous! Pushed the conservatory audition link and advanced Riya's file. Let's transition her to an active Application stage!" }
     ]
   };
 
@@ -1239,9 +1239,9 @@ const AdmissionsAI = () => {
                                 onChange={e => setScheduleInterviewer(e.target.value)}
                                 style={{ width: '100%', padding: '10px', borderRadius: '10px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-card)', color: 'var(--text-main)', outline: 'none', fontSize: '0.75rem' }}
                               >
-                                <option value="Dr. Clara Vance">Dr. Clara Vance</option>
-                                <option value="Prof. James Miller">Prof. James Miller</option>
-                                <option value="Dr. Sarah Wilson">Dr. Sarah Wilson</option>
+                                <option value="Dr. Sunita Rao">Dr. Sunita Rao</option>
+                                <option value="Prof. Amit Bose">Prof. Amit Bose</option>
+                                <option value="Dr. Sunita Sharma">Dr. Sunita Sharma</option>
                               </select>
                             </div>
                             <div>
@@ -1839,7 +1839,7 @@ const AdmissionsAI = () => {
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
                     <div>
-                      <div style={{ fontWeight: 800, fontSize: '0.8rem' }}>Dr. Sarah Wilson</div>
+                      <div style={{ fontWeight: 800, fontSize: '0.8rem' }}>Dr. Sunita Sharma</div>
                       <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Dean of Admissions</div>
                     </div>
                     <div style={{ opacity: 0.15 }}>

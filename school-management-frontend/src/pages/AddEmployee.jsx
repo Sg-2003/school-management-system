@@ -191,17 +191,17 @@ const AddEmployee = () => {
     // Sync Step 4 uploaded files to the central Staff Document Repository
     const uploadedDocs = vaultDocuments.filter(d => d.file !== null);
     if (uploadedDocs.length > 0) {
-      const storedDocs = localStorage.getItem('staff_documents');
+      const storedDocs = localStorage.getItem('staff_documents_v2');
       let docList = [];
       if (storedDocs) {
         docList = JSON.parse(storedDocs);
       } else {
         // Initial core database seeding
         docList = [
-          { id: 'DOC-1021', name: 'Dr. Robert Carter - Contract', type: 'Employment Contract', staff: 'Robert Carter', dept: 'Mathematics', date: '2021-01-12', size: '1.2 MB' },
-          { id: 'DOC-1022', name: 'Sarah Jenkins - Degree', type: 'Academic Credential', staff: 'Sarah Jenkins', dept: 'Administration', date: '2022-03-05', size: '2.4 MB' },
-          { id: 'DOC-1023', name: 'Michael O\'Brien - ID Proof', type: 'Identification', staff: 'Michael O\'Brien', dept: 'Technical', date: '2023-09-15', size: '0.8 MB' },
-          { id: 'DOC-1024', name: 'Elena Gilbert - Experience', type: 'Experience Certificate', staff: 'Elena Gilbert', dept: 'Student Welfare', date: '2024-02-20', size: '1.5 MB' },
+          { id: 'DOC-1021', name: 'Dr. Rajesh Malhotra - Contract', type: 'Employment Contract', staff: 'Rajesh Malhotra', dept: 'Mathematics', date: '2021-01-12', size: '1.2 MB' },
+          { id: 'DOC-1022', name: 'Sunita Rao - Degree', type: 'Academic Credential', staff: 'Sunita Rao', dept: 'Administration', date: '2022-03-05', size: '2.4 MB' },
+          { id: 'DOC-1023', name: 'Amit Bose - ID Proof', type: 'Identification', staff: 'Amit Bose', dept: 'Technical', date: '2023-09-15', size: '0.8 MB' },
+          { id: 'DOC-1024', name: 'Priya Patel - Experience', type: 'Experience Certificate', staff: 'Priya Patel', dept: 'Student Welfare', date: '2024-02-20', size: '1.5 MB' },
           { id: 'DOC-1025', name: 'Institutional Policy 2026', type: 'Legal/Policy', staff: 'System', dept: 'General', date: '2026-01-01', size: '3.1 MB' }
         ];
       }
@@ -231,7 +231,7 @@ const AddEmployee = () => {
         docList.unshift(newDoc);
       });
 
-      localStorage.setItem('staff_documents', JSON.stringify(docList));
+      localStorage.setItem('staff_documents_v2', JSON.stringify(docList));
     }
 
     showToast(`Staff successfully onboarded! Assigned ID: ${formattedId}`, 'success', 'Registration Complete');

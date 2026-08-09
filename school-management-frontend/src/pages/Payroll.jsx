@@ -10,16 +10,16 @@ const Payroll = () => {
 
   // Lazy initialize state connected to localStorage & employee directories
   const [payrollList, setPayrollList] = useState(() => {
-    const stored = localStorage.getItem('staff_payrolls');
+    const stored = localStorage.getItem('staff_payrolls_v2');
     let basePayrolls = [];
     if (stored) {
       basePayrolls = JSON.parse(stored);
     } else {
       basePayrolls = [
-        { id: 'PAY-2026-05-01', name: 'Dr. Robert Carter', role: 'Professor', salary: '$7,083', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Mathematics' },
-        { id: 'PAY-2026-05-02', name: 'Sarah Jenkins', role: 'Admin', salary: '$4,500', status: 'Paid', date: '01 May 2026', method: 'Bank Transfer', dept: 'Administration' },
-        { id: 'PAY-2026-05-03', name: "Michael O'Brien", role: 'IT Lead', salary: '$5,200', status: 'Pending', date: '--', method: 'Institutional Bank', dept: 'Technical' },
-        { id: 'PAY-2026-05-04', name: 'Elena Gilbert', role: 'Counselor', salary: '$3,800', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Student Welfare' },
+        { id: 'PAY-2026-05-01', name: 'Dr. Rajesh Malhotra', role: 'Professor', salary: '$7,083', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Mathematics' },
+        { id: 'PAY-2026-05-02', name: 'Sunita Rao', role: 'Admin', salary: '$4,500', status: 'Paid', date: '01 May 2026', method: 'Bank Transfer', dept: 'Administration' },
+        { id: 'PAY-2026-05-03', name: 'Amit Bose', role: 'IT Lead', salary: '$5,200', status: 'Pending', date: '--', method: 'Institutional Bank', dept: 'Technical' },
+        { id: 'PAY-2026-05-04', name: 'Priya Patel', role: 'Counselor', salary: '$3,800', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Student Welfare' },
       ];
     }
 
@@ -54,7 +54,7 @@ const Payroll = () => {
       });
     }
 
-    localStorage.setItem('staff_payrolls', JSON.stringify(basePayrolls));
+    localStorage.setItem('staff_payrolls_v2', JSON.stringify(basePayrolls));
     return basePayrolls;
   });
 

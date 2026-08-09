@@ -16,60 +16,60 @@ import ActionDropdown from '../components/ActionDropdown';
 // ─── Constants ──────────────────────────────────────────────────────────────
 const MOCK_STUDENTS = [
   // Class 10A
-  { student_id: 'STU-2026-001', name: 'Alex Johnson',      grade: '10A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-002', name: 'Sarah Williams',    grade: '10A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-003', name: 'Michael Brown',     grade: '10A', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-004', name: 'Emily Davis',       grade: '10A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-005', name: 'James Miller',      grade: '10A', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-006', name: 'Jessica Taylor',    grade: '10A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-007', name: 'Daniel Wilson',     grade: '10A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-008', name: 'Olivia Moore',      grade: '10A', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-009', name: 'William Anderson',  grade: '10A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-010', name: 'Sophia Martin',     grade: '10A', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-011', name: 'Lucas Jackson',     grade: '10A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-012', name: 'Mia Thompson',      grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-001', name: 'Aarav Sharma',      grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-002', name: 'Aditi Nair',         grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-003', name: 'Amit Patel',         grade: '10A', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-004', name: 'Divya Joshi',        grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-005', name: 'Rohan Verma',        grade: '10A', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-006', name: 'Neha Sharma',        grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-007', name: 'Abhishek Singh',     grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-008', name: 'Isha Sen',           grade: '10A', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-009', name: 'Karan Mehta',        grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-010', name: 'Priya Patel',        grade: '10A', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-011', name: 'Arjun Reddy',        grade: '10A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-012', name: 'Kavita Krishnan',    grade: '10A', initialStatus: 'Present' },
 
   // Class 10B
-  { student_id: 'STU-2026-101', name: 'Ethan Thomas',      grade: '10B', initialStatus: 'Present' },
-  { student_id: 'STU-2026-102', name: 'Charlotte White',    grade: '10B', initialStatus: 'Present' },
-  { student_id: 'STU-2026-103', name: 'Benjamin Harris',   grade: '10B', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-104', name: 'Amelia Martin',     grade: '10B', initialStatus: 'Present' },
-  { student_id: 'STU-2026-105', name: 'Henry Garcia',      grade: '10B', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-106', name: 'Harper Robinson',   grade: '10B', initialStatus: 'Present' },
-  { student_id: 'STU-2026-107', name: 'Alexander Clark',   grade: '10B', initialStatus: 'Present' },
-  { student_id: 'STU-2026-108', name: 'Evelyn Lewis',      grade: '10B', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-109', name: 'Sebastian Lee',     grade: '10B', initialStatus: 'Present' },
-  { student_id: 'STU-2026-110', name: 'Avery Walker',      grade: '10B', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-111', name: 'Jack Hall',          grade: '10B', initialStatus: 'Present' },
-  { student_id: 'STU-2026-112', name: 'Abigail Allen',     grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-101', name: 'Ishaan Choudhury',   grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-102', name: 'Anjali Desai',       grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-103', name: 'Varun Dhawan',       grade: '10B', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-104', name: 'Riya Sen',           grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-105', name: 'Aditya Roy',         grade: '10B', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-106', name: 'Sneha Reddy',        grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-107', name: 'Vivek Oberoi',       grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-108', name: 'Pooja Hegde',        grade: '10B', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-109', name: 'Rahul Dravid',       grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-110', name: 'Kirti Kulhari',      grade: '10B', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-111', name: 'Kabir Bedi',         grade: '10B', initialStatus: 'Present' },
+  { student_id: 'STU-2026-112', name: 'Meera Jasmine',      grade: '10B', initialStatus: 'Present' },
 
   // Class 09A
-  { student_id: 'STU-2026-201', name: 'Mason Young',       grade: '09A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-202', name: 'Ella King',          grade: '09A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-203', name: 'Elijah Wright',     grade: '09A', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-204', name: 'Scarlett Lopez',    grade: '09A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-205', name: 'Logan Hill',        grade: '09A', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-206', name: 'Aria Scott',        grade: '09A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-207', name: 'James Green',       grade: '09A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-208', name: 'Layla Adams',       grade: '09A', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-209', name: 'Jacob Baker',       grade: '09A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-210', name: 'Chloe Gonzalez',    grade: '09A', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-211', name: 'Michael Nelson',    grade: '09A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-212', name: 'Lily Carter',       grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-201', name: 'Madhav Yadav',       grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-202', name: 'Ekta Kinger',        grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-203', name: 'Alok Verma',          grade: '09A', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-204', name: 'Shalini Sharma',      grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-205', name: 'Lokesh Hila',        grade: '09A', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-206', name: 'Aria Swamy',          grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-207', name: 'Jatin Saxena',        grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-208', name: 'Lata Adhikari',      grade: '09A', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-209', name: 'Jagdish Bakshi',      grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-210', name: 'Charu Gokhale',      grade: '09A', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-211', name: 'Mukul Das',           grade: '09A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-212', name: 'Lila Nair',           grade: '09A', initialStatus: 'Present' },
 
   // Class 11A
-  { student_id: 'STU-2026-301', name: 'Oliver Mitchell',   grade: '11A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-302', name: 'Grace Perez',       grade: '11A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-303', name: 'Lucas Roberts',     grade: '11A', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-304', name: 'Zoey Turner',       grade: '11A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-305', name: 'Carter Phillips',   grade: '11A', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-306', name: 'Lily Campbell',     grade: '11A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-307', name: 'Gabriel Parker',     grade: '11A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-308', name: 'Hannah Evans',      grade: '11A', initialStatus: 'Absent'  },
-  { student_id: 'STU-2026-309', name: 'Luke Edwards',      grade: '11A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-310', name: 'Elizabeth Collins', grade: '11A', initialStatus: 'Leave'   },
-  { student_id: 'STU-2026-311', name: 'Dylan Stewart',     grade: '11A', initialStatus: 'Present' },
-  { student_id: 'STU-2026-312', name: 'Victoria Morris',    grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-301', name: 'Ojas Misra',         grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-302', name: 'Geeta Patel',        grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-303', name: 'Lokesh Roy',         grade: '11A', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-304', name: 'Zoya Tandon',        grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-305', name: 'Chetan Prasad',      grade: '11A', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-306', name: 'Leela Iyer',          grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-307', name: 'Gaurav Pathak',      grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-308', name: 'Himani Joshi',        grade: '11A', initialStatus: 'Absent'  },
+  { student_id: 'STU-2026-309', name: 'Lokesh Ekka',        grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-310', name: 'Esha Choudhury',     grade: '11A', initialStatus: 'Leave'   },
+  { student_id: 'STU-2026-311', name: 'Dilip Swaminathan',  grade: '11A', initialStatus: 'Present' },
+  { student_id: 'STU-2026-312', name: 'Vasundhara Sen',      grade: '11A', initialStatus: 'Present' },
 ];
 
 const PAGE_SIZE = 6;
@@ -639,26 +639,9 @@ const StudentAttendance = () => {
                               flexShrink: 0
                             }}>
                               <img 
-                                src={`https://images.unsplash.com/photo-${[
-                                  '1534528741775-53994a69daeb',
-                                  '1539571696357-5a69c17a67c6',
-                                  '1494790108377-be9c29b29330',
-                                  '1507003211169-0a1dd7228f2d',
-                                  '1500648767791-00dcc994a43e',
-                                  '1438761681033-6461ffad8d80',
-                                  '1544005313-94ddf0286df2',
-                                  '1517841905240-472988babdf9',
-                                  '1506794778202-cad84cf45f1d',
-                                  '1522075469751-3a6694fb2f61',
-                                  '1524504388940-b1c1722653e1',
-                                  '1531746020798-e6953c6e8e04'
-                                ][((parseInt(student.student_id.replace(/\D/g, '')) || 0) % 12)]}?w=150&h=150&fit=crop`} 
+                                src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(student.name)}`}
                                 alt={student.name} 
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                onError={(e) => {
-                                  e.currentTarget.onerror = null;
-                                  e.currentTarget.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(student.name)}`;
-                                }}
                               />
                             </div>
                             <div>

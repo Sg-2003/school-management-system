@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Megaphone, Plus, Bell, Trash2, Search, Filter, Calendar, User, MoreVertical, Pin, ShieldAlert, CheckCircle, ArrowRight, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { NoticesApi } from '../services/service';
 
 const Notices = () => {
   const navigate = useNavigate();
@@ -13,11 +14,27 @@ const Notices = () => {
     { id: 2, title: 'Summer Vacation Announcement', content: 'The school will remain closed for summer vacation from June 1st to July 15th. Have a great break!', target: 'Everyone', date: '2026-05-12', category: 'Academic', pinned: true },
     { id: 3, title: 'Parent-Teacher Meeting', content: 'PTM for the first quarter will be held this Saturday. Attendance is mandatory for all parents.', target: 'Parents', date: '2026-05-10', category: 'General', pinned: false },
     { id: 4, title: 'New Library Policy', content: 'Please note the updated library timings and book issue limits starting next Monday.', target: 'Students & Staff', date: '2026-05-08', category: 'Library', pinned: false },
+    { id: 5, title: 'Semester 2 Academic Syllabus Review', content: 'The revised syllabus for Semester 2 has been updated in the LMS resources directory. All teachers and students are requested to download the updated guides.', target: 'Students & Staff', date: '2026-05-20', category: 'Academic', pinned: false },
+    { id: 6, title: 'Digital Portal Scheduled Maintenance', content: 'The EduPro portal and server database will undergo scheduled security updates this Sunday from 02:00 AM to 06:00 AM. Access might be temporarily offline.', target: 'Everyone', date: '2026-05-18', category: 'General', pinned: false },
+    { id: 7, title: 'Annual Science Exhibition Registration', content: 'Registration for the Annual Science Exhibition is now open! Please submit your project abstract and team names to the science department by next Friday.', target: 'All Students', date: '2026-05-17', category: 'Events', pinned: false }
   ];
 
   const [notices, setNotices] = useState(() => {
     const saved = localStorage.getItem('institutional_notices');
-    return saved ? JSON.parse(saved) : defaultNotices;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        const hasNewNotices = parsed.some(n => n.id === 5 || n.id === 6 || n.id === 7);
+        if (!hasNewNotices) {
+          localStorage.setItem('institutional_notices', JSON.stringify(defaultNotices));
+          return defaultNotices;
+        }
+        return parsed;
+      } catch (e) {
+        return defaultNotices;
+      }
+    }
+    return defaultNotices;
   });
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,12 +55,33 @@ const Notices = () => {
   };
 
   // Sync to localStorage
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem('institutional_notices', JSON.stringify(notices));
   }, [notices]);
 
+  // Fetch notices from backend on mount
+  useEffect(() => {
+    NoticesApi.getNotices()
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped = data.map(n => ({
+            id: n.id,
+            title: n.title,
+            content: n.content,
+            target: n.target || 'Everyone',
+            date: n.created_at ? new Date(n.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+            category: n.type ? (n.type.charAt(0).toUpperCase() + n.type.slice(1)) : 'General',
+            pinned: n.pinned || false
+          }));
+          setNotices(mapped);
+          localStorage.setItem('institutional_notices', JSON.stringify(mapped));
+        }
+      })
+      .catch(() => { /* keep localStorage fallback */ });
+  }, []);
+
   const location = useLocation();
-  React.useEffect(() => {
+  useEffect(() => {
     if (location.state?.triggerToast) {
       showToast(location.state.triggerToast, 'success');
       navigate(location.pathname, { replace: true, state: {} });
@@ -478,6 +516,8 @@ const Notices = () => {
                       const updated = notices.filter(n => n.id !== deleteConfirmId);
                       setNotices(updated);
                       showToast("Notice has been successfully deleted.", "success");
+                      // Sync delete to backend
+                      NoticesApi.deleteNotice(deleteConfirmId).catch(() => {});
                       setDeleteConfirmId(null);
                     }}
                     style={{ 

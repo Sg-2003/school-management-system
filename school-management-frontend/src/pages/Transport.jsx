@@ -7,10 +7,10 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SEED_VEHICLES = [
-  { id: 1, name: 'Bus 01', route: 'North Campus - Sector 12', driver: 'Robert Wilson', status: 'In Transit', fuel: '75%', load: '85%' },
-  { id: 2, name: 'Bus 02', route: 'East Campus - Main Road', driver: 'David Miller', status: 'Idle', fuel: '45%', load: '0%' },
-  { id: 3, name: 'Van 04', route: 'Staff Route - Downtown', driver: 'Sarah Parker', status: 'Maintenance', fuel: '90%', load: '0%' },
-  { id: 4, name: 'Bus 05', route: 'West Campus - Residential', driver: 'Michael Chen', status: 'In Transit', fuel: '60%', load: '95%' },
+  { id: 1, name: 'Bus 01', route: 'North Campus - Sector 12', driver: 'Suresh Yadav', status: 'In Transit', fuel: '75%', load: '85%' },
+  { id: 2, name: 'Bus 02', route: 'East Campus - Main Road', driver: 'Mukesh Tiwari', status: 'Idle', fuel: '45%', load: '0%' },
+  { id: 3, name: 'Van 04', route: 'Staff Route - Downtown', driver: 'Geeta Pillai', status: 'Maintenance', fuel: '90%', load: '0%' },
+  { id: 4, name: 'Bus 05', route: 'West Campus - Residential', driver: 'Ramesh Gupta', status: 'In Transit', fuel: '60%', load: '95%' },
 ];
 
 const Transport = () => {

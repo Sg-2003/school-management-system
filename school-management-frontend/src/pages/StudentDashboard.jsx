@@ -36,9 +36,9 @@ const examResultsData = {
 
 const notices = [
   { title: 'Annual Science Fair 2026', content: 'The Annual Science Fair is scheduled for next week. All participating students must submit their project abstracts by Friday at 5 PM.', type: 'event', created_at: new Date().toISOString() },
-  { title: 'Severe Weather Warning', content: 'Due to expected heavy snowfall, all after-school activities for tomorrow have been cancelled. Please monitor this board for school closure updates.', type: 'alert', created_at: new Date(Date.now() - 86400000).toISOString() },
+  { title: 'Severe Weather Warning', content: 'Due to expected heavy monsoon rainfall, all after-school activities for tomorrow have been cancelled. Please monitor this board for school closure updates.', type: 'alert', created_at: new Date(Date.now() - 86400000).toISOString() },
   { title: 'System Maintenance Window', content: 'The school learning management system (LMS) will undergo scheduled maintenance this Sunday from 2 AM to 4 AM. Please save your work.', type: 'info', created_at: new Date(Date.now() - 172800000).toISOString() },
-  { title: 'Guest Lecture: AI in Healthcare', content: 'Dr. Alan Turing Jr. will be giving a guest lecture in the main auditorium this Thursday. Attendance is mandatory for computer science students.', type: 'general', created_at: new Date(Date.now() - 259200000).toISOString() },
+  { title: 'Guest Lecture: AI in Healthcare', content: 'Dr. K. Sivan will be giving a guest lecture in the main auditorium this Thursday. Attendance is mandatory for computer science students.', type: 'general', created_at: new Date(Date.now() - 259200000).toISOString() },
   { title: 'Library Book Returns', content: 'A reminder that all books checked out before the spring break must be returned by the end of this week to avoid late fees.', type: 'info', created_at: new Date(Date.now() - 345600000).toISOString() },
 ];
 

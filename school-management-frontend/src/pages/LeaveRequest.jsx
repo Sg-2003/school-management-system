@@ -6,17 +6,17 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PRESET_AVATARS = {
-  'Jane Doe': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-  'John Smith': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-  'Albert Flores': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-  'You (Admin)': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop',
-  'Default': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop'
+  'Sunita Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Sharma',
+  'Amit Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Amit%20Sharma',
+  'Anil Gupta': 'https://api.dicebear.com/7.x/initials/svg?seed=Anil%20Gupta',
+  'You (Admin)': 'https://api.dicebear.com/7.x/initials/svg?seed=Aarav%20Sharma',
+  'Default': 'https://api.dicebear.com/7.x/initials/svg?seed=Default'
 };
 
 const SEED_REQUESTS = [
-  { id: 1, type: 'Sick Leave', applicant: 'Jane Doe', from: '2026-05-15', to: '2026-05-16', days: 2, status: 'Pending', reason: 'Fever and medical checkup.', avatar: PRESET_AVATARS['Jane Doe'] },
-  { id: 2, type: 'Casual Leave', applicant: 'John Smith', from: '2026-05-20', to: '2026-05-20', days: 1, status: 'Pending', reason: 'Family function.', avatar: PRESET_AVATARS['John Smith'] },
-  { id: 3, type: 'Personal', applicant: 'Albert Flores', from: '2026-05-25', to: '2026-05-27', days: 3, status: 'Pending', reason: 'Personal urgent administrative reasons.', avatar: PRESET_AVATARS['Albert Flores'] },
+  { id: 1, type: 'Sick Leave', applicant: 'Sunita Sharma', from: '2026-05-15', to: '2026-05-16', days: 2, status: 'Pending', reason: 'Fever and medical checkup.', avatar: PRESET_AVATARS['Sunita Sharma'] },
+  { id: 2, type: 'Casual Leave', applicant: 'Amit Sharma', from: '2026-05-20', to: '2026-05-20', days: 1, status: 'Pending', reason: 'Family function.', avatar: PRESET_AVATARS['Amit Sharma'] },
+  { id: 3, type: 'Personal', applicant: 'Anil Gupta', from: '2026-05-25', to: '2026-05-27', days: 3, status: 'Pending', reason: 'Personal urgent administrative reasons.', avatar: PRESET_AVATARS['Anil Gupta'] },
 ];
 
 const SEED_BALANCES = [

@@ -28,6 +28,7 @@ export const login = async (email, password) => {
         localStorage.setItem('userRole', response.data.role);
         localStorage.setItem('userId', response.data.userId);
         localStorage.setItem('userName', response.data.name);
+        localStorage.setItem('userProfilePic', response.data.profilePic || '');
         localStorage.setItem('isAuthenticated', 'true');
     }
     return response.data;
@@ -68,6 +69,18 @@ export const getTeachers = async () => {
     const response = await axios.get(`${API_URL}/teachers`);
     return response.data;
 };
+export const addTeacher = async (teacherData) => {
+    const response = await axios.post(`${API_URL}/teachers`, teacherData);
+    return response.data;
+};
+export const updateTeacher = async (teacherId, teacherData) => {
+    const response = await axios.put(`${API_URL}/teachers/${teacherId}`, teacherData);
+    return response.data;
+};
+export const deleteTeacher = async (teacherId) => {
+    const response = await axios.delete(`${API_URL}/teachers/${teacherId}`);
+    return response.data;
+};
 
 // User Management
 export const getUsers = async () => {
@@ -98,6 +111,14 @@ export const NoticesApi = {
     getNotices,
     postNotice: async (data) => {
         const response = await axios.post(`${API_URL}/notices`, data);
+        return response.data;
+    },
+    updateNotice: async (id, data) => {
+        const response = await axios.put(`${API_URL}/notices/${id}`, data);
+        return response.data;
+    },
+    deleteNotice: async (id) => {
+        const response = await axios.delete(`${API_URL}/notices/${id}`);
         return response.data;
     }
 };
@@ -164,6 +185,48 @@ export const HostelApi = {
     },
     assignBed: async (data) => {
         const response = await axios.post(`${API_URL}/hostel`, data);
+        return response.data;
+    },
+    deleteAllotment: async (id) => {
+        const response = await axios.delete(`${API_URL}/hostel/${id}`);
+        return response.data;
+    }
+};
+
+export const DriversApi = {
+    getAll: async () => {
+        const response = await axios.get(`${API_URL}/drivers`);
+        return response.data;
+    },
+    create: async (data) => {
+        const response = await axios.post(`${API_URL}/drivers`, data);
+        return response.data;
+    },
+    update: async (id, data) => {
+        const response = await axios.put(`${API_URL}/drivers/${id}`, data);
+        return response.data;
+    },
+    delete: async (id) => {
+        const response = await axios.delete(`${API_URL}/drivers/${id}`);
+        return response.data;
+    }
+};
+
+export const QuizzesApi = {
+    getAll: async () => {
+        const response = await axios.get(`${API_URL}/quizzes`);
+        return response.data;
+    },
+    create: async (data) => {
+        const response = await axios.post(`${API_URL}/quizzes`, data);
+        return response.data;
+    },
+    update: async (id, data) => {
+        const response = await axios.put(`${API_URL}/quizzes/${id}`, data);
+        return response.data;
+    },
+    delete: async (id) => {
+        const response = await axios.delete(`${API_URL}/quizzes/${id}`);
         return response.data;
     }
 };

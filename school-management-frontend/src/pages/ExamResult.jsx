@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Trophy, Search, Filter, Download, Plus, Layout, 
   ChevronRight, Star, TrendingUp, Award, CheckCircle2,
@@ -9,8 +9,78 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, Cell
 } from 'recharts';
 
-import devonAvatar from '../assets/devon_avatar.png';
-import janeAvatar from '../assets/jane_avatar.png';
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+import indianMan2 from '../assets/indian_man_portrait_2.png';
+import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import indianWoman2 from '../assets/indian_woman_portrait_2.png';
+
+const devonAvatar = indianMan2;
+const janeAvatar = indianWoman1;
+
+const defaultResults = {
+  '10A': [
+    { id: 'STU-001', name: 'Aanya Sharma', rank: '1st', gpa: '3.95', percentage: '94.2%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Aanya%20Sharma', subjects: { Math: 96, Physics: 92, Chem: 94, Bio: 98, Eng: 95, Hist: 90 } },
+    { id: 'STU-002', name: 'Neha Sharma', rank: '2nd', gpa: '3.88', percentage: '91.5%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Neha%20Sharma', subjects: { Math: 91, Physics: 88, Chem: 92, Bio: 94, Eng: 93, Hist: 90 } },
+    { id: 'STU-2026-0492', name: 'Aman Verma', rank: '3rd', gpa: '3.85', percentage: '91.0%', status: 'Passed', color: '#10B981', avatar: devonAvatar, subjects: { Math: 98, Physics: 92, Chem: 95, Bio: 89, Eng: 88, Hist: 82 } },
+    { id: 'STU-003', name: 'Abhishek Singh', rank: '4th', gpa: '3.82', percentage: '89.8%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Abhishek%20Singh', subjects: { Math: 88, Physics: 85, Chem: 89, Bio: 92, Eng: 91, Hist: 84 } },
+    { id: 'STU-004', name: 'Priya Patel', rank: '5th', gpa: '3.45', percentage: '78.5%', status: 'Passed', color: '#F59E0B', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Patel', subjects: { Math: 76, Physics: 75, Chem: 80, Bio: 82, Eng: 84, Hist: 74 } },
+    { id: 'STU-005', name: 'Amit Sharma', rank: '6th', gpa: '2.80', percentage: '65.2%', status: 'Passed', color: '#F59E0B', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Amit%20Sharma', subjects: { Math: 60, Physics: 64, Chem: 62, Bio: 70, Eng: 68, Hist: 67 } }
+  ],
+  '10B': [
+    { id: 'STU-006', name: 'Isha Sen', rank: '1st', gpa: '3.91', percentage: '93.1%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Isha%20Sen', subjects: { Math: 94, Physics: 90, Chem: 91, Bio: 95, Eng: 96, Hist: 92 } },
+    { id: 'STU-007', name: 'Rohan Das', rank: '2nd', gpa: '3.80', percentage: '90.4%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Rohan%20Das', subjects: { Math: 89, Physics: 92, Chem: 88, Bio: 91, Eng: 90, Hist: 92 } },
+    { id: 'STU-008', name: 'Kavita Krishnan', rank: '3rd', gpa: '3.75', percentage: '87.9%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Kavita%20Krishnan', subjects: { Math: 86, Physics: 84, Chem: 89, Bio: 90, Eng: 92, Hist: 86 } },
+    { id: 'STU-009', name: 'Karan Mehta', rank: '4th', gpa: '3.20', percentage: '72.3%', status: 'Passed', color: '#F59E0B', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Karan%20Mehta', subjects: { Math: 70, Physics: 72, Chem: 68, Bio: 75, Eng: 78, Hist: 71 } },
+    { id: 'STU-010', name: 'Sameer Khan', rank: '5th', gpa: '2.10', percentage: '58.4%', status: 'Failed', color: '#EF4444', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Sameer%20Khan', subjects: { Math: 52, Physics: 55, Chem: 50, Bio: 60, Eng: 65, Hist: 68 } }
+  ],
+  '11A': [
+    { id: 'STU-011', name: 'Aditi Nair', rank: '1st', gpa: '3.98', percentage: '95.5%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair', subjects: { Math: 98, Physics: 96, Chem: 97, Bio: 99, Eng: 98, Hist: 95 } },
+    { id: 'STU-012', name: 'Rahul Kapoor', rank: '2nd', gpa: '3.85', percentage: '92.1%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Rahul%20Kapoor', subjects: { Math: 92, Physics: 91, Chem: 90, Bio: 94, Eng: 93, Hist: 93 } },
+    { id: 'STU-013', name: 'Riya Banerjee', rank: '3rd', gpa: '3.78', percentage: '88.4%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Riya%20Banerjee', subjects: { Math: 87, Physics: 85, Chem: 89, Bio: 91, Eng: 92, Hist: 86 } },
+    { id: 'STU-014', name: 'Arjun Reddy', rank: '4th', gpa: '3.55', percentage: '84.2%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Arjun%20Reddy', subjects: { Math: 82, Physics: 84, Chem: 81, Bio: 86, Eng: 87, Hist: 85 } }
+  ],
+  '8B': [
+    { id: 'STU-2026-0814', name: 'Divya Joshi', rank: '1st', gpa: '3.92', percentage: '93.5%', status: 'Passed', color: '#10B981', avatar: janeAvatar, subjects: { Math: 94, Physics: 92, Chem: 90, Bio: 96, Eng: 95, Hist: 94 } },
+    { id: 'STU-021', name: 'Kabir Nair', rank: '2nd', gpa: '3.70', percentage: '88.2%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Kabir%20Nair', subjects: { Math: 88, Physics: 85, Chem: 89, Bio: 90, Eng: 87, Hist: 90 } },
+    { id: 'STU-022', name: 'Ananya Rao', rank: '3rd', gpa: '3.50', percentage: '81.4%', status: 'Passed', color: '#10B981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Ananya%20Rao', subjects: { Math: 80, Physics: 78, Chem: 85, Bio: 84, Eng: 82, Hist: 79 } },
+    { id: 'STU-023', name: 'Vihaan Joshi', rank: '4th', gpa: '2.95', percentage: '68.7%', status: 'Passed', color: '#F59E0B', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Vihaan%20Joshi', subjects: { Math: 65, Physics: 68, Chem: 70, Bio: 72, Eng: 66, Hist: 71 } }
+  ]
+};
+
+const defaultPerformance = {
+  '10A': [
+    { month: 'Math', score: 85 },
+    { month: 'Physics', score: 78 },
+    { month: 'Chem', score: 82 },
+    { month: 'Bio', score: 90 },
+    { month: 'Eng', score: 88 },
+    { month: 'Hist', score: 75 }
+  ],
+  '10B': [
+    { month: 'Math', score: 82 },
+    { month: 'Physics', score: 84 },
+    { month: 'Chem', score: 80 },
+    { month: 'Bio', score: 85 },
+    { month: 'Eng', score: 89 },
+    { month: 'Hist', score: 81 }
+  ],
+  '11A': [
+    { month: 'Math', score: 91 },
+    { month: 'Physics', score: 88 },
+    { month: 'Chem', score: 90 },
+    { month: 'Bio', score: 92 },
+    { month: 'Eng', score: 93 },
+    { month: 'Hist', score: 86 }
+  ],
+  '8B': [
+    { month: 'Math', score: 84 },
+    { month: 'Physics', score: 79 },
+    { month: 'Chem', score: 81 },
+    { month: 'Bio', score: 88 },
+    { month: 'Eng', score: 90 },
+    { month: 'Hist', score: 83 }
+  ]
+};
 
 const ExamResult = () => {
   // 1. Dropdown & Search States
@@ -23,72 +93,25 @@ const ExamResult = () => {
   const [selectedStudentReport, setSelectedStudentReport] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
 
-  // 3. Class Results State - Detailed rankings with core subject marks
-  const [resultsByClass, setResultsByClass] = useState({
-    '10A': [
-      { id: 'STU-001', name: 'Alex Johnson', rank: '1st', gpa: '3.95', percentage: '94.2%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop', subjects: { Math: 96, Physics: 92, Chem: 94, Bio: 98, Eng: 95, Hist: 90 } },
-      { id: 'STU-002', name: 'Sarah Williams', rank: '2nd', gpa: '3.88', percentage: '91.5%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop', subjects: { Math: 91, Physics: 88, Chem: 92, Bio: 94, Eng: 93, Hist: 90 } },
-      { id: 'STU-2026-0492', name: 'Devon Lane', rank: '3rd', gpa: '3.85', percentage: '91.0%', status: 'Passed', color: '#10B981', avatar: devonAvatar, subjects: { Math: 98, Physics: 92, Chem: 95, Bio: 89, Eng: 88, Hist: 82 } },
-      { id: 'STU-003', name: 'Michael Brown', rank: '4th', gpa: '3.82', percentage: '89.8%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop', subjects: { Math: 88, Physics: 85, Chem: 89, Bio: 92, Eng: 91, Hist: 84 } },
-      { id: 'STU-004', name: 'Emily Davis', rank: '5th', gpa: '3.45', percentage: '78.5%', status: 'Passed', color: '#F59E0B', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop', subjects: { Math: 76, Physics: 75, Chem: 80, Bio: 82, Eng: 84, Hist: 74 } },
-      { id: 'STU-005', name: 'John Doe', rank: '6th', gpa: '2.80', percentage: '65.2%', status: 'Passed', color: '#F59E0B', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop', subjects: { Math: 60, Physics: 64, Chem: 62, Bio: 70, Eng: 68, Hist: 67 } }
-    ],
-    '10B': [
-      { id: 'STU-006', name: 'Emma Stone', rank: '1st', gpa: '3.91', percentage: '93.1%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop', subjects: { Math: 94, Physics: 90, Chem: 91, Bio: 95, Eng: 96, Hist: 92 } },
-      { id: 'STU-007', name: 'Ryan Gosling', rank: '2nd', gpa: '3.80', percentage: '90.4%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop', subjects: { Math: 89, Physics: 92, Chem: 88, Bio: 91, Eng: 90, Hist: 92 } },
-      { id: 'STU-008', name: 'Jennifer Lawrence', rank: '3rd', gpa: '3.75', percentage: '87.9%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop', subjects: { Math: 86, Physics: 84, Chem: 89, Bio: 90, Eng: 92, Hist: 86 } },
-      { id: 'STU-009', name: 'Brad Pitt', rank: '4th', gpa: '3.20', percentage: '72.3%', status: 'Passed', color: '#F59E0B', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&h=100&fit=crop', subjects: { Math: 70, Physics: 72, Chem: 68, Bio: 75, Eng: 78, Hist: 71 } },
-      { id: 'STU-010', name: 'Will Smith', rank: '5th', gpa: '2.10', percentage: '58.4%', status: 'Failed', color: '#EF4444', avatar: 'https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=100&h=100&fit=crop', subjects: { Math: 52, Physics: 55, Chem: 50, Bio: 60, Eng: 65, Hist: 68 } }
-    ],
-    '11A': [
-      { id: 'STU-011', name: 'Taylor Swift', rank: '1st', gpa: '3.98', percentage: '95.5%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop', subjects: { Math: 98, Physics: 96, Chem: 97, Bio: 99, Eng: 98, Hist: 95 } },
-      { id: 'STU-012', name: 'Ed Sheeran', rank: '2nd', gpa: '3.85', percentage: '92.1%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop', subjects: { Math: 92, Physics: 91, Chem: 90, Bio: 94, Eng: 93, Hist: 93 } },
-      { id: 'STU-013', name: 'Ariana Grande', rank: '3rd', gpa: '3.78', percentage: '88.4%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&h=100&fit=crop', subjects: { Math: 87, Physics: 85, Chem: 89, Bio: 91, Eng: 92, Hist: 86 } },
-      { id: 'STU-014', name: 'Bruno Mars', rank: '4th', gpa: '3.55', percentage: '84.2%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&h=100&fit=crop', subjects: { Math: 82, Physics: 84, Chem: 81, Bio: 86, Eng: 87, Hist: 85 } }
-    ],
-    '8B': [
-      { id: 'STU-2026-0814', name: 'Jane Lane', rank: '1st', gpa: '3.92', percentage: '93.5%', status: 'Passed', color: '#10B981', avatar: janeAvatar, subjects: { Math: 94, Physics: 92, Chem: 90, Bio: 96, Eng: 95, Hist: 94 } },
-      { id: 'STU-021', name: 'Oliver Twist', rank: '2nd', gpa: '3.70', percentage: '88.2%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=100&h=100&fit=crop', subjects: { Math: 88, Physics: 85, Chem: 89, Bio: 90, Eng: 87, Hist: 90 } },
-      { id: 'STU-022', name: 'Alice Liddell', rank: '3rd', gpa: '3.50', percentage: '81.4%', status: 'Passed', color: '#10B981', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop', subjects: { Math: 80, Physics: 78, Chem: 85, Bio: 84, Eng: 82, Hist: 79 } },
-      { id: 'STU-023', name: 'Tom Sawyer', rank: '4th', gpa: '2.95', percentage: '68.7%', status: 'Passed', color: '#F59E0B', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&h=100&fit=crop', subjects: { Math: 65, Physics: 68, Chem: 70, Bio: 72, Eng: 66, Hist: 71 } }
-    ]
+  // 3. Class Results State - Detailed rankings with core subject marks, backed by localStorage
+  const [resultsByClass, setResultsByClass] = useState(() => {
+    const saved = localStorage.getItem('exam_results_by_class');
+    return saved ? JSON.parse(saved) : defaultResults;
   });
 
-  // 4. Subject-wise class average scores (updates dynamically based on roster calculations)
-  const [performanceDataByClass, setPerformanceDataByClass] = useState({
-    '10A': [
-      { month: 'Math', score: 85 },
-      { month: 'Physics', score: 78 },
-      { month: 'Chem', score: 82 },
-      { month: 'Bio', score: 90 },
-      { month: 'Eng', score: 88 },
-      { month: 'Hist', score: 75 }
-    ],
-    '10B': [
-      { month: 'Math', score: 82 },
-      { month: 'Physics', score: 84 },
-      { month: 'Chem', score: 80 },
-      { month: 'Bio', score: 85 },
-      { month: 'Eng', score: 89 },
-      { month: 'Hist', score: 81 }
-    ],
-    '11A': [
-      { month: 'Math', score: 91 },
-      { month: 'Physics', score: 88 },
-      { month: 'Chem', score: 90 },
-      { month: 'Bio', score: 92 },
-      { month: 'Eng', score: 93 },
-      { month: 'Hist', score: 86 }
-    ],
-    '8B': [
-      { month: 'Math', score: 84 },
-      { month: 'Physics', score: 79 },
-      { month: 'Chem', score: 81 },
-      { month: 'Bio', score: 88 },
-      { month: 'Eng', score: 90 },
-      { month: 'Hist', score: 83 }
-    ]
+  // 4. Subject-wise class average scores, backed by localStorage
+  const [performanceDataByClass, setPerformanceDataByClass] = useState(() => {
+    const saved = localStorage.getItem('exam_perf_data_by_class');
+    return saved ? JSON.parse(saved) : defaultPerformance;
   });
+
+  useEffect(() => {
+    localStorage.setItem('exam_results_by_class', JSON.stringify(resultsByClass));
+  }, [resultsByClass]);
+
+  useEffect(() => {
+    localStorage.setItem('exam_perf_data_by_class', JSON.stringify(performanceDataByClass));
+  }, [performanceDataByClass]);
 
   // 5. Upload Results Form State
   const [uploadForm, setUploadForm] = useState({
@@ -150,6 +173,373 @@ const ExamResult = () => {
     if (!query) return true;
     return item.name.toLowerCase().includes(query) || item.id.toLowerCase().includes(query);
   });
+
+  // High-fidelity Academic Report Transcript printer
+  const handlePrintSingle = (student) => {
+    if (!student) return;
+
+    const root = window.getComputedStyle(document.documentElement);
+    const primary = root.getPropertyValue('--primary').trim() || '#4F46E5';
+    const textMuted = root.getPropertyValue('--text-muted').trim() || '#64748B';
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      triggerToast("Popup blocker prevented opening the print view!");
+      return;
+    }
+
+    let subjectRowsHtml = '';
+    if (student.subjects) {
+      Object.entries(student.subjects).forEach(([subj, marks]) => {
+        let tag = 'Pass';
+        let letter = 'D';
+        let gpa = '2.00';
+        let color = '#6366F1';
+        
+        if (marks >= 95) { tag = 'Distinction'; letter = 'A+'; gpa = '4.00'; color = '#10B981'; }
+        else if (marks >= 90) { tag = 'Distinction'; letter = 'A'; gpa = '3.90'; color = '#10B981'; }
+        else if (marks >= 85) { tag = 'Merit'; letter = 'B+'; gpa = '3.70'; color = '#4F46E5'; }
+        else if (marks >= 80) { tag = 'Merit'; letter = 'B'; gpa = '3.50'; color = '#4F46E5'; }
+        else if (marks >= 70) { tag = 'Credit'; letter = 'C'; gpa = '3.00'; color = '#F59E0B'; }
+        else if (marks < 60) { tag = 'Fail'; letter = 'F'; gpa = '0.00'; color = '#EF4444'; }
+
+        const classAvgObj = (performanceDataByClass[selectedClass] || []).find(
+           p => p.month.toLowerCase() === subj.toLowerCase()
+        );
+        const classAvg = classAvgObj ? classAvgObj.score : 80;
+        const deviation = marks - classAvg;
+        const devText = deviation >= 0 ? `+${deviation}%` : `-${Math.abs(deviation)}%`;
+        const devColor = deviation >= 0 ? '#10B981' : '#EF4444';
+
+        subjectRowsHtml += `
+          <tr>
+            <td style="font-weight: 800; padding: 14px 16px; border-bottom: 1px solid #e2e8f0; color: #1e293b;">${subj}</td>
+            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; text-align: center;">${marks} / 100</td>
+            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0; text-align: center;">
+              <span style="font-weight: 900; background: ${color}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">${letter}</span>
+            </td>
+            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; text-align: center; font-weight: 700;">${gpa}</td>
+            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; text-align: center;">${classAvg}%</td>
+            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0; color: ${devColor}; text-align: center; font-weight: 700;">${devText}</td>
+            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0; text-align: right;">
+              <span style="font-weight: 800; font-size: 0.7rem; color: ${color}; background: ${color}15; padding: 4px 8px; border-radius: 6px; text-transform: uppercase;">${tag}</span>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Academic Report Card - ${student.name}</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+          <style>
+            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+            body {
+              font-family: 'Inter', sans-serif;
+              color: #1e293b;
+              background: #f8fafc;
+              padding: 40px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              min-height: 100vh;
+            }
+            .report-card-container {
+              width: 100%;
+              max-width: 800px;
+              background: #ffffff;
+              border-radius: 24px;
+              box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+              border: 1px solid #e2e8f0;
+              padding: 48px;
+              position: relative;
+              overflow: hidden;
+            }
+            .top-bar {
+              position: absolute;
+              top: 0; left: 0; right: 0;
+              height: 6px;
+              background: linear-gradient(90deg, ${primary}, #8b5cf6, #10b981);
+            }
+            .header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border-bottom: 2px solid #f1f5f9;
+              padding-bottom: 24px;
+              margin-bottom: 28px;
+            }
+            .school-logo-area {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+            }
+            .school-logo {
+              width: 44px;
+              height: 44px;
+              border-radius: 12px;
+              background: linear-gradient(135deg, ${primary} 0%, #8b5cf6 100%);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              font-family: 'Outfit', sans-serif;
+              font-weight: 900;
+              font-size: 1.5rem;
+            }
+            .school-name {
+              font-family: 'Outfit', sans-serif;
+              font-size: 1.6rem;
+              font-weight: 900;
+              color: #0f172a;
+              line-height: 1.1;
+            }
+            .school-sub {
+              font-size: 0.75rem;
+              color: ${textMuted};
+              font-weight: 700;
+              letter-spacing: 1.5px;
+              text-transform: uppercase;
+              margin-top: 4px;
+            }
+            .badge-title {
+              background: rgba(79, 70, 229, 0.08);
+              color: ${primary};
+              padding: 8px 16px;
+              border-radius: 12px;
+              font-size: 0.75rem;
+              font-weight: 900;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+              border: 1px solid rgba(79, 70, 229, 0.15);
+            }
+            .profile-grid {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 16px;
+              margin-bottom: 28px;
+              background: #f8fafc;
+              padding: 20px 24px;
+              border-radius: 18px;
+              border: 1px solid #f1f5f9;
+            }
+            .profile-item {
+              display: flex;
+              flex-direction: column;
+              gap: 4px;
+            }
+            .profile-label {
+              font-size: 0.7rem;
+              font-weight: 800;
+              color: ${textMuted};
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+            .profile-value {
+              font-size: 0.95rem;
+              font-weight: 800;
+              color: #0f172a;
+            }
+            .summary-stats {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 16px;
+              margin-bottom: 32px;
+            }
+            .stat-card {
+              background: #ffffff;
+              border: 1px solid #e2e8f0;
+              border-radius: 16px;
+              padding: 16px;
+              text-align: center;
+              box-shadow: 0 4px 6px -1px rgba(0,0,0,0.01);
+            }
+            .stat-card.highlight {
+              background: rgba(79, 70, 229, 0.03);
+              border-color: rgba(79, 70, 229, 0.12);
+            }
+            .stat-label {
+              font-size: 0.75rem;
+              font-weight: 800;
+              color: ${textMuted};
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+            .stat-val {
+              font-size: 1.5rem;
+              font-weight: 900;
+              color: #0f172a;
+              margin-top: 6px;
+            }
+            .stat-val.success { color: #10B981; }
+            .stat-val.primary { color: ${primary}; }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 32px;
+            }
+            th {
+              background: #f8fafc;
+              color: #475569;
+              font-size: 0.7rem;
+              font-weight: 800;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              padding: 14px 16px;
+              border-bottom: 2px solid #e2e8f0;
+            }
+            th:first-child { text-align: left; }
+            th:last-child { text-align: right; }
+            .remarks-box {
+              background: #f8fafc;
+              border: 1px solid #e2e8f0;
+              border-radius: 18px;
+              padding: 20px 24px;
+              margin-bottom: 40px;
+            }
+            .remarks-title {
+              font-size: 0.75rem;
+              font-weight: 800;
+              color: #475569;
+              text-transform: uppercase;
+              margin-bottom: 8px;
+              letter-spacing: 0.5px;
+            }
+            .remarks-text {
+              font-size: 0.85rem;
+              line-height: 1.55;
+              color: #334155;
+              font-weight: 500;
+            }
+            .signature-row {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 48px;
+              padding: 0 16px;
+            }
+            .sig-line {
+              width: 220px;
+              border-top: 1.5px solid #cbd5e1;
+              text-align: center;
+              padding-top: 10px;
+              font-size: 0.75rem;
+              font-weight: 800;
+              color: ${textMuted};
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+            @media print {
+              body {
+                background: #ffffff;
+                padding: 0;
+                margin: 0;
+                display: block;
+                min-height: auto;
+              }
+              .report-card-container {
+                border: none;
+                box-shadow: none;
+                padding: 20px;
+                max-width: 100%;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="report-card-container">
+            <div class="top-bar"></div>
+            <div class="header">
+              <div class="school-logo-area">
+                <div class="school-logo">⚡</div>
+                <div>
+                  <div class="school-name">EDUPRO ACADEMY</div>
+                  <div class="school-sub">Excellence in Education</div>
+                </div>
+              </div>
+              <div class="badge-title">Official Transcript</div>
+            </div>
+
+            <div class="profile-grid">
+              <div class="profile-item">
+                <span class="profile-label">Student Name</span>
+                <span class="profile-value">\${student.name}</span>
+              </div>
+              <div class="profile-item">
+                <span class="profile-label">Student ID</span>
+                <span class="profile-value">\${student.id}</span>
+              </div>
+              <div class="profile-item" style="margin-top: 12px;">
+                <span class="profile-label">Class / Section</span>
+                <span class="profile-value">Class \${selectedClass}</span>
+              </div>
+              <div class="profile-item" style="margin-top: 12px;">
+                <span class="profile-label">Academic Term</span>
+                <span class="profile-value">Final Semester 2026</span>
+              </div>
+            </div>
+
+            <div class="summary-stats">
+              <div class="stat-card">
+                <div class="stat-label">Class Rank</div>
+                <div class="stat-val primary">\${student.rank}</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Cumulative Score</div>
+                <div class="stat-val success">\${student.percentage}</div>
+              </div>
+              <div class="stat-card highlight">
+                <div class="stat-label">GPA Points</div>
+                <div class="stat-val">\${student.gpa} / 4.00</div>
+              </div>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align: left;">Subject</th>
+                  <th style="text-align: center;">Marks</th>
+                  <th style="text-align: center;">Grade</th>
+                  <th style="text-align: center;">GPA</th>
+                  <th style="text-align: center;">Class Avg</th>
+                  <th style="text-align: center;">Deviation</th>
+                  <th style="text-align: right;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                \${subjectRowsHtml}
+              </tbody>
+            </table>
+
+            <div class="remarks-box">
+              <div class="remarks-title">Counsellor Remarks</div>
+              <div class="remarks-text">
+                \${getReportRemarks(student.gpa)}
+              </div>
+            </div>
+
+            <div class="signature-row">
+              <div class="sig-line">Class Teacher</div>
+              <div class="sig-line">Principal & Dean</div>
+            </div>
+          </div>
+
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+                setTimeout(function() { window.close(); }, 300);
+              }, 600);
+            };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
 
   // Generate All Reports - CSV Spreadsheet Summary Downloader
   const handleGenerateAllReports = () => {
@@ -1064,7 +1454,7 @@ const ExamResult = () => {
                      <button 
                         className="btn"
                         style={{ flex: 1, border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontWeight: 800 }}
-                        onClick={() => triggerToast(`Initiated report card printer spooler for ${selectedStudentReport.name}!`)}
+                        onClick={() => handlePrintSingle(selectedStudentReport)}
                      >
                         <Printer size={16} /> PRINT CARD
                      </button>

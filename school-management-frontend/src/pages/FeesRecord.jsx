@@ -13,25 +13,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 ───────────────────────────────────────── */
 const SEED_RECORDS = [
   // ── Current Session ──
-  { id: '#INV-9821', student: 'Robert Fox',       roll: 'ADM-2026-004', type: 'Tuition Fee',  amount: 450.00, date: '05 May 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
-  { id: '#INV-9820', student: 'Jane Cooper',       roll: 'ADM-2026-012', type: 'Tuition Fee',  amount: 450.00, date: '05 May 2026', status: 'Paid',    method: 'Cash',          session: 'Current Session' },
-  { id: '#INV-9819', student: 'Cody Fisher',       roll: 'ADM-2026-045', type: 'Tuition Fee',  amount: 450.00, date: '04 May 2026', status: 'Pending', method: '-',             session: 'Current Session' },
-  { id: '#INV-9818', student: 'Arlene McCoy',      roll: 'ADM-2026-089', type: 'Transport Fee',amount: 80.00,  date: '04 May 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
-  { id: '#INV-9817', student: 'Jerome Bell',       roll: 'ADM-2026-023', type: 'Tuition Fee',  amount: 450.00, date: '03 May 2026', status: 'Paid',    method: 'Bank Transfer', session: 'Current Session' },
-  { id: '#INV-9816', student: 'Eleanor Pena',      roll: 'ADM-2026-067', type: 'Library Fine', amount: 15.00,  date: '02 May 2026', status: 'Paid',    method: 'Cash',          session: 'Current Session' },
-  { id: '#INV-9815', student: 'Marvin McKinney',   roll: 'ADM-2026-011', type: 'Tuition Fee',  amount: 450.00, date: '02 May 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
-  { id: '#INV-9814', student: 'Kathryn Murphy',    roll: 'ADM-2026-034', type: 'Tuition Fee',  amount: 450.00, date: '01 May 2026', status: 'Unpaid',  method: '-',             session: 'Current Session' },
-  { id: '#INV-9813', student: 'Devon Lane',        roll: 'ADM-2026-018', type: 'Hostel Fee',   amount: 300.00, date: '30 Apr 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
-  { id: '#INV-9812', student: 'Floyd Miles',       roll: 'ADM-2026-055', type: 'Transport Fee',amount: 80.00,  date: '29 Apr 2026', status: 'Unpaid',  method: '-',             session: 'Current Session' },
-  { id: '#INV-9811', student: 'Kristin Watson',    roll: 'ADM-2026-072', type: 'Hostel Fee',   amount: 300.00, date: '28 Apr 2026', status: 'Pending', method: '-',             session: 'Current Session' },
-  { id: '#INV-9810', student: 'Cameron Williamson',roll: 'ADM-2026-031', type: 'Tuition Fee',  amount: 450.00, date: '27 Apr 2026', status: 'Paid',    method: 'Cash',          session: 'Current Session' },
+  { id: '#INV-9821', student: 'Rohan Das',         roll: 'ADM-2026-004', type: 'Tuition Fee',  amount: 450.00, date: '05 May 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
+  { id: '#INV-9820', student: 'Aditi Nair',        roll: 'ADM-2026-012', type: 'Tuition Fee',  amount: 450.00, date: '05 May 2026', status: 'Paid',    method: 'Cash',          session: 'Current Session' },
+  { id: '#INV-9819', student: 'Rahul Kapoor',      roll: 'ADM-2026-045', type: 'Tuition Fee',  amount: 450.00, date: '04 May 2026', status: 'Pending', method: '-',             session: 'Current Session' },
+  { id: '#INV-9818', student: 'Divya Joshi',       roll: 'ADM-2026-089', type: 'Transport Fee',amount: 80.00,  date: '04 May 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
+  { id: '#INV-9817', student: 'Kabir Sen',         roll: 'ADM-2026-023', type: 'Tuition Fee',  amount: 450.00, date: '03 May 2026', status: 'Paid',    method: 'Bank Transfer', session: 'Current Session' },
+  { id: '#INV-9816', student: 'Ananya Iyer',       roll: 'ADM-2026-067', type: 'Library Fine', amount: 15.00,  date: '02 May 2026', status: 'Paid',    method: 'Cash',          session: 'Current Session' },
+  { id: '#INV-9815', student: 'Rohan Das',         roll: 'ADM-2026-011', type: 'Tuition Fee',  amount: 450.00, date: '02 May 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
+  { id: '#INV-9814', student: 'Neha Sharma',       roll: 'ADM-2026-034', type: 'Tuition Fee',  amount: 450.00, date: '01 May 2026', status: 'Unpaid',  method: '-',             session: 'Current Session' },
+  { id: '#INV-9813', student: 'Aman Verma',        roll: 'ADM-2026-018', type: 'Hostel Fee',   amount: 300.00, date: '30 Apr 2026', status: 'Paid',    method: 'Online',        session: 'Current Session' },
+  { id: '#INV-9812', student: 'Arjun Reddy',       roll: 'ADM-2026-055', type: 'Transport Fee',amount: 80.00,  date: '29 Apr 2026', status: 'Unpaid',  method: '-',             session: 'Current Session' },
+  { id: '#INV-9811', student: 'Aditi Nair',        roll: 'ADM-2026-072', type: 'Hostel Fee',   amount: 300.00, date: '28 Apr 2026', status: 'Pending', method: '-',             session: 'Current Session' },
+  { id: '#INV-9810', student: 'Karan Mehta',       roll: 'ADM-2026-031', type: 'Tuition Fee',  amount: 450.00, date: '27 Apr 2026', status: 'Paid',    method: 'Cash',          session: 'Current Session' },
   // ── Last Session ──
-  { id: '#INV-8742', student: 'Sarah Williams',    roll: 'ADM-2025-002', type: 'Tuition Fee',  amount: 420.00, date: '15 Dec 2025', status: 'Paid',    method: 'Online',        session: 'Last Session' },
-  { id: '#INV-8741', student: 'Michael Brown',     roll: 'ADM-2025-003', type: 'Hostel Fee',   amount: 300.00, date: '14 Dec 2025', status: 'Paid',    method: 'Bank Transfer', session: 'Last Session' },
-  { id: '#INV-8740', student: 'Alex Johnson',      roll: 'ADM-2025-001', type: 'Tuition Fee',  amount: 420.00, date: '12 Dec 2025', status: 'Paid',    method: 'Online',        session: 'Last Session' },
-  { id: '#INV-8739', student: 'Emily Davis',       roll: 'ADM-2025-007', type: 'Transport Fee',amount: 75.00,  date: '10 Dec 2025', status: 'Paid',    method: 'Cash',          session: 'Last Session' },
-  { id: '#INV-8738', student: 'Robert Fox',        roll: 'ADM-2025-009', type: 'Tuition Fee',  amount: 420.00, date: '08 Dec 2025', status: 'Unpaid',  method: '-',             session: 'Last Session' },
-  { id: '#INV-8737', student: 'Liam Garcia',       roll: 'ADM-2025-014', type: 'Library Fine', amount: 12.00,  date: '05 Dec 2025', status: 'Paid',    method: 'Cash',          session: 'Last Session' },
+  { id: '#INV-8742', student: 'Meera Patel',       roll: 'ADM-2025-002', type: 'Tuition Fee',  amount: 420.00, date: '15 Dec 2025', status: 'Paid',    method: 'Online',        session: 'Last Session' },
+  { id: '#INV-8741', student: 'Abhishek Singh',    roll: 'ADM-2025-003', type: 'Hostel Fee',   amount: 300.00, date: '14 Dec 2025', status: 'Paid',    method: 'Bank Transfer', session: 'Last Session' },
+  { id: '#INV-8740', student: 'Aanya Sharma',      roll: 'ADM-2025-001', type: 'Tuition Fee',  amount: 420.00, date: '12 Dec 2025', status: 'Paid',    method: 'Online',        session: 'Last Session' },
+  { id: '#INV-8739', student: 'Priya Patel',       roll: 'ADM-2025-007', type: 'Transport Fee',amount: 75.00,  date: '10 Dec 2025', status: 'Paid',    method: 'Cash',          session: 'Last Session' },
+  { id: '#INV-8738', student: 'Rajinder Singh',    roll: 'ADM-2025-009', type: 'Tuition Fee',  amount: 420.00, date: '08 Dec 2025', status: 'Unpaid',  method: '-',             session: 'Last Session' },
+  { id: '#INV-8737', student: 'Vihaan Joshi',      roll: 'ADM-2025-014', type: 'Library Fine', amount: 12.00,  date: '05 Dec 2025', status: 'Paid',    method: 'Cash',          session: 'Last Session' },
 ];
 
 /* ─────────────────────────────────────────

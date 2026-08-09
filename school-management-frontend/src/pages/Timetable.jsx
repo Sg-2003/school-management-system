@@ -6,10 +6,10 @@ const Timetable = () => {
   const times = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM'];
 
   const schedule = [
-    { day: 'Monday', time: '08:00 AM', subject: 'Mathematics', teacher: 'John Smith', room: 'Room 101' },
-    { day: 'Monday', time: '09:00 AM', subject: 'Physics', teacher: 'Jane Doe', room: 'Lab A' },
-    { day: 'Tuesday', time: '08:00 AM', subject: 'Chemistry', teacher: 'Robert Wilson', room: 'Lab B' },
-    { day: 'Wednesday', time: '10:00 AM', subject: 'English', teacher: 'Emily Davis', room: 'Room 202' },
+    { day: 'Monday', time: '08:00 AM', subject: 'Mathematics', teacher: 'Amit Sharma', room: 'Room 101' },
+    { day: 'Monday', time: '09:00 AM', subject: 'Physics', teacher: 'Sunita Sharma', room: 'Lab A' },
+    { day: 'Tuesday', time: '08:00 AM', subject: 'Chemistry', teacher: 'Rajesh Verma', room: 'Lab B' },
+    { day: 'Wednesday', time: '10:00 AM', subject: 'English', teacher: 'Priya Sharma', room: 'Room 202' },
   ];
 
   return (

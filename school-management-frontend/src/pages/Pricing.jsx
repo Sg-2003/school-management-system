@@ -307,7 +307,7 @@ const Pricing = () => {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '32px', maxWidth: '1200px', margin: '0 auto' }}>
           {[
-            { name: 'Dr. Sarah Jenkins', role: 'Global Director, Acadia Group', text: 'EduPro ELITE is not just a platform; it is a force multiplier for our pedagogical mission.' },
+            { name: 'Dr. Sunita Rao', role: 'Global Director, Acadia Group', text: 'EduPro ELITE is not just a platform; it is a force multiplier for our pedagogical mission.' },
             { name: 'Marcus Thorne', role: 'Head of IT, Sterling Network', text: 'The security and multi-campus sync are years ahead of the competition. Simply peerless.' },
             { name: 'Elena Rodriguez', role: 'COO, BrightFuture Systems', text: 'Our operational efficiency jumped by 40% in the first quarter alone. Incredible data fidelity.' }
           ].map((t, i) => (

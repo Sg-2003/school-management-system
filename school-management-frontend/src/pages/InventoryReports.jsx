@@ -214,11 +214,11 @@ Generated on: ${new Date().toLocaleString()}
 
   // --- Mock Templates & Filtering Data ---
   const assetTemplates = [
-    { id: 1, title: 'School Bus Fleet Utilization Log', type: 'Transport', lastGen: '2 days ago', totalUnits: '12 Buses', inUse: '10', reserved: '2', condition: 'Excellent', manager: 'Chief Officer Vance' },
-    { id: 2, title: 'Library Book Circulation Audit', type: 'Academic Support', lastGen: '5 days ago', totalUnits: '42,000 volumes', inUse: '420 circulating', reserved: '1,200 requests', condition: 'Optimal', manager: 'Librarian Jenkins' },
-    { id: 3, title: 'Laboratory Equipment Health Index', type: 'Infrastructure', lastGen: '1 week ago', totalUnits: '480 items', inUse: '380 active', reserved: '20 in vault', condition: 'Stable', manager: 'Dr. Thorne' },
-    { id: 4, title: 'Digital Asset & IT Inventory', type: 'Operational', lastGen: '10 days ago', totalUnits: '820 Devices', inUse: '780 client PCs', reserved: '40 spares', condition: 'Optimal', manager: 'Director Marcus' },
-    { id: 5, title: 'Canteen Stock Consumption Report', type: 'Services', lastGen: '12 days ago', totalUnits: '15 Supply Lines', inUse: '6 active', reserved: '9 stockrooms', condition: 'Stable', manager: 'Catering Lead Sarah' },
+    { id: 1, title: 'School Bus Fleet Utilization Log', type: 'Transport', lastGen: '2 days ago', totalUnits: '12 Buses', inUse: '10', reserved: '2', condition: 'Excellent', manager: 'Chief Officer Rajesh Yadav' },
+    { id: 2, title: 'Library Book Circulation Audit', type: 'Academic Support', lastGen: '5 days ago', totalUnits: '42,000 volumes', inUse: '420 circulating', reserved: '1,200 requests', condition: 'Optimal', manager: 'Librarian Sunita Rao' },
+    { id: 3, title: 'Laboratory Equipment Health Index', type: 'Infrastructure', lastGen: '1 week ago', totalUnits: '480 items', inUse: '380 active', reserved: '20 in vault', condition: 'Stable', manager: 'Prof. Amit Bose' },
+    { id: 4, title: 'Digital Asset & IT Inventory', type: 'Operational', lastGen: '10 days ago', totalUnits: '820 Devices', inUse: '780 client PCs', reserved: '40 spares', condition: 'Optimal', manager: 'Director Aarav Sharma' },
+    { id: 5, title: 'Canteen Stock Consumption Report', type: 'Services', lastGen: '12 days ago', totalUnits: '15 Supply Lines', inUse: '6 active', reserved: '9 stockrooms', condition: 'Stable', manager: 'Catering Lead Sunita Sharma' },
     { id: 6, title: 'Stationery & Supplies Audit', type: 'General', lastGen: '2 weeks ago', totalUnits: '6,200 catalogued', inUse: '4,100 distributed', reserved: '2,100 reserve', condition: 'Good', manager: 'Admin Services Team' },
   ];
 

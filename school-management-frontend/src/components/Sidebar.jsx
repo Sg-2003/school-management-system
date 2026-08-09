@@ -11,12 +11,17 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { logout } from '../services/service';
 
-import eleanorAvatar from '../assets/eleanor_avatar.png';
-import janeAvatar from '../assets/jane_avatar.png';
-import robertAvatar from '../assets/robert_avatar.png';
-import studentAvatar from '../assets/student_avatar.png';
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+import indianMan2 from '../assets/indian_man_portrait_2.png';
+import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import indianWoman2 from '../assets/indian_woman_portrait_2.png';
 
-const NavItem = ({ item, collapsed, role }) => {
+const eleanorAvatar = indianMan1;
+const janeAvatar = indianWoman1;
+const robertAvatar = indianMan2;
+const studentAvatar = indianWoman2;
+
+const NavItem = ({ item, collapsed, role, isMobile, setMobileOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const hasSubItems = item.subItems && item.subItems.length > 0;
@@ -72,6 +77,7 @@ const NavItem = ({ item, collapsed, role }) => {
                       <NavLink 
                         to={sub.path} 
                         className={({ isActive }) => `nav-item sub-item ${isActive ? 'active' : ''}`}
+                        onClick={() => { if (isMobile && setMobileOpen) setMobileOpen(false); }}
                       >
                         {sub.icon && <span style={{ opacity: 0.8, display: 'flex', alignItems: 'center' }}>{sub.icon}</span>}
                         <span style={{ fontSize: '0.9rem' }}>{sub.name}</span>
@@ -99,6 +105,7 @@ const NavItem = ({ item, collapsed, role }) => {
             to={item.path} 
             className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
             end={item.path === '/dashboard'}
+            onClick={() => { if (isMobile && setMobileOpen) setMobileOpen(false); }}
           >
             <span className="nav-icon">{item.icon}</span>
             {!collapsed && <span style={{ flex: 1 }}>{item.name}</span>}
@@ -110,7 +117,7 @@ const NavItem = ({ item, collapsed, role }) => {
   );
 };
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = ({ collapsed, mobileOpen, setMobileOpen, isMobile }) => {
   const getTeacherProfilePic = () => {
     try {
       const stored = localStorage.getItem('teachers');
@@ -489,7 +496,8 @@ const Sidebar = ({ collapsed }) => {
           roles: ['admin', 'teacher', 'student'],
           subItems: [
             { path: '/dashboard/ai-hub', name: 'Neural Hub', icon: <Grid size={14} /> },
-            { path: '/dashboard/performance', name: 'Student Analytics', icon: <Target size={14} /> },
+            { path: '/dashboard/performance', name: 'Performance Intelligence', icon: <Target size={14} /> },
+            { path: '/dashboard/student-analytics', name: 'Student Analytics', icon: <Activity size={14} /> },
             { path: '/dashboard/faculty-ai', name: 'Faculty Excellence', icon: <GraduationCap size={14} /> },
             { path: '/dashboard/efficiency-ai', name: 'Neural Efficiency', icon: <Zap size={14} /> },
             { path: '/dashboard/financial-ai', name: 'Fiscal Intelligence', icon: <Landmark size={14} /> },
@@ -522,18 +530,23 @@ const Sidebar = ({ collapsed }) => {
   ];
 
   return (
-    <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
-      <div className="sidebar-header" style={{ padding: collapsed ? '0' : '0 24px', justifyContent: collapsed ? 'center' : 'flex-start' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: collapsed ? '0' : '12px', justifyContent: collapsed ? 'center' : 'flex-start', width: '100%' }}>
+    <aside className={`sidebar ${collapsed && !isMobile ? 'collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>
+      <div className="sidebar-header" style={{ padding: collapsed && !isMobile ? '0' : '0 24px', justifyContent: collapsed && !isMobile ? 'center' : 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: collapsed && !isMobile ? '0' : '12px', justifyContent: collapsed && !isMobile ? 'center' : 'flex-start' }}>
           <div style={{ padding: '8px', backgroundColor: 'var(--primary)', borderRadius: '10px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <GraduationCap size={24} />
           </div>
-          {!collapsed && <span style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-main)', letterSpacing: '-0.5px' }}>EduPro <small style={{ color: 'var(--primary)', fontSize: '0.6rem' }}>ELITE</small></span>}
+          {(!collapsed || isMobile) && <span style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-main)', letterSpacing: '-0.5px' }}>EduPro <small style={{ color: 'var(--primary)', fontSize: '0.6rem' }}>ELITE</small></span>}
         </div>
+        {isMobile && (
+          <button onClick={() => setMobileOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+            <X size={24} />
+          </button>
+        )}
       </div>
       
       <div className="sidebar-nav">
-        {!collapsed && (
+        {(!collapsed || isMobile) && (
           <div 
             ref={profileRef}
             onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -630,10 +643,10 @@ const Sidebar = ({ collapsed }) => {
 
         {menuGroups.map((group, idx) => (
           <div key={`group-${idx}-${group.title}`}>
-            {!collapsed && <div className="nav-group-title">{group.title}</div>}
+            {(!collapsed || isMobile) && <div className="nav-group-title">{group.title}</div>}
             <ul style={{ listStyle: 'none' }}>
               {group.items.map((item, i) => (
-                <NavItem key={`item-${i}-${item.name}`} item={item} collapsed={collapsed} role={role} />
+                <NavItem key={`item-${i}-${item.name}`} item={item} collapsed={collapsed && !isMobile} role={role} isMobile={isMobile} setMobileOpen={setMobileOpen} />
               ))}
             </ul>
           </div>
@@ -647,7 +660,7 @@ const Sidebar = ({ collapsed }) => {
           style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', color: 'var(--danger)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: '12px' }}
         >
           <span className="nav-icon"><LogOut size={20} /></span>
-          {!collapsed && <span style={{ fontWeight: 800 }}>Logout Session</span>}
+          {(!collapsed || isMobile) && <span style={{ fontWeight: 800 }}>Logout Session</span>}
         </button>
       </div>
     </aside>

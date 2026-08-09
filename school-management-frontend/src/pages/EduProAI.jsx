@@ -38,14 +38,170 @@ const MODELS = {
   }
 };
 
+// ─── Hook: reads dark-mode from localStorage + syncs with Topbar toggle ──────
+const useDarkMode = () => {
+  const [isDark, setIsDark] = useState(
+    () => localStorage.getItem('theme') === 'dark' || document.documentElement.getAttribute('data-theme') === 'dark'
+  );
+  useEffect(() => {
+    const sync = () => setIsDark(localStorage.getItem('theme') === 'dark' || document.documentElement.getAttribute('data-theme') === 'dark');
+    window.addEventListener('storage', sync);
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.getAttribute('data-theme') === 'dark');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => {
+      window.removeEventListener('storage', sync);
+      observer.disconnect();
+    };
+  }, []);
+  return isDark;
+};
+
 const EduProAI = () => {
   const navigate = useNavigate();
+  const isDark = useDarkMode();
   const { toast, showToast, hideToast } = useToast();
   
   // Model Selector State
   const [activeModelId, setActiveModelId] = useState('intelligence-4.5');
   const [showModelDropdown, setShowModelDropdown] = useState(false);
   const activeModel = MODELS[activeModelId];
+
+  // Online & Smart Features States
+  const [smartMode, setSmartMode] = useState(true); // default to true to show off the feature!
+  const [expandedThoughts, setExpandedThoughts] = useState({});
+
+  // Helper to resolve high-fidelity simulation logs for search & thinking
+  const getAILogs = (textQuery) => {
+    const queryLower = textQuery.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    
+    let category = 'default';
+    if (queryLower.match(/fee|payment|money|finance|cost|revenue|budget/)) {
+      category = 'finance';
+    } else if (queryLower.match(/attendance|absent|late|leave/)) {
+      category = 'attendance';
+    } else if (queryLower.match(/exam|grade|score|performance|result|test|gpa/)) {
+      category = 'academic';
+    } else if (queryLower.match(/teacher|faculty|staff|employee|payroll/)) {
+      category = 'staff';
+    } else if (queryLower.match(/hostel|dorm|mess|dining|food|canteen/)) {
+      category = 'logistics';
+    } else if (queryLower.match(/security|access|log|permission/)) {
+      category = 'security';
+    } else if (queryLower === 'hi' || queryLower === 'hello' || queryLower === 'hey' || queryLower === 'greetings' || queryLower === 'howdy' || queryLower === 'hi there' || queryLower === 'hello there') {
+      category = 'greeting';
+    }
+
+    const logs = {
+      greeting: {
+        search: [
+          '🌐 Parsing conversation greeting intent...',
+          '🔍 Accessing system routing directory...',
+          '📄 Loaded greeting localizations'
+        ],
+        thinking: [
+          'Identified friendly conversational opener.',
+          'Determined query context as non-departmental routing.',
+          'Activating administrative virtual support interface.',
+          'Preparing system welcome packet.'
+        ]
+      },
+      finance: {
+        search: [
+          '🌐 Ingesting school_db.fees transaction database...',
+          '🔍 Querying outstanding Q2 billing ledgers...',
+          '📄 Retrieved outstanding balance sheet logs'
+        ],
+        thinking: [
+          'Analyzing outstanding billing collection variables.',
+          'Detected $24,500 invoice deficit in grades 10-12.',
+          'Modeling payment acceleration coefficients via billing alerts.',
+          'Synthesizing cashflow acceleration forecast (+18%).'
+        ]
+      },
+      attendance: {
+        search: [
+          '🌐 Reading student_attendance logs...',
+          '🔍 Analyzing class attendance records across sections...',
+          '📄 Scanned morning roll-call and tardiness records'
+        ],
+        thinking: [
+          'Calculating morning class attendance rates (currently 96%).',
+          'Correlating daily delays with transit shuttle Route 4 logs.',
+          'Formulating automated alert triggers for parental communication.',
+          'Calculating impact of shifting attendance logging times (+10m shift).'
+        ]
+      },
+      academic: {
+        search: [
+          '🌐 Accessing exam_marks registry...',
+          '🔍 Auditing student GPA averages across classes...',
+          '📄 Loaded academic performance spreadsheets'
+        ],
+        thinking: [
+          'Processing Grade 9-12 GPA indexes (average GPA: 3.4).',
+          'Identified statistical GPA dip of 2.4% in Mathematics.',
+          'Designing student support protocol (revisions & tutor peer-groups).',
+          'Validating study group intervention success criteria.'
+        ]
+      },
+      staff: {
+        search: [
+          '🌐 Ingesting employee payroll and work logs...',
+          '🔍 Querying administrative prep hours allocation maps...',
+          '📄 Retrieved faculty course planner schedules'
+        ],
+        thinking: [
+          'Auditing administrative burden indicators across faculty.',
+          'Discovered 15% prep hours lost to redundant entry systems.',
+          'Drafting gradebook synchronization model in LMS.',
+          'Calculating employee retention acceleration index (+11% retaining).'
+        ]
+      },
+      logistics: {
+        search: [
+          '🌐 Connecting to hostel allocation matrices...',
+          '🔍 Scanning cafeteria traffic tracking registers...',
+          '📄 Scanned peak dining hall flow metrics'
+        ],
+        thinking: [
+          'Ingesting hostel room occupancy percentages (86% utilization rate).',
+          'Pinpointing peak hall corridor congestion at 8:00 AM - 8:20 AM.',
+          'Designing staggered 20-minute meal schedule offsets.',
+          'Calculating projected food waste reduction curve (-12% delta).'
+        ]
+      },
+      security: {
+        search: [
+          '🌐 Connecting to security overwatch access logs...',
+          '🔍 Auditing digital compliance protocols...',
+          '📄 Scanned parental portal 2FA authentication lists'
+        ],
+        thinking: [
+          'Reviewing digital firewall event histories.',
+          'Detected 1 blocked brute-force attack from external IP.',
+          'Verifying user 2FA status (confirmed 100% compliance).',
+          'Developing weekly routine system log auditing schedules.'
+        ]
+      },
+      default: {
+        search: [
+          '🌐 Auditing connected system indices...',
+          '🔍 Running multi-node intelligence check...',
+          '📄 Scanned student, staff, and financial data hooks'
+        ],
+        thinking: [
+          'Decoupling queries to resolve active operational entities.',
+          'Structuring cross-department performance indicators.',
+          'Analyzing neural system compliance vectors.',
+          'Synthesizing final administrative recommendation parameters.'
+        ]
+      }
+    };
+
+    return logs[category];
+  };
 
   // Chat History Sidebar & Threads State (persisted inside client database)
   const [isHistorySidebarOpen, setIsHistorySidebarOpen] = useState(true);
@@ -122,7 +278,7 @@ const EduProAI = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // Refs
-  const chatEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const fileInputRef = useRef(null);
   const inlineFileInputRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -133,7 +289,12 @@ const EduProAI = () => {
   const aiHistory = activeThread.messages;
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [aiHistory, isProcessing, isStreaming]);
 
   // Synchronize threads changes into local storage database
@@ -405,12 +566,204 @@ const EduProAI = () => {
     setQuery('');
   };
 
+  const runSearchStage = (textQuery, activeLogs) => {
+    if (!searchActive) {
+      runThinkingStage(textQuery, activeLogs);
+      return;
+    }
+
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (currentIndex < activeLogs.search.length) {
+        const nextStep = activeLogs.search[currentIndex];
+        setThreads(prev => prev.map(t => {
+          if (t.id === activeThreadId) {
+            const msgs = [...t.messages];
+            const last = { ...msgs[msgs.length - 1] };
+            last.searchSteps = [...(last.searchSteps || []), nextStep];
+            last.currentSearchIndex = currentIndex;
+            msgs[msgs.length - 1] = last;
+            return { ...t, messages: msgs };
+          }
+          return t;
+        }));
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          setThreads(prev => prev.map(t => {
+            if (t.id === activeThreadId) {
+              const msgs = [...t.messages];
+              const last = { ...msgs[msgs.length - 1] };
+              last.isSearching = false; // completed search
+              msgs[msgs.length - 1] = last;
+              return { ...t, messages: msgs };
+            }
+            return t;
+          }));
+          runThinkingStage(textQuery, activeLogs);
+        }, 500);
+      }
+    }, 400);
+  };
+
+  const runThinkingStage = (textQuery, activeLogs) => {
+    if (!smartMode) {
+      runStreamingStage(textQuery);
+      return;
+    }
+
+    let currentIndex = 0;
+    let startTime = Date.now();
+    
+    const timerInterval = setInterval(() => {
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+      setThreads(prev => prev.map(t => {
+        if (t.id === activeThreadId) {
+          const msgs = [...t.messages];
+          const last = { ...msgs[msgs.length - 1] };
+          last.thinkingTime = elapsed;
+          msgs[msgs.length - 1] = last;
+          return { ...t, messages: msgs };
+        }
+        return t;
+      }));
+    }, 100);
+
+    const stepInterval = setInterval(() => {
+      if (currentIndex < activeLogs.thinking.length) {
+        const nextThought = activeLogs.thinking[currentIndex];
+        setThreads(prev => prev.map(t => {
+          if (t.id === activeThreadId) {
+            const msgs = [...t.messages];
+            const last = { ...msgs[msgs.length - 1] };
+            last.thinkingSteps = [...(last.thinkingSteps || []), nextThought];
+            last.currentThinkingIndex = currentIndex;
+            msgs[msgs.length - 1] = last;
+            return { ...t, messages: msgs };
+          }
+          return t;
+        }));
+        currentIndex++;
+      } else {
+        clearInterval(stepInterval);
+        clearInterval(timerInterval);
+        
+        setTimeout(() => {
+          setThreads(prev => prev.map(t => {
+            if (t.id === activeThreadId) {
+              const msgs = [...t.messages];
+              const last = { ...msgs[msgs.length - 1] };
+              last.isThinking = false; // completed thinking
+              msgs[msgs.length - 1] = last;
+              return { ...t, messages: msgs };
+            }
+            return t;
+          }));
+          runStreamingStage(textQuery);
+        }, 400);
+      }
+    }, 500);
+  };
+
+  const runStreamingStage = (textQuery) => {
+    setIsProcessing(false);
+    setIsStreaming(true);
+
+    const intent = resolveAIIntent(textQuery);
+    let routeAction = intent.route;
+    let textResponse = intent.text;
+
+    if (!textResponse) {
+      const queryLower = textQuery.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+      
+      if (queryLower === 'hi' || queryLower === 'hello' || queryLower === 'hey' || queryLower === 'greetings' || queryLower === 'howdy' || queryLower === 'hi there' || queryLower === 'hello there') {
+        textResponse = `**Hey there! How are you?** How could I assist you today? \n\nI am your **EduPro AI Operational Consultant**, ready to help you analyze institutional performance, predict student outcomes, optimize catering schedules, or audit financial balances. Let's make today highly productive!`;
+      } else if (queryLower.match(/fee|payment|money|finance|cost|revenue|budget/)) {
+        textResponse = `**Institutional Financial Consultation complete.** \n\nBased on the latest Q2 fee collection metrics ($1.25M / 94.2% rate), I have identified a $24.5k variance in outstanding accounts.\n\nHere is my recommended optimization action plan:\n- **Billing Reminders**: Activate automated SMS & Email billing alerts under \`Settings\` to speed up payments.\n- **Direct Deposit**: Configure secure direct-deposit links to reduce manual clearing times.\n- **Reconciliation**: Audit the outstanding balance sheet weekly to capture late charges.\n\nBy implementing these, we can accelerate cash flow by 18% over the next 30 days.`;
+      } else if (queryLower.match(/attendance|absent|late|leave/)) {
+        textResponse = `**Predictive Attendance Audit complete.**\n\nStandard attendance rates are optimal at 96%, but my regression model indicates early warning vectors in the morning classes.\n\n- **Core Discovery**: Faculty logs confirm morning delays are primarily due to public transit delays on Route 4.\n- **Communication**: I suggest setting up automated attendance SMS alerts in the API configuration to bridge parental communication.\n- **Flexibility**: Consider shifting morning roll-call by 10 minutes to accommodate transit variances.`;
+      } else if (queryLower.match(/exam|grade|score|performance|result|test|gpa/)) {
+        textResponse = `**Academic Performance Analysis complete.**\n\nThe institutional GPA stands at a premium 3.4. While Humanities and Sciences show strong growth, Mathematics has experienced a minor 2.4% dip.\n\n1. **Revision Sheets**: Deploy supplementary interactive revision sheets to the LMS Digital Library.\n2. **Study Groups**: Form tutor-led peer study groups for students falling below the 2.8 GPA threshold.\n3. **Analytics**: Track interactive progress metrics on the academic performance dashboard.`;
+      } else if (queryLower.match(/teacher|faculty|staff|employee|payroll/)) {
+        textResponse = `**Operational Staff Audit complete.**\n\nCurrently, 15% of teacher prep hours are allocated to administrative routine tasks.\n\n- **Automating Gradebooks**: Syncing the LMS Course planner will save approximately 6 hours per week per faculty member, significantly reducing administrative fatigue.\n- **Fatigue Reduction**: Saving these routine administrative hours is projected to increase overall employee retention by 11%.`;
+      } else if (queryLower.match(/hostel|dorm|mess|dining|food|canteen/)) {
+        textResponse = `**Logistical & Hostel Audit complete.**\n\nMess hall utilization peaks at 86% during breakfast hours.\n\n- **Meal Timetable Shift**: Shifting the meal timetable to overlapping 20-minute windows.\n- **Waste Minimization**: Streamline menu planning on the Dining Hub to reduce peak congestion by 35% and minimize food waste by 12%.`;
+      } else if (queryLower.match(/security|access|log|permission/)) {
+        textResponse = `**Security Overwatch Analysis active.**\n\nThe digital perimeter is highly secure. Here is the threat intelligence report:\n- **Blocked Events**: Detected 1 blocked brute-force firewall event from external servers last week.\n- **Authentication**: Two-factor authentication (2FA) is successfully active for all parent portals.\n- **Audit Frequency**: I recommend auditing access logs on the Security Overwatch page weekly.`;
+      } else {
+        textResponse = `**Institutional Intelligence query processed successfully.**\n\nRegarding your request: *"${textQuery}"*, our neural networks have reviewed all linked student, staff, and financial nodes. The institutional command centers are operating at peak efficiency.\n\nWould you like me to generate a detailed report for this department or explore specific student analytics?`;
+      }
+    }
+
+    let searchPrepend = "";
+    if (searchActive) {
+      searchPrepend = `**[Database & Web Search Enabled]**\n\n`;
+    }
+
+    const fullResponse = searchPrepend + textResponse + (routeAction ? "" : "\n\nWould you like me to generate a detailed report?");
+
+    let currentText = "";
+    let wordIndex = 0;
+    const words = fullResponse.split(" ");
+
+    typingIntervalRef.current = setInterval(() => {
+      if (wordIndex < words.length) {
+        currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex];
+        setThreads(prev => prev.map(t => {
+          if (t.id === activeThreadId) {
+            const msgs = [...t.messages];
+            msgs[msgs.length - 1] = {
+              ...msgs[msgs.length - 1],
+              text: currentText,
+              isStreaming: true
+            };
+            return { ...t, messages: msgs };
+          }
+          return t;
+        }));
+        wordIndex++;
+      } else {
+        clearInterval(typingIntervalRef.current);
+        typingIntervalRef.current = null;
+        setIsStreaming(false);
+
+        setThreads(prev => prev.map(t => {
+          if (t.id === activeThreadId) {
+            const msgs = [...t.messages];
+            msgs[msgs.length - 1] = {
+              ...msgs[msgs.length - 1],
+              text: fullResponse,
+              isStreaming: false
+            };
+            return { ...t, messages: msgs };
+          }
+          return t;
+        }));
+
+        if (routeAction) {
+          setTimeout(() => {
+            navigate(routeAction);
+          }, 1800);
+        }
+      }
+    }, activeModel.speed);
+  };
+
   const submitQuery = (textQuery) => {
     // Add user message to active thread
     const userMsg = { role: 'user', text: textQuery };
+    
+    // Determine category and logs
+    const activeLogs = getAILogs(textQuery);
+
+    // Cancel active Speech synthesis
+    window.speechSynthesis.cancel();
+    setSpeakingMsgIndex(null);
+
+    // 1. Add user message
     setThreads(prev => prev.map(t => {
       if (t.id === activeThreadId) {
-        // If the thread is named "New Conversation" or "New Chat", auto-generate a title based on user first query!
         const isFirstQuery = t.title === 'New Conversation' || t.title === 'New Chat' || t.title === 'New Conversation Thread' || !t.messages || t.messages.length <= 2;
         const newTitle = isFirstQuery 
           ? (textQuery.length > 25 ? textQuery.substring(0, 22) + '...' : textQuery)
@@ -426,56 +779,22 @@ const EduProAI = () => {
 
     setIsProcessing(true);
 
-    // Cancel active Speech synthesis
-    window.speechSynthesis.cancel();
-    setSpeakingMsgIndex(null);
+    // 2. Add assistant message placeholder
+    const assistantMsgPlaceholder = {
+      role: 'assistant',
+      text: '',
+      isSearching: searchActive,
+      searchSteps: [],
+      currentSearchIndex: -1,
+      isThinking: smartMode,
+      thinkingSteps: [],
+      currentThinkingIndex: -1,
+      thinkingTime: 0,
+      isStreaming: false,
+      feedback: null
+    };
 
-    // AI Intent routing simulation
     setTimeout(() => {
-      const intent = resolveAIIntent(textQuery);
-      let routeAction = intent.route;
-      let textResponse = intent.text;
-
-      if (!textResponse) {
-        const queryLower = textQuery.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-        
-        if (queryLower === 'hi' || queryLower === 'hello' || queryLower === 'hey' || queryLower === 'greetings' || queryLower === 'howdy' || queryLower === 'hi there' || queryLower === 'hello there') {
-          textResponse = `**Hey there! How are you?** How could I assist you today? \n\nI am your **EduPro AI Operational Consultant**, ready to help you analyze institutional performance, predict student outcomes, optimize catering schedules, or audit financial balances. Let's make today highly productive!`;
-        } else if (queryLower.match(/fee|payment|money|finance|cost|revenue|budget/)) {
-          textResponse = `**Institutional Financial Consultation complete.** \n\nBased on the latest Q2 fee collection metrics ($1.25M / 94.2% rate), I have identified a $24.5k variance in outstanding accounts.\n\nHere is my recommended optimization action plan:\n- **Billing Reminders**: Activate automated SMS & Email billing alerts under \`Settings\` to speed up payments.\n- **Direct Deposit**: Configure secure direct-deposit links to reduce manual clearing times.\n- **Reconciliation**: Audit the outstanding balance sheet weekly to capture late charges.\n\nBy implementing these, we can accelerate cash flow by 18% over the next 30 days.`;
-        } else if (queryLower.match(/attendance|absent|late|leave/)) {
-          textResponse = `**Predictive Attendance Audit complete.**\n\nStandard attendance rates are optimal at 96%, but my regression model indicates early warning vectors in the morning classes.\n\n- **Core Discovery**: Faculty logs confirm morning delays are primarily due to public transit delays on Route 4.\n- **Communication**: I suggest setting up automated attendance SMS alerts in the API configuration to bridge parental communication.\n- **Flexibility**: Consider shifting morning roll-call by 10 minutes to accommodate transit variances.`;
-        } else if (queryLower.match(/exam|grade|score|performance|result|test|gpa/)) {
-          textResponse = `**Academic Performance Analysis complete.**\n\nThe institutional GPA stands at a premium 3.4. While Humanities and Sciences show strong growth, Mathematics has experienced a minor 2.4% dip.\n\n1. **Revision Sheets**: Deploy supplementary interactive revision sheets to the LMS Digital Library.\n2. **Study Groups**: Form tutor-led peer study groups for students falling below the 2.8 GPA threshold.\n3. **Analytics**: Track interactive progress metrics on the academic performance dashboard.`;
-        } else if (queryLower.match(/teacher|faculty|staff|employee|payroll/)) {
-          textResponse = `**Operational Staff Audit complete.**\n\nCurrently, 15% of teacher prep hours are allocated to administrative routine tasks.\n\n- **Automating Gradebooks**: Syncing the LMS Course planner will save approximately 6 hours per week per faculty member, significantly reducing administrative fatigue.\n- **Fatigue Reduction**: Saving these routine administrative hours is projected to increase overall employee retention by 11%.`;
-        } else if (queryLower.match(/hostel|dorm|mess|dining|food|canteen/)) {
-          textResponse = `**Logistical & Hostel Audit complete.**\n\nMess hall utilization peaks at 86% during breakfast hours.\n\n- **Meal Timetable Shift**: Shifting the meal timetable to overlapping 20-minute windows.\n- **Waste Minimization**: Streamline menu planning on the Dining Hub to reduce peak congestion by 35% and minimize food waste by 12%.`;
-        } else if (queryLower.match(/security|access|log|permission/)) {
-          textResponse = `**Security Overwatch Analysis active.**\n\nThe digital perimeter is highly secure. Here is the threat intelligence report:\n- **Blocked Events**: Detected 1 blocked brute-force firewall event from external servers last week.\n- **Authentication**: Two-factor authentication (2FA) is successfully active for all parent portals.\n- **Audit Frequency**: I recommend auditing access logs on the Security Overwatch page weekly.`;
-        } else {
-          textResponse = `**Institutional Intelligence query processed successfully.**\n\nRegarding your request: *"${textQuery}"*, our neural networks have reviewed all linked student, staff, and financial nodes. The institutional command centers are operating at peak efficiency.\n\nWould you like me to generate a detailed report for this department or explore specific student analytics?`;
-        }
-      }
-
-      if (searchActive) {
-        textResponse = `**[Database & Web Search Enabled]**\n\n${textResponse}`;
-      }
-
-      const fullResponse = textResponse + (routeAction ? "" : "\n\nWould you like me to generate a detailed report?");
-
-      setIsProcessing(false);
-      setIsStreaming(true);
-
-      // Create streaming message placeholder
-      const assistantMsgIndex = aiHistory.length + 1; // logical next index
-      const assistantMsgPlaceholder = { 
-        role: 'assistant', 
-        text: '', 
-        isStreaming: true,
-        feedback: null
-      };
-
       setThreads(prev => prev.map(t => {
         if (t.id === activeThreadId) {
           return { ...t, messages: [...t.messages, assistantMsgPlaceholder] };
@@ -483,57 +802,9 @@ const EduProAI = () => {
         return t;
       }));
 
-      // Stream words
-      let currentText = "";
-      let wordIndex = 0;
-      const words = fullResponse.split(" ");
-
-      typingIntervalRef.current = setInterval(() => {
-        if (wordIndex < words.length) {
-          currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex];
-          setThreads(prev => prev.map(t => {
-            if (t.id === activeThreadId) {
-              const updatedMsgs = [...t.messages];
-              updatedMsgs[updatedMsgs.length - 1] = {
-                role: 'assistant',
-                text: currentText,
-                isStreaming: true,
-                feedback: null
-              };
-              return { ...t, messages: updatedMsgs };
-            }
-            return t;
-          }));
-          wordIndex++;
-        } else {
-          clearInterval(typingIntervalRef.current);
-          typingIntervalRef.current = null;
-          setIsStreaming(false);
-
-          setThreads(prev => prev.map(t => {
-            if (t.id === activeThreadId) {
-              const updatedMsgs = [...t.messages];
-              updatedMsgs[updatedMsgs.length - 1] = {
-                role: 'assistant',
-                text: fullResponse,
-                isStreaming: false,
-                feedback: null
-              };
-              return { ...t, messages: updatedMsgs };
-            }
-            return t;
-          }));
-
-          // Trigger Intent Routing after typing finishes
-          if (routeAction) {
-            setTimeout(() => {
-              navigate(routeAction);
-            }, 1800);
-          }
-        }
-      }, activeModel.speed);
-
-    }, 1200); // Response lag simulating LLM thinking
+      // Start stages
+      runSearchStage(textQuery, activeLogs);
+    }, 400);
   };
 
   // Feedback widgets handler
@@ -1042,7 +1313,10 @@ const EduProAI = () => {
              </div>
 
              {/* Chat Messages Log */}
-             <div style={{ flex: 1, padding: '32px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '24px', backgroundColor: 'var(--bg-card)' }}>
+             <div 
+               ref={chatContainerRef}
+               style={{ flex: 1, padding: '32px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '24px', backgroundColor: 'var(--bg-card)' }}
+             >
                 {aiHistory.map((msg, i) => {
                   const isUser = msg.role === 'user';
                   const isSpeaking = speakingMsgIndex === i;
@@ -1065,7 +1339,7 @@ const EduProAI = () => {
                          width: '36px', 
                          height: '36px', 
                          borderRadius: '12px', 
-                         backgroundColor: isUser ? '#0f172a' : activeModel.bgColor,
+                         backgroundColor: isUser ? (isDark ? '#6366f1' : '#0f172a') : activeModel.bgColor,
                          color: isUser ? 'white' : activeModel.color,
                          display: 'flex', 
                          alignItems: 'center', 
@@ -1084,7 +1358,7 @@ const EduProAI = () => {
                            borderRadius: '24px', 
                            borderTopRightRadius: isUser ? '4px' : '24px',
                            borderTopLeftRadius: isUser ? '24px' : '4px',
-                           backgroundColor: isUser ? '#0f172a' : 'var(--bg-body)',
+                           backgroundColor: isUser ? (isDark ? '#6366f1' : '#0f172a') : 'var(--bg-body)',
                            color: isUser ? 'white' : 'var(--text-main)',
                            fontWeight: isUser ? 600 : 500, 
                            border: isUser ? 'none' : '1px solid var(--border-color)',
@@ -1093,6 +1367,115 @@ const EduProAI = () => {
                          }}>
                             
                             {/* User plain-text or AI Custom Formatted Markdown */}
+                            {/* Online Web Search Progress logs */}
+                            {!isUser && (msg.searchSteps && msg.searchSteps.length > 0 || msg.isSearching) && (
+                              <div style={{
+                                marginBottom: '16px',
+                                padding: '14px 18px',
+                                borderRadius: '16px',
+                                backgroundColor: 'var(--bg-card)',
+                                border: '1px solid #10b98120',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '8px'
+                              }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontSize: '0.8rem', fontWeight: 800 }}>
+                                  <motion.div
+                                    animate={{ rotate: msg.isSearching ? 360 : 0 }}
+                                    transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
+                                    style={{ display: 'flex', alignItems: 'center' }}
+                                  >
+                                    <Globe size={14} />
+                                  </motion.div>
+                                  <span>ONLINE WEB SEARCH</span>
+                                  {msg.isSearching && (
+                                    <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 500 }}>• searching indices...</span>
+                                  )}
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '4px' }}>
+                                  {msg.searchSteps && msg.searchSteps.map((step, sIdx) => (
+                                    <motion.div 
+                                      key={sIdx}
+                                      initial={{ opacity: 0, x: -4 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}
+                                    >
+                                      <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                                      {step}
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Deep Reasoning chain-of-thought blocks */}
+                            {!isUser && (msg.thinkingSteps && msg.thinkingSteps.length > 0 || msg.isThinking) && (
+                              <div style={{
+                                marginBottom: '16px',
+                                borderRadius: '16px',
+                                border: '1px solid #6366f120',
+                                backgroundColor: '#6366f104',
+                                overflow: 'hidden'
+                              }}>
+                                <div 
+                                  onClick={() => setExpandedThoughts(prev => ({ ...prev, [i]: !prev[i] }))}
+                                  style={{
+                                    padding: '12px 18px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    cursor: 'pointer',
+                                    userSelect: 'none',
+                                    borderBottom: expandedThoughts[i] || msg.isThinking ? '1px solid #6366f115' : 'none'
+                                  }}
+                                >
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6366f1', fontSize: '0.8rem', fontWeight: 800 }}>
+                                    <Brain size={14} />
+                                    <span>SMART DEEP REASONING</span>
+                                    {msg.thinkingTime > 0 && (
+                                      <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>({msg.thinkingTime}s)</span>
+                                    )}
+                                  </div>
+                                  <div style={{ fontSize: '0.75rem', color: '#6366f1', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <span>{expandedThoughts[i] || msg.isThinking ? 'Hide Thoughts' : 'Expand Thoughts'}</span>
+                                    <ChevronDown size={14} style={{ transform: expandedThoughts[i] || msg.isThinking ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }} />
+                                  </div>
+                                </div>
+                                <AnimatePresence>
+                                  {(expandedThoughts[i] || msg.isThinking) && (
+                                    <motion.div
+                                      initial={{ height: 0, opacity: 0 }}
+                                      animate={{ height: 'auto', opacity: 1 }}
+                                      exit={{ height: 0, opacity: 0 }}
+                                      style={{ overflow: 'hidden' }}
+                                    >
+                                      <div style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                        {msg.thinkingSteps && msg.thinkingSteps.map((step, tIdx) => (
+                                          <motion.div
+                                            key={tIdx}
+                                            initial={{ opacity: 0, x: -4 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600, display: 'flex', alignItems: 'flex-start', gap: '6px', lineHeight: 1.5 }}
+                                          >
+                                            <span style={{ color: '#6366f1', userSelect: 'none' }}>•</span>
+                                            <span>{step}</span>
+                                          </motion.div>
+                                        ))}
+                                        {msg.isThinking && (
+                                          <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginTop: '6px', paddingLeft: '2px' }}>
+                                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1 }} style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#6366f1' }}></motion.div>
+                                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#6366f1' }}></motion.div>
+                                            <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#6366f1' }}></motion.div>
+                                            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, fontStyle: 'italic' }}>thinking...</span>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            )}
+
                             {isUser ? (
                               <p style={{ margin: 0, fontSize: '0.92rem', lineHeight: 1.6 }}>{msg.text}</p>
                             ) : (
@@ -1250,7 +1633,6 @@ const EduProAI = () => {
                   </motion.div>
                 )}
                 
-                <div ref={chatEndRef} />
              </div>
 
              {/* Quick recommendation chips (Visible only at new threads) */}
@@ -1289,7 +1671,73 @@ const EduProAI = () => {
 
              {/* Bottom Input Area */}
              <div style={{ padding: '24px 32px', borderTop: '1px solid var(--border-color)', backgroundColor: 'var(--bg-card)', zIndex: 10 }}>
-                <form onSubmit={handleQuery} style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              
+              {/* Premium Online & Smart Settings Bar */}
+              <div style={{ display: 'flex', gap: '12px', marginBottom: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
+                {/* Smart Mode Toggle */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSmartMode(!smartMode);
+                    showToast(
+                      !smartMode ? 'Smart Mode enabled. Advanced deep reasoning core is active.' : 'Smart Mode disabled.',
+                      'success',
+                      'Smart Mode Toggled'
+                    );
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '8px 16px',
+                    borderRadius: '24px',
+                    border: smartMode ? '1.5px solid #6366f1' : '1.5px solid var(--border-color)',
+                    backgroundColor: smartMode ? '#6366f112' : 'var(--bg-body)',
+                    color: smartMode ? '#6366f1' : 'var(--text-muted)',
+                    fontSize: '0.8rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: smartMode ? '0 0 15px #6366f115' : 'none'
+                  }}
+                >
+                  <Brain size={14} style={{ filter: smartMode ? 'drop-shadow(0 0 4px #6366f1)' : 'none' }} />
+                  Smart Mode {smartMode && '• Active'}
+                </button>
+
+                {/* Online Search Toggle */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchActive(!searchActive);
+                    showToast(
+                      !searchActive ? 'Online search enabled. Real-time web & DB indices are connected.' : 'Online search disabled.',
+                      'info',
+                      'Online Search Toggled'
+                    );
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '8px 16px',
+                    borderRadius: '24px',
+                    border: searchActive ? '1.5px solid #10b981' : '1.5px solid var(--border-color)',
+                    backgroundColor: searchActive ? '#10b98112' : 'var(--bg-body)',
+                    color: searchActive ? '#10b981' : 'var(--text-muted)',
+                    fontSize: '0.8rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: searchActive ? '0 0 15px #10b98115' : 'none'
+                  }}
+                >
+                  <Globe size={14} style={{ filter: searchActive ? 'drop-shadow(0 0 4px #10b981)' : 'none' }} />
+                  Online Search {searchActive && '• Active'}
+                </button>
+              </div>
+
+                <form onSubmit={handleQuery} style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
                    
                    {/* File attachment paperclip */}
                    <button 
@@ -1307,7 +1755,8 @@ const EduProAI = () => {
                        justifyContent: 'center',
                        padding: '8px',
                        borderRadius: '50%',
-                       transition: '0.2s'
+                       transition: '0.2s',
+                       zIndex: 5
                      }}
                      onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--bg-body)'}
                      onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -1326,7 +1775,7 @@ const EduProAI = () => {
                    {/* Main Query input field */}
                    <input 
                      type="text" 
-                     placeholder={`Message EduPro AI (${activeModel.name})...`}
+                     placeholder={smartMode ? `Message EduPro AI [Smart Reasoning Active]...` : `Message EduPro AI (${activeModel.name})...`}
                      value={query} 
                      onChange={handleInputChange}
                      disabled={isProcessing || isStreaming}
@@ -1354,36 +1803,8 @@ const EduProAI = () => {
                    />
 
                    {/* Right Side absolute control pills (Speech, Search database, Send) */}
-                   <div style={{ position: 'absolute', right: '10px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                   <div style={{ position: 'absolute', right: '10px', display: 'flex', gap: '8px', alignItems: 'center', zIndex: 5 }}>
                       
-                      {/* Web / Ingestion Database Search toggle */}
-                      <button 
-                        type="button"
-                        onClick={() => {
-                          setSearchActive(!searchActive);
-                          showToast(
-                            !searchActive ? 'Database & web search enabled for detailed intelligence audits.' : 'Search ingestion deactivated.',
-                            'info',
-                            'Search Toggled'
-                          );
-                        }}
-                        style={{ 
-                          background: 'none', 
-                          border: 'none', 
-                          color: searchActive ? '#10b981' : 'var(--text-muted)', 
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          padding: '8px',
-                          borderRadius: '50%',
-                          backgroundColor: searchActive ? '#10b98110' : 'transparent',
-                          transition: '0.2s'
-                        }}
-                      >
-                        <Globe size={18} />
-                      </button>
-
                       {/* Microphone Voice dictation */}
                       <button 
                         type="button"

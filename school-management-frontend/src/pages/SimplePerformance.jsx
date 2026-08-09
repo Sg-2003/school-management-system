@@ -12,12 +12,12 @@ const SimplePerformance = () => {
   const [predictions, setPredictions] = useState({});
 
   const students = [
-    { id: '101', name: 'Liam Carter', grade: '10th', attendance: '72%' },
-    { id: '102', name: 'Emma Wilson', grade: '11th', attendance: '98%' },
+    { id: '101', name: 'Lokesh Roy', grade: '10th', attendance: '72%' },
+    { id: '102', name: 'Divya Joshi', grade: '11th', attendance: '98%' },
     { id: '103', name: 'Noah Patel', grade: '9th', attendance: '65%' },
-    { id: '104', name: 'Sophia Martinez', grade: '12th', attendance: '88%' },
-    { id: '105', name: 'James Chen', grade: '10th', attendance: '92%' },
-    { id: '106', name: 'Ava Jenkins', grade: '9th', attendance: '81%' }
+    { id: '104', name: 'Neha Sharma', grade: '12th', attendance: '88%' },
+    { id: '105', name: 'Madhav Yadav', grade: '10th', attendance: '92%' },
+    { id: '106', name: 'Ekta Kinger', grade: '9th', attendance: '81%' }
   ];
 
   const handlePredict = (id) => {

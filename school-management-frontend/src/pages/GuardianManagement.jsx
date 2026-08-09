@@ -5,31 +5,34 @@ import {
   Key, RefreshCw, Trash2, MoreVertical, CircleCheck, 
   CircleX, Clock, Link as LinkIcon, ExternalLink
 } from 'lucide-react';
-import robertAvatar from '../assets/robert_avatar.png';
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+import indianMan2 from '../assets/indian_man_portrait_2.png';
+import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import indianWoman2 from '../assets/indian_woman_portrait_2.png';
 
 const GuardianManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   
   const guardians = [
     { 
-      id: 1, name: 'Robert Wilson', email: 'robert.w@example.com', phone: '+1 234 567 8901', 
-      students: ['Sarah Wilson'], status: 'active', lastLogin: '2 hours ago', 
-      role: 'parent', avatar: 'RW', avatarUrl: robertAvatar 
+      id: 1, name: 'Rajesh Verma', email: 'rajesh.v@example.com', phone: '+91 98765 43299', 
+      students: ['Aman Verma'], status: 'active', lastLogin: '2 hours ago', 
+      role: 'parent', avatar: 'RV', avatarUrl: indianMan1 
     },
     { 
-      id: 2, name: 'Linda Thompson', email: 'linda.t@example.com', phone: '+1 234 567 8902', 
-      students: ['Emma Thompson', 'James Thompson'], status: 'active', lastLogin: '1 day ago', 
-      role: 'guardian', avatar: 'LT' 
+      id: 2, name: 'Meeta Devi', email: 'meeta.d@example.com', phone: '+91 98765 43296', 
+      students: ['Divya Joshi'], status: 'active', lastLogin: '1 day ago', 
+      role: 'guardian', avatar: 'MD', avatarUrl: indianWoman1
     },
     { 
-      id: 3, name: 'Michael Chen', email: 'm.chen@example.com', phone: '+1 234 567 8903', 
-      students: ['Kevin Chen'], status: 'suspended', lastLogin: '5 days ago', 
-      role: 'parent', avatar: 'MC' 
+      id: 3, name: 'Sanjay Gupta', email: 'sanjay.g@example.com', phone: '+91 98765 43297', 
+      students: ['Karan Mehta'], status: 'suspended', lastLogin: '5 days ago', 
+      role: 'parent', avatar: 'SG', avatarUrl: indianMan2
     },
     { 
-      id: 4, name: 'Sarah Garcia', email: 's.garcia@example.com', phone: '+1 234 567 8904', 
-      students: ['Maria Garcia'], status: 'active', lastLogin: '30 mins ago', 
-      role: 'parent', avatar: 'SG' 
+      id: 4, name: 'Priya Patel', email: 'priya.p@example.com', phone: '+91 98765 43294', 
+      students: ['Neha Sharma'], status: 'active', lastLogin: '30 mins ago', 
+      role: 'parent', avatar: 'PP', avatarUrl: indianWoman2
     }
   ];
 

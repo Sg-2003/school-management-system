@@ -12,6 +12,7 @@ import {
   CloudUpload, Trash2, Share2, Camera, Home, CheckCircle2
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { addTeacher, updateTeacher } from '../services/service';
 
 const AddTeacher = ({ mode = 'add' }) => {
   const navigate = useNavigate();
@@ -205,7 +206,7 @@ const AddTeacher = ({ mode = 'add' }) => {
       });
     }, 600);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       clearInterval(interval);
       
       const stored = localStorage.getItem('teachers');
@@ -217,6 +218,7 @@ const AddTeacher = ({ mode = 'add' }) => {
       const teacherObj = {
         id: formData.teacherId,
         teacherId: formData.teacherId,
+        teacher_id: formData.teacherId,
         name: formData.fullName,
         fullName: formData.fullName,
         subject: formData.subject,
@@ -257,6 +259,16 @@ const AddTeacher = ({ mode = 'add' }) => {
         rating: 4.8,
         documents: formData.documents || []
       };
+
+      try {
+        if (mode === 'edit') {
+          await updateTeacher(id, teacherObj);
+        } else {
+          await addTeacher(teacherObj);
+        }
+      } catch (apiErr) {
+        console.warn("Backend API offline, bypassing direct node sync", apiErr);
+      }
 
       if (mode === 'edit') {
         list = list.map(t => t.id === id ? { ...t, ...teacherObj } : t);

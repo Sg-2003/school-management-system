@@ -32,17 +32,17 @@ const useDarkMode = () => {
 const StudentAvatar = ({ name, size = 40, border = '1px solid rgba(99,102,241,0.25)', borderRadius = '12px' }) => {
   const [imgError, setImgError] = useState(false);
   const avatars = {
-    'Alice Johnson': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-    'Bob Wilson': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-    'Charlie Davis': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-    'Diana Prince': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop',
-    'Edward Norton': 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&h=150&fit=crop',
-    'Fiona Gallagher': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop',
-    'George Miller': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop',
-    'Hannah Abbott': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop',
+    'Aanya Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Aanya%20Sharma',
+    'Rohan Malhotra': 'https://api.dicebear.com/7.x/initials/svg?seed=Rohan%20Malhotra',
+    'Karan Mehta': 'https://api.dicebear.com/7.x/initials/svg?seed=Karan%20Mehta',
+    'Divya Joshi': 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi',
+    'Aman Verma': 'https://api.dicebear.com/7.x/initials/svg?seed=Aman%20Verma',
+    'Neha Patel': 'https://api.dicebear.com/7.x/initials/svg?seed=Neha%20Patel',
+    'Kabir Sen': 'https://api.dicebear.com/7.x/initials/svg?seed=Kabir%20Sen',
+    'Aditi Nair': 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair',
   };
 
-  const url = avatars[name] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`;
+  const url = avatars[name] || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
 
   if (imgError) {
     return (
@@ -120,14 +120,14 @@ const MessAttendance = () => {
   };
 
   const [attendance, setAttendance] = useState([
-    { id: 1, name: 'Alice Johnson', idNo: 'STU-2026-001', meal: 'Breakfast', time: '08:15 AM', status: 'Present', color: '#4f46e5' },
-    { id: 2, name: 'Bob Wilson', idNo: 'STU-2026-045', meal: 'Breakfast', time: '08:20 AM', status: 'Present', color: '#ec4899' },
-    { id: 3, name: 'Charlie Davis', idNo: 'STU-2026-122', meal: 'Breakfast', time: '08:45 AM', status: 'Present', color: '#10b981' },
-    { id: 4, name: 'Diana Prince', idNo: 'STU-2026-089', meal: 'Lunch', time: '01:05 PM', status: 'Present', color: '#f59e0b' },
-    { id: 5, name: 'Edward Norton', idNo: 'STU-2026-156', meal: 'Lunch', time: '---', status: 'Absent', color: '#64748b' },
-    { id: 6, name: 'Fiona Gallagher', idNo: 'STU-2026-201', meal: 'Lunch', time: '01:15 PM', status: 'Present', color: '#ec4899' },
-    { id: 7, name: 'George Miller', idNo: 'STU-2026-245', meal: 'Dinner', time: '07:45 PM', status: 'Present', color: '#4f46e5' },
-    { id: 8, name: 'Hannah Abbott', idNo: 'STU-2026-312', meal: 'Dinner', time: '08:05 PM', status: 'Present', color: '#ec4899' }
+    { id: 1, name: 'Aanya Sharma', idNo: 'STU-2026-001', meal: 'Breakfast', time: '08:15 AM', status: 'Present', color: '#4f46e5' },
+    { id: 2, name: 'Rohan Malhotra', idNo: 'STU-2026-045', meal: 'Breakfast', time: '08:20 AM', status: 'Present', color: '#ec4899' },
+    { id: 3, name: 'Karan Mehta', idNo: 'STU-2026-122', meal: 'Breakfast', time: '08:45 AM', status: 'Present', color: '#10b981' },
+    { id: 4, name: 'Divya Joshi', idNo: 'STU-2026-089', meal: 'Lunch', time: '01:05 PM', status: 'Present', color: '#f59e0b' },
+    { id: 5, name: 'Aman Verma', idNo: 'STU-2026-156', meal: 'Lunch', time: '---', status: 'Absent', color: '#64748b' },
+    { id: 6, name: 'Neha Patel', idNo: 'STU-2026-201', meal: 'Lunch', time: '01:15 PM', status: 'Present', color: '#ec4899' },
+    { id: 7, name: 'Kabir Sen', idNo: 'STU-2026-245', meal: 'Dinner', time: '07:45 PM', status: 'Present', color: '#4f46e5' },
+    { id: 8, name: 'Aditi Nair', idNo: 'STU-2026-312', meal: 'Dinner', time: '08:05 PM', status: 'Present', color: '#ec4899' }
   ]);
 
   const [searchTerm, setSearchTerm] = useState('');

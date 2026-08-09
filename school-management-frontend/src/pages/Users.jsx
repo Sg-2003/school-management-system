@@ -13,7 +13,7 @@ const Users = () => {
   const [loading, setLoading] = useState(false);
   const [isCreatingUser, setIsCreatingUser] = useState(false);
   const [toast, setToast] = useState(null);
-  const [newUser, setNewUser] = useState({ name: '', email: '', role: 'student' });
+  const [newUser, setNewUser] = useState({ name: '', email: '', role: 'student', profilePic: '' });
   const [editingUser, setEditingUser] = useState(null);
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
@@ -43,27 +43,43 @@ const Users = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const stored = localStorage.getItem('edupro_users_list');
+      const stored = localStorage.getItem('edupro_users_list_v2');
       if (stored) {
-        setUsers(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        const needsSeeding = parsed.some(u => !u.profilePic && u.id <= 5);
+        if (needsSeeding) {
+          const seeded = parsed.map(u => {
+            if (u.id === 1 && !u.profilePic) u.profilePic = 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Malhotra';
+            else if (u.id === 2 && !u.profilePic) u.profilePic = 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Rao';
+            else if (u.id === 3 && !u.profilePic) u.profilePic = 'https://api.dicebear.com/7.x/initials/svg?seed=Ramesh%20Verma';
+            else if (u.id === 4 && !u.profilePic) u.profilePic = 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi';
+            else if (u.id === 5 && !u.profilePic) u.profilePic = 'https://api.dicebear.com/7.x/initials/svg?seed=Sanjay%20Gupta';
+            return u;
+          });
+          localStorage.setItem('edupro_users_list_v2', JSON.stringify(seeded));
+          setUsers(seeded);
+          setLoading(false);
+          return;
+        }
+        setUsers(parsed);
         setLoading(false);
         return;
       }
       const data = await getUsers();
       setUsers(data);
-      localStorage.setItem('edupro_users_list', JSON.stringify(data));
+      localStorage.setItem('edupro_users_list_v2', JSON.stringify(data));
     } catch (error) {
       console.error('Error fetching users:', error);
       // Fallback premium mock data
       const fallback = [
-        { id: 1, name: 'Robert Alexander', email: 'admin@edupro.com', role: 'admin', status: 'active', lastLogin: '10 mins ago', avatar: 'RA', color: '#4f46e5' },
-        { id: 2, name: 'Dr. Sarah Jenkins', email: 'sarah.j@edupro.com', role: 'teacher', status: 'active', lastLogin: '1 hour ago', avatar: 'SJ', color: '#f59e0b' },
-        { id: 3, name: 'John Thompson', email: 'john.t@edupro.com', role: 'parent', status: 'active', lastLogin: '5 hours ago', avatar: 'JT', color: '#10b981' },
-        { id: 4, name: 'Emma Wilson', email: 'emma.w@edupro.com', role: 'student', status: 'active', lastLogin: '2 days ago', avatar: 'EW', color: '#3b82f6' },
-        { id: 5, name: 'Michael Chen', email: 'm.chen@edupro.com', role: 'admin', status: 'suspended', lastLogin: '1 week ago', avatar: 'MC', color: '#4f46e5' },
+        { id: 1, name: 'Rajesh Malhotra', email: 'rajesh.m@edupro.com', role: 'admin', status: 'active', lastLogin: '10 mins ago', avatar: 'RM', color: '#4f46e5', profilePic: 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Malhotra' },
+        { id: 2, name: 'Dr. Sunita Rao', email: 'sunita.r@edupro.com', role: 'teacher', status: 'active', lastLogin: '1 hour ago', avatar: 'SR', color: '#f59e0b', profilePic: 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Rao' },
+        { id: 3, name: 'Ramesh Verma', email: 'ramesh.v@edupro.com', role: 'parent', status: 'active', lastLogin: '5 hours ago', avatar: 'RV', color: '#10b981', profilePic: 'https://api.dicebear.com/7.x/initials/svg?seed=Ramesh%20Verma' },
+        { id: 4, name: 'Divya Joshi', email: 'divya.j@edupro.com', role: 'student', status: 'active', lastLogin: '2 days ago', avatar: 'DJ', color: '#3b82f6', profilePic: 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi' },
+        { id: 5, name: 'Sanjay Gupta', email: 'sanjay.g@edupro.com', role: 'admin', status: 'suspended', lastLogin: '1 week ago', avatar: 'SG', color: '#4f46e5', profilePic: 'https://api.dicebear.com/7.x/initials/svg?seed=Sanjay%20Gupta' },
       ];
       setUsers(fallback);
-      localStorage.setItem('edupro_users_list', JSON.stringify(fallback));
+      localStorage.setItem('edupro_users_list_v2', JSON.stringify(fallback));
     } finally {
       setLoading(false);
     }
@@ -302,12 +318,24 @@ const Users = () => {
                 >
                   <td style={{ padding: '16px 12px', backgroundColor: 'var(--bg-body)', borderRadius: '16px 0 0 16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                      <div style={{ 
-                        width: '46px', height: '46px', borderRadius: '14px', backgroundColor: user.color, 
-                        color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                        fontWeight: 900, fontSize: '1rem', boxShadow: `0 8px 16px ${user.color}30` 
-                      }}>
-                        {user.avatar}
+                      <div style={{ position: 'relative', width: '46px', height: '46px', flexShrink: 0 }}>
+                        <img 
+                          src={user.profilePic || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}&backgroundType=gradientLinear&fontFamily=Arial,Helvetica,sans-serif&fontSize=42&fontWeight=700`}
+                          alt={user.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}&backgroundType=gradientLinear&fontFamily=Arial,Helvetica,sans-serif&fontSize=42&fontWeight=700`;
+                          }}
+                          style={{ 
+                            width: '46px', 
+                            height: '46px', 
+                            borderRadius: '14px', 
+                            objectFit: 'cover', 
+                            border: `2px solid ${user.color || '#4f46e5'}`,
+                            boxShadow: `0 8px 16px ${(user.color || '#4f46e5')}30`,
+                            backgroundColor: user.color || '#4f46e5'
+                          }} 
+                        />
                       </div>
                       <div>
                         <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 800, color: 'var(--text-main)' }}>{user.name}</h4>
@@ -432,6 +460,16 @@ const Users = () => {
                     <option value="student">Student</option>
                   </select>
                 </div>
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase' }}>Profile Picture URL</label>
+                  <input 
+                    type="text" 
+                    placeholder="https://images.unsplash.com/... (optional)"
+                    style={{ width: '100%', padding: '14px 16px', borderRadius: '14px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-body)', color: 'var(--text-main)', fontWeight: 600, outline: 'none' }}
+                    value={newUser.profilePic}
+                    onChange={(e) => setNewUser({...newUser, profilePic: e.target.value})}
+                  />
+                </div>
               </div>
 
               <div style={{ display: 'flex', gap: '16px', marginTop: '40px' }}>
@@ -462,7 +500,7 @@ const Users = () => {
                     localStorage.setItem('edupro_users_list', JSON.stringify(updated));
                     setIsCreatingUser(false);
                     showToast(`Provisioned new ${newUser.role} account for ${newUser.name}.`, "success", "User Created");
-                    setNewUser({ name: '', email: '', role: 'student' });
+                    setNewUser({ name: '', email: '', role: 'student', profilePic: '' });
                   }}
                   style={{ flex: 1, padding: '16px', borderRadius: '16px', fontWeight: 800, border: 'none', cursor: 'pointer' }}
                 >
@@ -525,6 +563,16 @@ const Users = () => {
                     <option value="parent">Guardian / Parent</option>
                     <option value="student">Student</option>
                   </select>
+                </div>
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase' }}>Profile Picture URL</label>
+                  <input 
+                    type="text" 
+                    placeholder="https://images.unsplash.com/... (optional)"
+                    style={{ width: '100%', padding: '14px 16px', borderRadius: '14px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-body)', color: 'var(--text-main)', fontWeight: 600, outline: 'none' }}
+                    value={editingUser.profilePic || ''}
+                    onChange={(e) => setEditingUser({...editingUser, profilePic: e.target.value})}
+                  />
                 </div>
                 <div className="form-group" style={{ margin: 0 }}>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase' }}>Account Status</label>
@@ -648,8 +696,24 @@ const Users = () => {
               {/* Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', position: 'relative', zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '16px', backgroundColor: `${userColor}20`, color: userColor, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900 }}>
-                    {selectedAuditUser.avatar}
+                  <div style={{ position: 'relative', width: '48px', height: '48px', flexShrink: 0 }}>
+                    <img 
+                      src={selectedAuditUser.profilePic || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(selectedAuditUser.name)}&backgroundType=gradientLinear&fontFamily=Arial,Helvetica,sans-serif&fontSize=42&fontWeight=700`}
+                      alt={selectedAuditUser.name}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(selectedAuditUser.name)}&backgroundType=gradientLinear&fontFamily=Arial,Helvetica,sans-serif&fontSize=42&fontWeight=700`;
+                      }}
+                      style={{ 
+                        width: '48px', 
+                        height: '48px', 
+                        borderRadius: '16px', 
+                        objectFit: 'cover', 
+                        border: `2px solid ${userColor}`,
+                        boxShadow: `0 8px 16px ${userColor}30`,
+                        backgroundColor: `${userColor}20`
+                      }} 
+                    />
                   </div>
                   <div>
                     <h3 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 950, letterSpacing: '-0.5px' }}>{selectedAuditUser.name} Audit Logs</h3>

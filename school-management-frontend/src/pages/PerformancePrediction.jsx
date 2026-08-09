@@ -191,38 +191,38 @@ const PerformancePrediction = () => {
 
   // State-driven student cohorts
   const [criticalStudents, setCriticalStudents] = useState([
-    { id: 'STU-1092', name: 'Liam Carter', riskLevel: 'High', factor: 'Chronic Absenteeism', predictedScore: '45%', attendance: '72%', missingTasks: 7, avatar: 'LC', desc: 'Liam exhibits chronic absenteeism and high regression rates in math vectors.' },
+    { id: 'STU-1092', name: 'Lokesh Roy', riskLevel: 'High', factor: 'Chronic Absenteeism', predictedScore: '45%', attendance: '72%', missingTasks: 7, avatar: 'LR', desc: 'Lokesh exhibits chronic absenteeism and high regression rates in math vectors.' },
     { id: 'STU-0881', name: 'Noah Patel', riskLevel: 'High', factor: 'Low Engagement', predictedScore: '38%', attendance: '68%', missingTasks: 9, avatar: 'NP', desc: 'Noah has very low online system activity and chronic missing lab modules.' },
-    { id: 'STU-0943', name: 'Oliver Brown', riskLevel: 'High', factor: 'Reading Regression', predictedScore: '42%', attendance: '79%', missingTasks: 5, avatar: 'OB', desc: 'Oliver shows conceptual regressions on textbook reading comprehension vectors.' }
+    { id: 'STU-0943', name: 'Alok Verma', riskLevel: 'High', factor: 'Reading Regression', predictedScore: '42%', attendance: '79%', missingTasks: 5, avatar: 'AV', desc: 'Alok shows conceptual regressions on textbook reading comprehension vectors.' }
   ]);
 
   const [resilientStudents, setResilientStudents] = useState([
-    { id: 'STU-1205', name: 'Emma Wilson', riskLevel: 'Low', factor: 'GPA Dip', predictedScore: '74%', attendance: '98%', gpa: '3.92', avatar: 'EW', desc: 'Emma maintains high attendance and stable homework engagement scores.' },
-    { id: 'STU-1166', name: 'Sarah Miller', riskLevel: 'Low', factor: 'Stable Capability', predictedScore: '98%', attendance: '99%', gpa: '3.98', avatar: 'SM', desc: 'Sarah is an elite mathematical contributor in cohort research groups.' },
-    { id: 'STU-0955', name: 'David Kim', riskLevel: 'Low', factor: 'Stable Velocity', predictedScore: '94%', attendance: '97%', gpa: '3.85', avatar: 'DK', desc: 'David has robust conceptual capabilities across biology and coding lectures.' }
+    { id: 'STU-1205', name: 'Divya Joshi', riskLevel: 'Low', factor: 'GPA Dip', predictedScore: '74%', attendance: '98%', gpa: '3.92', avatar: 'DJ', desc: 'Divya maintains high attendance and stable homework engagement scores.' },
+    { id: 'STU-1166', name: 'Shalini Mishra', riskLevel: 'Low', factor: 'Stable Capability', predictedScore: '98%', attendance: '99%', gpa: '3.98', avatar: 'SM', desc: 'Shalini is an elite mathematical contributor in cohort research groups.' },
+    { id: 'STU-0955', name: 'Deepak Kumar', riskLevel: 'Low', factor: 'Stable Velocity', predictedScore: '94%', attendance: '97%', gpa: '3.85', avatar: 'DK', desc: 'Deepak has robust conceptual capabilities across biology and coding lectures.' }
   ]);
 
   // Pivot strategies state
   const [pivotList, setPivotList] = useState([
     { id: 'STU-1122', name: 'Maya Reddy', grade: 'Grade 10-B', pivotScore: 42, factor: 'Pre-Calculus Regression' },
-    { id: 'STU-0899', name: 'James Chen', grade: 'Grade 9-A', pivotScore: 38, factor: 'Chronic Tardiness' },
-    { id: 'STU-1405', name: 'Zoe Brooks', grade: 'Grade 12-C', pivotScore: 45, factor: 'Physics Laboratory Lag' },
-    { id: 'STU-1502', name: 'Leo Wright', grade: 'Grade 11-A', pivotScore: 48, factor: 'Reading Comprehension' },
-    { id: 'STU-0944', name: 'Mia Wong', grade: 'Grade 10-A', pivotScore: 52, factor: 'English Assignment Lag' },
-    { id: 'STU-1177', name: 'Aaron Paul', grade: 'Grade 11-C', pivotScore: 41, factor: 'Chemistry Regression' },
+    { id: 'STU-0899', name: 'Madhav Yadav', grade: 'Grade 9-A', pivotScore: 38, factor: 'Chronic Tardiness' },
+    { id: 'STU-1405', name: 'Kriti Sen', grade: 'Grade 12-C', pivotScore: 45, factor: 'Physics Laboratory Lag' },
+    { id: 'STU-1502', name: 'Rahul Verma', grade: 'Grade 11-A', pivotScore: 48, factor: 'Reading Comprehension' },
+    { id: 'STU-0944', name: 'Meera Iyer', grade: 'Grade 10-A', pivotScore: 52, factor: 'English Assignment Lag' },
+    { id: 'STU-1177', name: 'Arun Patel', grade: 'Grade 11-C', pivotScore: 41, factor: 'Chemistry Regression' },
     { id: 'STU-1088', name: 'Zara Khan', grade: 'Grade 9-B', pivotScore: 49, factor: 'French Homework Compliance' },
-    { id: 'STU-1255', name: 'Felix Grey', grade: 'Grade 12-A', pivotScore: 55, factor: 'Advanced Calculus' },
+    { id: 'STU-1255', name: 'Farhan Khan', grade: 'Grade 12-A', pivotScore: 55, factor: 'Advanced Calculus' },
     { id: 'STU-1333', name: 'Sana Malik', grade: 'Grade 10-C', pivotScore: 44, factor: 'Trigonometry Homework' }
   ]);
 
   // Audit list state
   const [auditList, setAuditList] = useState([
-    { id: 'STU-1092', name: 'Liam Carter', riskLevel: 'High', factor: 'Chronic Absenteeism', predictedScore: '45%', attendance: '72%', missingTasks: 7, desc: 'Liam exhibits chronic absenteeism and high regression rates in math vectors.' },
-    { id: 'STU-1144', name: 'Sophia Martinez', riskLevel: 'Medium', factor: 'Physics Regression', predictedScore: '62%', attendance: '81%', missingTasks: 4, desc: 'Sophia exhibits declining trends in science modules and homework completions.' },
+    { id: 'STU-1092', name: 'Lokesh Roy', riskLevel: 'High', factor: 'Chronic Absenteeism', predictedScore: '45%', attendance: '72%', missingTasks: 7, desc: 'Lokesh exhibits chronic absenteeism and high regression rates in math vectors.' },
+    { id: 'STU-1144', name: 'Neha Sharma', riskLevel: 'Medium', factor: 'Physics Regression', predictedScore: '62%', attendance: '81%', missingTasks: 4, desc: 'Neha exhibits declining trends in science modules and homework completions.' },
     { id: 'STU-0881', name: 'Noah Patel', riskLevel: 'High', factor: 'Low Engagement', predictedScore: '51%', attendance: '68%', missingTasks: 9, desc: 'Noah has very low online system activity and chronic missing lab modules.' },
-    { id: 'STU-1205', name: 'Emma Wilson', riskLevel: 'Low', factor: 'GPA Dip', predictedScore: '74%', attendance: '98%', gpa: '3.92', desc: 'Emma maintains high attendance and stable homework engagement scores.' },
-    { id: 'STU-0943', name: 'Oliver Brown', riskLevel: 'High', factor: 'Reading Regression', predictedScore: '42%', attendance: '79%', missingTasks: 5, desc: 'Oliver shows conceptual regressions on textbook reading comprehension vectors.' },
-    { id: 'STU-1120', name: 'Isabella Garcia', riskLevel: 'Medium', factor: 'Lab Reports', predictedScore: '65%', attendance: '84%', missingTasks: 3, desc: 'Isabella shows moderate compliance delays in biology practical blocks.' }
+    { id: 'STU-1205', name: 'Divya Joshi', riskLevel: 'Low', factor: 'GPA Dip', predictedScore: '74%', attendance: '98%', gpa: '3.92', desc: 'Divya maintains high attendance and stable homework engagement scores.' },
+    { id: 'STU-0943', name: 'Alok Verma', riskLevel: 'High', factor: 'Reading Regression', predictedScore: '42%', attendance: '79%', missingTasks: 5, desc: 'Alok shows conceptual regressions on textbook reading comprehension vectors.' },
+    { id: 'STU-1120', name: 'Geeta Patel', riskLevel: 'Medium', factor: 'Lab Reports', predictedScore: '65%', attendance: '84%', missingTasks: 3, desc: 'Geeta shows moderate compliance delays in biology practical blocks.' }
   ]);
 
   // Interactive UI modals state
@@ -304,8 +304,8 @@ const PerformancePrediction = () => {
             setInstitutionalPassRate(94.8);
             triggerToast('Neural core optimization complete! Projected pass rate increased to 94.8%.', 'success');
             setScanResult({
-              highFail: [{ name: 'Liam Carter', chance: 82 }, { name: 'Noah Patel', chance: 76 }],
-              lowFail: [{ name: 'Emma Wilson', chance: 12 }, { name: 'Sophia Martinez', chance: 18 }]
+              highFail: [{ name: 'Lokesh Roy', chance: 82 }, { name: 'Noah Patel', chance: 76 }],
+              lowFail: [{ name: 'Divya Joshi', chance: 12 }, { name: 'Neha Sharma', chance: 18 }]
             });
           }, 400);
           return 100;

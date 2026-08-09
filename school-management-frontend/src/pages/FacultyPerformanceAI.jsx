@@ -21,7 +21,7 @@ const FacultyPerformanceAI = () => {
   // 1. Initial Interactive Teacher Data
   const [teachers, setTeachers] = useState([
     { 
-      name: 'Dr. Sarah Wilson', 
+      name: 'Dr. Sunita Rao', 
       subject: 'Advanced Physics', 
       dept: 'Science',
       score: 94, 
@@ -30,11 +30,11 @@ const FacultyPerformanceAI = () => {
       avatarColor: '#6366f1',
       avatar: janeAvatar,
       metrics: { lessonQuality: 96, techAdoption: 92, punctuality: 98, studentSentiment: 95 },
-      feedback: { positive: 92, neutral: 6, negative: 2, quote: "Dr. Wilson makes complex quantum concepts feel like everyday logic. Her visual notes are amazing." },
+      feedback: { positive: 92, neutral: 6, negative: 2, quote: "Dr. Rao makes complex quantum concepts feel like everyday logic. Her visual notes are amazing." },
       observation: "Highly interactive lecture structure. Successfully checks understanding every 10 minutes. Peer collaboration was integrated smoothly."
     },
     { 
-      name: 'Prof. James Miller', 
+      name: 'Prof. Amit Bose', 
       subject: 'Pure Mathematics', 
       dept: 'Mathematics',
       score: 88, 

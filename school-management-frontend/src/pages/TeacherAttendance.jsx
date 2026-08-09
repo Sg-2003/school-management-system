@@ -11,13 +11,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // ─── Seed data ────────────────────────────────────────────────────
 const INITIAL_DATA = [
-  { id: 'AD52365', name: 'Eleanor Pena',     dept: 'Mathematics', role: 'Senior Teacher',    status: 'P', time: '08:45 AM', avatar: 'EP', color: '#4880FF', remark: '' },
-  { id: 'AD52366', name: 'Robert Fox',       dept: 'Physics',     role: 'Head of Dept',      status: 'L', time: '09:15 AM', avatar: 'RF', color: '#10B981', remark: '' },
-  { id: 'AD52367', name: 'Jane Cooper',      dept: 'English',     role: 'Assistant Teacher', status: 'A', time: '-',        avatar: 'JC', color: '#F59E0B', remark: '' },
-  { id: 'AD52368', name: 'Wade Warren',      dept: 'Chemistry',   role: 'Lecturer',          status: 'P', time: '08:50 AM', avatar: 'WW', color: '#8B5CF6', remark: '' },
-  { id: 'AD52370', name: 'Brooklyn Simmons', dept: 'Biology',     role: 'Senior Teacher',    status: 'H', time: '08:45 AM', avatar: 'BS', color: '#EF4444', remark: '' },
-  { id: 'AD52371', name: 'Guy Hawkins',      dept: 'CS',          role: 'Lab Instructor',    status: 'P', time: '08:55 AM', avatar: 'GH', color: '#4880FF', remark: '' },
-  { id: 'AD52372', name: 'Theresa Webb',     dept: 'Geography',   role: 'Senior Teacher',    status: 'P', time: '08:40 AM', avatar: 'TW', color: '#10B981', remark: '' },
+  { id: 'AD52365', name: 'Priya Malhotra',  dept: 'Mathematics', role: 'Senior Teacher',    status: 'P', time: '08:45 AM', avatar: 'PM', color: '#4880FF', remark: '' },
+  { id: 'AD52366', name: 'Rajesh Kumar',    dept: 'Physics',     role: 'Head of Dept',      status: 'L', time: '09:15 AM', avatar: 'RK', color: '#10B981', remark: '' },
+  { id: 'AD52367', name: 'Sunita Sharma',   dept: 'English',     role: 'Assistant Teacher', status: 'A', time: '-',        avatar: 'SS', color: '#F59E0B', remark: '' },
+  { id: 'AD52368', name: 'Vikram Nair',     dept: 'Chemistry',   role: 'Lecturer',          status: 'P', time: '08:50 AM', avatar: 'VN', color: '#8B5CF6', remark: '' },
+  { id: 'AD52370', name: 'Meena Iyer',      dept: 'Biology',     role: 'Senior Teacher',    status: 'H', time: '08:45 AM', avatar: 'MI', color: '#EF4444', remark: '' },
+  { id: 'AD52371', name: 'Arun Pandey',     dept: 'CS',          role: 'Lab Instructor',    status: 'P', time: '08:55 AM', avatar: 'AP', color: '#4880FF', remark: '' },
+  { id: 'AD52372', name: 'Kavya Reddy',     dept: 'Geography',   role: 'Senior Teacher',    status: 'P', time: '08:40 AM', avatar: 'KR', color: '#10B981', remark: '' },
 ];
 
 const DEPTS = ['All', 'Mathematics', 'Physics', 'English', 'Chemistry', 'Biology', 'CS', 'Geography'];

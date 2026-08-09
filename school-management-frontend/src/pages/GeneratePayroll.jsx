@@ -12,17 +12,17 @@ const GeneratePayroll = () => {
 
   // Load staff payrolls from localStorage
   const [payrollList, setPayrollList] = useState(() => {
-    const stored = localStorage.getItem('staff_payrolls');
+    const stored = localStorage.getItem('staff_payrolls_v2');
     if (stored) {
       return JSON.parse(stored);
     } else {
       const initial = [
-        { id: 'PAY-2026-05-01', name: 'Dr. Robert Carter', role: 'Professor', salary: '$7,083', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Mathematics' },
-        { id: 'PAY-2026-05-02', name: 'Sarah Jenkins', role: 'Admin', salary: '$4,500', status: 'Paid', date: '01 May 2026', method: 'Bank Transfer', dept: 'Administration' },
-        { id: 'PAY-2026-05-03', name: "Michael O'Brien", role: 'IT Lead', salary: '$5,200', status: 'Pending', date: '--', method: 'Institutional Bank', dept: 'Technical' },
-        { id: 'PAY-2026-05-04', name: 'Elena Gilbert', role: 'Counselor', salary: '$3,800', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Student Welfare' },
+        { id: 'PAY-2026-05-01', name: 'Dr. Rajesh Malhotra', role: 'Professor', salary: '$7,083', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Mathematics' },
+        { id: 'PAY-2026-05-02', name: 'Sunita Rao', role: 'Admin', salary: '$4,500', status: 'Paid', date: '01 May 2026', method: 'Bank Transfer', dept: 'Administration' },
+        { id: 'PAY-2026-05-03', name: 'Amit Bose', role: 'IT Lead', salary: '$5,200', status: 'Pending', date: '--', method: 'Institutional Bank', dept: 'Technical' },
+        { id: 'PAY-2026-05-04', name: 'Priya Patel', role: 'Counselor', salary: '$3,800', status: 'Paid', date: '01 May 2026', method: 'Direct Deposit', dept: 'Student Welfare' },
       ];
-      localStorage.setItem('staff_payrolls', JSON.stringify(initial));
+      localStorage.setItem('staff_payrolls_v2', JSON.stringify(initial));
       return initial;
     }
   });
@@ -107,7 +107,7 @@ const GeneratePayroll = () => {
       return p;
     });
 
-    localStorage.setItem('staff_payrolls', JSON.stringify(updatedPayrolls));
+    localStorage.setItem('staff_payrolls_v2', JSON.stringify(updatedPayrolls));
     setIsSuccess(true);
     setTimeout(() => {
       navigate('/dashboard/payroll');

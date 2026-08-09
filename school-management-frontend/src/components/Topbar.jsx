@@ -16,6 +16,7 @@ import robertAvatar from '../assets/robert_avatar.png';
 import studentAvatar from '../assets/student_avatar.png';
 
 const Topbar = ({ toggleSidebar }) => {
+  const customProfilePic = localStorage.getItem('userProfilePic');
   const getTeacherProfilePic = () => {
     try {
       const stored = localStorage.getItem('teachers');
@@ -398,19 +399,29 @@ const Topbar = ({ toggleSidebar }) => {
                borderRadius: '12px', boxShadow: `0 6px 16px ${theme.glow}`, position: 'relative', zIndex: 2,
                display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'
              }}>
-               {isSuperAdmin ? (
-                 <img 
-                   src={eleanorAvatar} 
-                   alt={userName} 
-                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                 />
-               ) : (
+                {customProfilePic ? (
                   <img 
-                    src={userRole === 'teacher' ? getTeacherProfilePic() : (userRole === 'parent' ? robertAvatar : (userRole === 'student' ? studentAvatar : `https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`))} 
+                    src={customProfilePic} 
+                    alt={userName} 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(userName)}&backgroundType=gradientLinear`;
+                    }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  />
+                ) : isSuperAdmin ? (
+                  <img 
+                    src={eleanorAvatar} 
                     alt={userName} 
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                   />
-               )}
+                ) : (
+                   <img 
+                     src={userRole === 'teacher' ? getTeacherProfilePic() : (userRole === 'parent' ? robertAvatar : (userRole === 'student' ? studentAvatar : `https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`))} 
+                     alt={userName} 
+                     style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                   />
+                )}
              </div>
              {isSuperAdmin && (
                <motion.div 
@@ -433,7 +444,17 @@ const Topbar = ({ toggleSidebar }) => {
                    <div style={{ position: 'absolute', top: '-20px', right: '-20px', opacity: 0.1 }}><Sparkles size={100} /></div>
                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 2 }}>
                       <div style={{ width: '54px', height: '54px', borderRadius: '16px', backgroundColor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 950, fontSize: '1.6rem', border: '1px solid rgba(255,255,255,0.3)', overflow: 'hidden' }}>
-                        {isSuperAdmin ? (
+                        {customProfilePic ? (
+                          <img 
+                            src={customProfilePic} 
+                            alt={userName} 
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(userName)}&backgroundType=gradientLinear`;
+                            }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                          />
+                        ) : isSuperAdmin ? (
                           <img 
                             src={eleanorAvatar} 
                             alt={userName} 

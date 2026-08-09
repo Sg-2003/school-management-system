@@ -273,7 +273,7 @@ const StudentAnalytics = () => {
     const subjectData = {
       Mathematics: { name: 'Mathematics', val: 92, activeStudents: 480, avg: 'A', syllabus: '94%', trend: '+3.2%', instructor: 'Dr. Elizabeth Thorne', milestone: 'Algebraic Structures & Vector Calculus' },
       Physics: { name: 'Physics', val: 84, activeStudents: 420, avg: 'B+', syllabus: '81%', trend: '+8.4%', instructor: 'Prof. Marcus Vance', milestone: 'Electromagnetism & Quantum Mechanics' },
-      History: { name: 'History', val: 76, activeStudents: 550, avg: 'B', syllabus: '78%', trend: '+1.5%', instructor: 'Sarah Jenkins, M.A.', milestone: 'Modern Geopolitics & Global Treaties' }
+      History: { name: 'History', val: 76, activeStudents: 550, avg: 'B', syllabus: '78%', trend: '+1.5%', instructor: 'Sunita Rao, M.A.', milestone: 'Modern Geopolitics & Global Treaties' }
     };
     setSelectedSubject(subjectData[name]);
     setSubjectDifficulty(50);

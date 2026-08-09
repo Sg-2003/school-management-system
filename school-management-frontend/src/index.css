@@ -356,6 +356,78 @@ body {
 }
 .sidebar.collapsed ~ .topbar { left: 80px; }
 .sidebar.collapsed ~ .main-content { margin-left: 80px; }
+
+/* Responsive Utility Classes */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+  .main-content {
+    padding: calc(var(--header-height) + 20px) 20px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 60px;
+  }
+  
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+  
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .topbar {
+    left: 0;
+    padding: 0 16px;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding: calc(var(--header-height) + 16px) 16px 16px;
+  }
+  
+  .sidebar.collapsed ~ .topbar,
+  .sidebar ~ .topbar {
+    left: 0;
+  }
+  
+  .sidebar.collapsed ~ .main-content,
+  .sidebar ~ .main-content {
+    margin-left: 0;
+  }
+
+  .search-bar {
+    display: none; /* Hide standard search on mobile */
+  }
+  
+  .topbar-right {
+    gap: 8px;
+  }
+  
+  .card {
+    padding: 16px;
+  }
+  
+  .user-profile .user-info {
+    display: none; /* Hide name and role on mobile, keep avatar */
+  }
+}
 .btn-icon {
   width: 36px;
   height: 36px;

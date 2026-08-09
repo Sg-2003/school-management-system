@@ -43,10 +43,26 @@ const AddNotice = () => {
       { id: 2, title: 'Summer Vacation Announcement', content: 'The school will remain closed for summer vacation from June 1st to July 15th. Have a great break!', target: 'Everyone', date: '2026-05-12', category: 'Academic', pinned: true },
       { id: 3, title: 'Parent-Teacher Meeting', content: 'PTM for the first quarter will be held this Saturday. Attendance is mandatory for all parents.', target: 'Parents', date: '2026-05-10', category: 'General', pinned: false },
       { id: 4, title: 'New Library Policy', content: 'Please note the updated library timings and book issue limits starting next Monday.', target: 'Students & Staff', date: '2026-05-08', category: 'Library', pinned: false },
+      { id: 5, title: 'Semester 2 Academic Syllabus Review', content: 'The revised syllabus for Semester 2 has been updated in the LMS resources directory. All teachers and students are requested to download the updated guides.', target: 'Students & Staff', date: '2026-05-20', category: 'Academic', pinned: false },
+      { id: 6, title: 'Digital Portal Scheduled Maintenance', content: 'The EduPro portal and server database will undergo scheduled security updates this Sunday from 02:00 AM to 06:00 AM. Access might be temporarily offline.', target: 'Everyone', date: '2026-05-18', category: 'General', pinned: false },
+      { id: 7, title: 'Annual Science Exhibition Registration', content: 'Registration for the Annual Science Exhibition is now open! Please submit your project abstract and team names to the science department by next Friday.', target: 'All Students', date: '2026-05-17', category: 'Events', pinned: false }
     ];
 
     const saved = localStorage.getItem('institutional_notices');
-    const currentNotices = saved ? JSON.parse(saved) : defaultNotices;
+    let currentNotices = defaultNotices;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        const hasNewNotices = parsed.some(n => n.id === 5 || n.id === 6 || n.id === 7);
+        if (!hasNewNotices) {
+          localStorage.setItem('institutional_notices', JSON.stringify(defaultNotices));
+        } else {
+          currentNotices = parsed;
+        }
+      } catch (e) {
+        currentNotices = defaultNotices;
+      }
+    }
 
     let formattedTarget = formData.target;
     if (formData.target === 'All') formattedTarget = 'All Students';

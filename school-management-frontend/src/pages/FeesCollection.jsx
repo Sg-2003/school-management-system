@@ -18,25 +18,7 @@ import eleanorAvatar from '../assets/eleanor_avatar.png';
 import ninaPatelAvatar from '../assets/nina_patel_avatar.png';
 
 const getStudentAvatar = (studentName) => {
-  const name = studentName.toLowerCase();
-  if (name.includes('devon') || name.includes('alex johnson')) return devonAvatar;
-  if (name.includes('jane')) return janeAvatar;
-  if (name.includes('eleanor')) return eleanorAvatar;
-  if (name.includes('patel') || name.includes('arlene')) return ninaPatelAvatar;
-  
-  // High-quality unsplash fallback avatars for other students
-  const avatars = {
-    'sarah williams': 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=100&h=100&fit=crop',
-    'michael brown': 'https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=100&h=100&fit=crop',
-    'emily davis': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-    'robert fox': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
-    'cody fisher': 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&h=100&fit=crop',
-    'jerome bell': 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=100&h=100&fit=crop',
-    'marvin mckinney': 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop',
-    'kathryn murphy': 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&h=100&fit=crop'
-  };
-  
-  return avatars[name] || null;
+  return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(studentName)}`;
 };
 
 const FeesCollection = () => {
@@ -58,54 +40,53 @@ const FeesCollection = () => {
   const [invoiceAmount, setInvoiceAmount] = useState('');
   const [invoiceCategory, setInvoiceCategory] = useState('Tuition');
 
-  // Lazy load student lists
   const [studentList, setStudentList] = useState(() => {
-    const stored = localStorage.getItem('students_fees');
+    const stored = localStorage.getItem('students_fees_v2');
     const initial = [
-      { id: 'STU-2026-001', name: 'Devon Lane', class: '10A', balance: '$450.00', status: 'Partially Paid', lastPayment: '2026-04-12' },
-      { id: 'STU-2026-002', name: 'Sarah Williams', class: '10B', balance: '$0.00', status: 'Fully Paid', lastPayment: '2026-05-01' },
-      { id: 'STU-2026-003', name: 'Michael Brown', class: '09A', balance: '$1,200.00', status: 'Unpaid', lastPayment: '-' },
-      { id: 'STU-2026-004', name: 'Emily Davis', class: '12C', balance: '$250.00', status: 'Partially Paid', lastPayment: '2026-05-02' },
-      { id: 'STU-2026-005', name: 'Robert Fox', class: '11A', balance: '$600.00', status: 'Unpaid', lastPayment: '-' },
-      { id: 'STU-2026-006', name: 'Jane Lane', class: '08B', balance: '$0.00', status: 'Fully Paid', lastPayment: '2026-04-28' },
-      { id: 'STU-2026-007', name: 'Cody Fisher', class: '10A', balance: '$850.00', status: 'Partially Paid', lastPayment: '2026-05-03' },
-      { id: 'STU-2026-008', name: 'Arlene McCoy', class: '12B', balance: '$1,500.00', status: 'Unpaid', lastPayment: '-' },
-      { id: 'STU-2026-009', name: 'Jerome Bell', class: '09C', balance: '$320.00', status: 'Partially Paid', lastPayment: '2026-05-01' },
-      { id: 'STU-2026-010', name: 'Eleanor Pena', class: '11B', balance: '$0.00', status: 'Fully Paid', lastPayment: '2026-05-05' },
-      { id: 'STU-2026-011', name: 'Marvin McKinney', class: '10B', balance: '$450.00', status: 'Unpaid', lastPayment: '-' },
-      { id: 'STU-2026-012', name: 'Kathryn Murphy', class: '12A', balance: '$120.00', status: 'Partially Paid', lastPayment: '2026-04-30' },
+      { id: 'STU-2026-001', name: 'Aman Verma', class: '10A', balance: '₹25,000', status: 'Partially Paid', lastPayment: '2026-04-12' },
+      { id: 'STU-2026-002', name: 'Neha Sharma', class: '10B', balance: '₹0', status: 'Fully Paid', lastPayment: '2026-05-01' },
+      { id: 'STU-2026-003', name: 'Abhishek Singh', class: '09A', balance: '₹75,000', status: 'Unpaid', lastPayment: '-' },
+      { id: 'STU-2026-004', name: 'Priya Patel', class: '12C', balance: '₹15,000', status: 'Partially Paid', lastPayment: '2026-05-02' },
+      { id: 'STU-2026-005', name: 'Rajinder Singh', class: '11A', balance: '₹35,000', status: 'Unpaid', lastPayment: '-' },
+      { id: 'STU-2026-006', name: 'Divya Joshi', class: '08B', balance: '₹0', status: 'Fully Paid', lastPayment: '2026-04-28' },
+      { id: 'STU-2026-007', name: 'Rahul Kapoor', class: '10A', balance: '₹50,000', status: 'Partially Paid', lastPayment: '2026-05-03' },
+      { id: 'STU-2026-008', name: 'Meera Patel', class: '12B', balance: '₹90,000', status: 'Unpaid', lastPayment: '-' },
+      { id: 'STU-2026-009', name: 'Kabir Sen', class: '09C', balance: '₹18,000', status: 'Partially Paid', lastPayment: '2026-05-01' },
+      { id: 'STU-2026-010', name: 'Ananya Iyer', class: '11B', balance: '₹0', status: 'Fully Paid', lastPayment: '2026-05-05' },
+      { id: 'STU-2026-011', name: 'Rohan Das', class: '10B', balance: '₹25,000', status: 'Unpaid', lastPayment: '-' },
+      { id: 'STU-2026-012', name: 'Neha Sharma', class: '12A', balance: '₹7,000', status: 'Partially Paid', lastPayment: '2026-04-30' },
     ];
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
           return parsed.map(s => {
-            if (s.id === 'STU-2026-001' && s.name !== 'Devon Lane') {
-              return { ...s, name: 'Devon Lane' };
+            if (s.id === 'STU-2026-001' && s.name !== 'Aman Verma') {
+              return { ...s, name: 'Aman Verma' };
             }
-            if (s.id === 'STU-2026-006' && s.name !== 'Jane Lane') {
-              return { ...s, name: 'Jane Lane' };
+            if (s.id === 'STU-2026-006' && s.name !== 'Divya Joshi') {
+              return { ...s, name: 'Divya Joshi' };
             }
             return s;
           });
         }
       } catch (e) {}
     }
-    localStorage.setItem('students_fees', JSON.stringify(initial));
+    localStorage.setItem('students_fees_v2', JSON.stringify(initial));
     return initial;
   });
 
   // Lazy load activities log
   const [activities, setActivities] = useState(() => {
-    const stored = localStorage.getItem('fees_recent_activity');
+    const stored = localStorage.getItem('fees_recent_activity_v2');
     if (stored) {
       return JSON.parse(stored);
     } else {
       const initial = [
-        { id: 'TRX-9821', student: 'Robert Fox', amount: '$450.00', time: '12m ago' },
-        { id: 'TRX-9820', student: 'Jane Cooper', amount: '$450.00', time: '45m ago' },
+        { id: 'TRX-9821', student: 'Rohan Das', amount: '₹25,000', time: '12m ago' },
+        { id: 'TRX-9820', student: 'Aditi Nair', amount: '₹25,000', time: '45m ago' },
       ];
-      localStorage.setItem('fees_recent_activity', JSON.stringify(initial));
+      localStorage.setItem('fees_recent_activity_v2', JSON.stringify(initial));
       return initial;
     }
   });
@@ -219,7 +200,7 @@ Authorized Stamp: School Management System
     });
     
     setStudentList(updatedList);
-    localStorage.setItem('students_fees', JSON.stringify(updatedList));
+    localStorage.setItem('students_fees_v2', JSON.stringify(updatedList));
 
     setSelectedStudent(prev => ({
       ...prev,
@@ -292,7 +273,7 @@ Authorized Stamp: School Management System
     });
 
     setStudentList(updatedList);
-    localStorage.setItem('students_fees', JSON.stringify(updatedList));
+    localStorage.setItem('students_fees_v2', JSON.stringify(updatedList));
 
     if (selectedStudent && selectedStudent.id === target.id) {
       setSelectedStudent(prev => ({
@@ -302,7 +283,7 @@ Authorized Stamp: School Management System
       }));
     }
 
-    showToast(`Invoice for $${amountVal.toLocaleString()} issued for ${target.name}. Dues updated to ${formattedNewBal}.`, 'success', 'Invoice Created');
+    showToast(`Invoice for ₹${amountVal.toLocaleString()} issued for ${target.name}. Dues updated to ${formattedNewBal}.`, 'success', 'Invoice Created');
     setShowInvoiceModal(false);
     setInvoiceStudent('');
     setInvoiceAmount('');

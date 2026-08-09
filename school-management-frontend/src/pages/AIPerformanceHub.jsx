@@ -107,20 +107,20 @@ const AIPerformanceHub = () => {
   const [showPrintPreview, setShowPrintPreview] = useState(false);
 
   const risks = [
-    { name: 'Liam Carter', score: '42%', risk: 'Critical', grade: 'D-', attendance: '72%', missingTasks: 6, avatar: 'LC', desc: 'Liam is exhibiting steep declines in Algebra and homework compliance indexes.' },
+    { name: 'Lokesh Roy', score: '42%', risk: 'Critical', grade: 'D-', attendance: '72%', missingTasks: 6, avatar: 'LR', desc: 'Lokesh is exhibiting steep declines in Algebra and homework compliance indexes.' },
     { name: 'Noah Patel', score: '38%', risk: 'Critical', grade: 'F', attendance: '68%', missingTasks: 9, avatar: 'NP', desc: 'Noah has missed consecutive lab modules, leading to credit allocation risks.' },
-    { name: 'Ava Jenkins', score: '51%', risk: 'High', grade: 'D+', attendance: '79%', missingTasks: 3, avatar: 'AJ', desc: 'Ava shows moderate signs of conceptual regression in chemistry modules.' }
+    { name: 'Ekta Kinger', score: '51%', risk: 'High', grade: 'D+', attendance: '79%', missingTasks: 3, avatar: 'EK', desc: 'Ekta shows moderate signs of conceptual regression in chemistry modules.' }
   ];
 
   const successes = [
-    { name: 'Sarah Miller', score: '98%', status: 'Elite', grade: 'A+', attendance: '99%', gpa: '3.98', avatar: 'SM', desc: 'Sarah leads the Grade 10 cohort in mathematics research assignments.' },
-    { name: 'Emma Wilson', score: '96%', status: 'Elite', grade: 'A', attendance: '98%', gpa: '3.94', avatar: 'EW', desc: 'Emma exhibits advanced conceptual mastery across biology and physics blocks.' },
-    { name: 'David Kim', score: '94%', status: 'High', grade: 'A-', attendance: '96%', gpa: '3.88', avatar: 'DK', desc: 'David is a strong conceptual contributor in computer science lectures.' }
+    { name: 'Shalini Mishra', score: '98%', status: 'Elite', grade: 'A+', attendance: '99%', gpa: '3.98', avatar: 'SM', desc: 'Shalini leads the Grade 10 cohort in mathematics research assignments.' },
+    { name: 'Divya Joshi', score: '96%', status: 'Elite', grade: 'A', attendance: '98%', gpa: '3.94', avatar: 'DJ', desc: 'Divya exhibits advanced conceptual mastery across biology and physics blocks.' },
+    { name: 'Deepak Kumar', score: '94%', status: 'High', grade: 'A-', attendance: '96%', gpa: '3.88', avatar: 'DK', desc: 'Deepak is a strong conceptual contributor in computer science lectures.' }
   ];
 
   const [auditLogs, setAuditLogs] = useState([
     { time: '10:14:02', event: 'EVALUATION', details: 'AI Model evaluated Grade 10 Algebra marks vectors successfully.' },
-    { time: '10:14:05', event: 'PREDICTION', details: 'Liam Carter flagged as CRITICAL risk for upcoming exam block.' },
+    { time: '10:14:05', event: 'PREDICTION', details: 'Lokesh Roy flagged as CRITICAL risk for upcoming exam block.' },
     { time: '10:14:12', event: 'INTERVENTION', details: 'Triggered parental alert protocol for student Noah Patel.' },
     { time: '10:14:24', event: 'INTEGRITY', details: 'PCI DSS secure financial compliance check validated successfully.' },
     { time: '10:14:45', event: 'ACCELERATION', details: 'STEM acceleration program metrics exported to board registers.' }
@@ -985,7 +985,7 @@ const AIPerformanceHub = () => {
 
                      <button 
                        onClick={() => {
-                         setSmsDraft(`EduPro Academic Alert: Please be notified that Liam Carter is flagged under high math regression triggers. Let's schedule counselor slots.`);
+                         setSmsDraft(`EduPro Academic Alert: Please be notified that Lokesh Roy is flagged under high math regression triggers. Let's schedule counselor slots.`);
                          setShowSmsComposer(true);
                        }} 
                        className="btn"

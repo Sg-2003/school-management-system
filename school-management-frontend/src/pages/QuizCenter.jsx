@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast, ToastRenderer } from '../hooks/useToast';
+import { QuizzesApi } from '../services/service';
 
 const QuizCenter = () => {
   // Core Quiz State
@@ -21,20 +22,38 @@ const QuizCenter = () => {
     { id: 'QZ-008', title: 'Business Law Essentials', subject: 'Business', questions: 2, time: '30 mins', timeLimitSec: 1800, difficulty: 'Hard', status: 'Ongoing', color: '#F59E0B' },
   ]);
 
+  // Load quizzes from backend on mount
+  useEffect(() => {
+    QuizzesApi.getAll()
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setQuizzes(data);
+          localStorage.setItem('quiz_center_quizzes', JSON.stringify(data));
+        }
+      })
+      .catch(() => {
+        // Fallback: try localStorage
+        try {
+          const cached = localStorage.getItem('quiz_center_quizzes');
+          if (cached) setQuizzes(JSON.parse(cached));
+        } catch (e) {}
+      });
+  }, []);
+
   // Sidebar Recent Results State
   const [recentResults, setRecentResults] = useState([
-    { id: 'RES-001', user: 'Alex Johnson', quizTitle: 'Advanced Algebra Weekly', score: '15/15', accuracy: 100, color: '#10B981', date: 'Today, 10:45 AM' },
-    { id: 'RES-002', user: 'Sarah Williams', quizTitle: 'World War II Summary', score: '14/15', accuracy: 93, color: '#10B981', date: 'Today, 09:20 AM' },
-    { id: 'RES-003', user: 'Michael Brown', quizTitle: 'Quantum Physics Intro', score: '08/15', accuracy: 53, color: '#EF4444', date: 'Yesterday, 04:15 PM' },
+    { id: 'RES-001', user: 'Aarav Sharma', quizTitle: 'Advanced Algebra Weekly', score: '15/15', accuracy: 100, color: '#10B981', date: 'Today, 10:45 AM' },
+    { id: 'RES-002', user: 'Aditi Nair', quizTitle: 'World War II Summary', score: '14/15', accuracy: 93, color: '#10B981', date: 'Today, 09:20 AM' },
+    { id: 'RES-003', user: 'Amit Patel', quizTitle: 'Quantum Physics Intro', score: '08/15', accuracy: 53, color: '#EF4444', date: 'Yesterday, 04:15 PM' },
   ]);
 
   // Leaderboard State
   const [leaderboard, setLeaderboard] = useState([
-    { rank: 1, name: 'Emma Thompson', quizzesTaken: 18, accuracy: 98, medal: '🥇' },
-    { rank: 2, name: 'Alex Johnson', quizzesTaken: 15, accuracy: 95, medal: '🥈' },
-    { rank: 3, name: 'Sophia Chen', quizzesTaken: 22, accuracy: 92, medal: '🥉' },
-    { rank: 4, name: 'Maria Garcia', quizzesTaken: 12, accuracy: 89, medal: '' },
-    { rank: 5, name: 'Kevin Lee', quizzesTaken: 14, accuracy: 85, medal: '' }
+    { rank: 1, name: 'Divya Joshi', quizzesTaken: 18, accuracy: 98, medal: '🥇' },
+    { rank: 2, name: 'Aarav Sharma', quizzesTaken: 15, accuracy: 95, medal: '🥈' },
+    { rank: 3, name: 'Sneha Reddy', quizzesTaken: 22, accuracy: 92, medal: '🥉' },
+    { rank: 4, name: 'Neha Sharma', quizzesTaken: 12, accuracy: 89, medal: '' },
+    { rank: 5, name: 'Karan Mehta', quizzesTaken: 14, accuracy: 85, medal: '' }
   ]);
 
   // Interactive Quiz Questions Database
@@ -171,7 +190,10 @@ const QuizCenter = () => {
     // Update Quiz Status in Parent List
     setQuizzes(prev => prev.map(q => {
       if (q.id === activeQuizSession.id) {
-        return { ...q, status: 'Completed', color: '#10B981' };
+        const updated = { ...q, status: 'Completed', color: '#10B981' };
+        // Sync completed status to database
+        QuizzesApi.update(q.id, { ...updated }).catch(() => {});
+        return updated;
       }
       return q;
     }));
@@ -213,6 +235,9 @@ const QuizCenter = () => {
 
     setQuizzes(prev => [newQuiz, ...prev]);
     setShowCreateModal(false);
+
+    // Sync to database
+    QuizzesApi.create(newQuiz).catch(() => {});
 
     // Reset Form
     setCreateForm({

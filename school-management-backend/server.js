@@ -38,7 +38,7 @@ app.post('/api/login', async (req, res) => {
             const user = users[0];
             const token = jwt.encode({ id: user.id, role: user.role }, secret);
             console.log(`✅ Login Success: ${user.name} (${user.role})`);
-            res.json({ token, role: user.role, userId: user.id, name: user.name });
+            res.json({ token, role: user.role, userId: user.id, name: user.name, profilePic: user.profilePic });
         } else {
             console.warn(`❌ Login Failed: ${email}`);
             res.status(401).json({ message: 'Invalid credentials' });
@@ -50,9 +50,9 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.post('/api/register', async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, profilePic } = req.body;
     try {
-        await pool.query('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', [name, email, password, role]);
+        await pool.query('INSERT INTO users (name, email, password, role, profilePic) VALUES (?, ?, ?, ?, ?)', [name, email, password, role, profilePic || null]);
         res.json({ message: 'User registered' });
     } catch (err) { res.status(500).json(err); }
 });
@@ -87,8 +87,11 @@ app.get('/api/students', async (req, res) => {
 });
 app.post('/api/students', async (req, res) => {
     try {
-        const { student_id, name, email, phone, class_id } = req.body;
-        await pool.query('INSERT INTO students (student_id, name, email, phone, class_id) VALUES (?, ?, ?, ?, ?)', [student_id, name, email, phone, class_id]);
+        const { student_id, name, email, phone, class_id, section_id, dob, gender, address, blood_group, admission_date } = req.body;
+        await pool.query(
+            'INSERT INTO students (student_id, name, email, phone, class_id, section_id, dob, gender, address, blood_group, admission_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [student_id, name, email, phone, class_id || null, section_id || null, dob || null, gender || null, address || null, blood_group || null, admission_date || null]
+        );
         res.json({ message: 'Student added' });
     } catch (err) {
         console.error('Error adding student:', err);
@@ -125,11 +128,51 @@ app.get('/api/teachers', async (req, res) => {
         res.status(500).json({ error: 'Database error', details: err.message });
     }
 });
+app.post('/api/teachers', async (req, res) => {
+    try {
+        const { teacher_id, name, email, phone, subject, qualification, experience, dob, gender, password, avatar } = req.body;
+        console.log(`Adding new teacher: ${name} (${email})`);
+        await pool.query(
+            'INSERT INTO users (teacher_id, name, email, password, role, profilePic, phone, subject, qualification, experience, dob, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [teacher_id, name, email, password || 'demo123', 'teacher', avatar || null, phone || null, subject || null, qualification || null, experience || null, dob || null, gender || null]
+        );
+        res.json({ message: 'Teacher added successfully' });
+    } catch (err) {
+        console.error('Error adding teacher:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
+    }
+});
+app.put('/api/teachers/:teacher_id', async (req, res) => {
+    try {
+        const { teacher_id } = req.params;
+        const { name, email, phone, subject, qualification, experience, dob, gender, avatar, password } = req.body;
+        console.log(`Updating teacher: ${teacher_id}`);
+        await pool.query(
+            'UPDATE users SET name = ?, email = ?, phone = ?, subject = ?, qualification = ?, experience = ?, dob = ?, gender = ?, profilePic = ?, password = COALESCE(?, password) WHERE teacher_id = ? AND role = "teacher"',
+            [name, email, phone || null, subject || null, qualification || null, experience || null, dob || null, gender || null, avatar || null, password || null, teacher_id]
+        );
+        res.json({ message: 'Teacher updated successfully' });
+    } catch (err) {
+        console.error('Error updating teacher:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
+    }
+});
+app.delete('/api/teachers/:teacher_id', async (req, res) => {
+    try {
+        const { teacher_id } = req.params;
+        console.log(`Deleting teacher: ${teacher_id}`);
+        await pool.query('DELETE FROM users WHERE teacher_id = ? AND role = "teacher"', [teacher_id]);
+        res.json({ message: 'Teacher deleted successfully' });
+    } catch (err) {
+        console.error('Error deleting teacher:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
+    }
+});
 
 // CRUD for Users
 app.get('/api/users', async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT id, name, email, role, created_at FROM users');
+        const [rows] = await pool.query('SELECT id, name, email, role, created_at, profilePic FROM users');
         res.json(rows);
     } catch (err) {
         console.error('Error fetching users:', err);
@@ -154,6 +197,27 @@ app.post('/api/notices', async (req, res) => {
         res.json({ message: 'Notice posted' });
     } catch (err) {
         console.error('Error posting notice:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
+    }
+});
+app.put('/api/notices/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, content, type } = req.body;
+        await pool.query('UPDATE notices SET title = ?, content = ?, type = ? WHERE id = ?', [title, content, type, id]);
+        res.json({ message: 'Notice updated' });
+    } catch (err) {
+        console.error('Error updating notice:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
+    }
+});
+app.delete('/api/notices/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query('DELETE FROM notices WHERE id = ?', [id]);
+        res.json({ message: 'Notice deleted' });
+    } catch (err) {
+        console.error('Error deleting notice:', err);
         res.status(500).json({ error: 'Database error', details: err.message });
     }
 });
@@ -274,6 +338,79 @@ app.post('/api/library', async (req, res) => {
         await pool.query('INSERT INTO library_books (title, author, category, status) VALUES (?, ?, ?, ?)', 
             [title, author, category, status || 'Available']);
         res.json({ success: true });
+    } catch (err) { res.status(500).json(err); }
+});
+
+// Drivers API
+app.get('/api/drivers', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM drivers');
+        res.json(rows);
+    } catch (err) { res.status(500).json(err); }
+});
+app.post('/api/drivers', async (req, res) => {
+    try {
+        const { name, license, experience, rating, status, phone, email, assignment, avatar } = req.body;
+        await pool.query('INSERT INTO drivers (name, license, experience, rating, status, phone, email, assignment, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [name, license, experience, rating, status, phone, email, assignment, avatar]);
+        res.json({ success: true, message: 'Driver created successfully' });
+    } catch (err) { res.status(500).json(err); }
+});
+app.put('/api/drivers/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, license, experience, rating, status, phone, email, assignment, avatar } = req.body;
+        await pool.query('UPDATE drivers SET name = ?, license = ?, experience = ?, rating = ?, status = ?, phone = ?, email = ?, assignment = ?, avatar = ? WHERE id = ?', 
+            [name, license, experience, rating, status, phone, email, assignment, avatar, id]);
+        res.json({ success: true, message: 'Driver updated successfully' });
+    } catch (err) { res.status(500).json(err); }
+});
+app.delete('/api/drivers/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query('DELETE FROM drivers WHERE id = ?', [id]);
+        res.json({ success: true, message: 'Driver deleted successfully' });
+    } catch (err) { res.status(500).json(err); }
+});
+
+// Quizzes API
+app.get('/api/quizzes', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM quizzes');
+        res.json(rows);
+    } catch (err) { res.status(500).json(err); }
+});
+app.post('/api/quizzes', async (req, res) => {
+    try {
+        const { id, title, subject, questions, time, timeLimitSec, difficulty, status, color } = req.body;
+        await pool.query('INSERT INTO quizzes (id, title, subject, questions, time, timeLimitSec, difficulty, status, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [id, title, subject, questions, time, timeLimitSec, difficulty, status, color]);
+        res.json({ success: true, message: 'Quiz created successfully' });
+    } catch (err) { res.status(500).json(err); }
+});
+app.put('/api/quizzes/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, subject, questions, time, timeLimitSec, difficulty, status, color } = req.body;
+        await pool.query('UPDATE quizzes SET title = ?, subject = ?, questions = ?, time = ?, timeLimitSec = ?, difficulty = ?, status = ?, color = ? WHERE id = ?', 
+            [title, subject, questions, time, timeLimitSec, difficulty, status, color, id]);
+        res.json({ success: true, message: 'Quiz updated successfully' });
+    } catch (err) { res.status(500).json(err); }
+});
+app.delete('/api/quizzes/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query('DELETE FROM quizzes WHERE id = ?', [id]);
+        res.json({ success: true, message: 'Quiz deleted successfully' });
+    } catch (err) { res.status(500).json(err); }
+});
+
+// Hostel Allotment Delete API
+app.delete('/api/hostel/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query('DELETE FROM hostel WHERE id = ?', [id]);
+        res.json({ success: true, message: 'Hostel allotment deleted successfully' });
     } catch (err) { res.status(500).json(err); }
 });
 

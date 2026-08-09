@@ -7,7 +7,9 @@ import {
   Edit, Bell, Globe, Lock, CheckCircle, Award, Settings, X, Loader2, Save
 } from 'lucide-react';
 
-import eleanorAvatar from '../assets/eleanor_avatar.png';
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+const eleanorAvatar = indianMan1;
+
 
 const AdminProfile = () => {
   const navigate = useNavigate();
@@ -37,12 +39,12 @@ const AdminProfile = () => {
 
   // Profile data
   const adminData = {
-    name: 'Eleanor Pena',
+    name: 'Aarav Sharma',
     role: 'Super Admin',
     id: 'ADM-2026-001',
-    email: 'admin@edupro.elite',
-    phone: '+1 234 567 890',
-    location: 'California, USA',
+    email: 'admin@school.com',
+    phone: '+91 98765 43210',
+    location: 'Delhi, India',
     joinDate: '12 January 2024',
     lastLogin: '10 mins ago',
     permissions: ['Full Access', 'Financial Management', 'System Config', 'User Control']

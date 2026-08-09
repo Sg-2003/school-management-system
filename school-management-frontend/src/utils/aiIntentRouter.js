@@ -104,7 +104,7 @@ export const resolveAIIntent = (queryText) => {
   if (query.match(/faculty performance|teacher effectiveness/)) return { route: '/dashboard/faculty-ai', text: 'Opening Faculty Performance AI...' };
   if (query.match(/efficiency|institutional audit|optimization/)) return { route: '/dashboard/efficiency-ai', text: 'Navigating to Institutional Efficiency AI...' };
   if (query.match(/certificate/)) return { route: '/dashboard/certificates', text: 'Navigating to Certificates module...' };
-  if (query.match(/performance|predict/)) return { route: '/dashboard/performance', text: 'Opening Performance Predictions...' };
+  if (query.match(/performance|predict|institutional intelligence|performance intelligence/)) return { route: '/dashboard/performance', text: 'Opening Performance Predictions...' };
   if (query.match(/setting|configuration/)) return { route: '/dashboard/settings', text: 'Navigating to Institutional Settings...' };
   if (query.match(/ai|neural engine/)) return { route: '/dashboard/ai', text: 'Opening EduPro AI Dashboard...' };
 

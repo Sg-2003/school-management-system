@@ -18,20 +18,20 @@ const InstitutionalSettings = () => {
   ]);
 
   const [classes, setClasses] = useState([
-    { id: 1, name: 'Grade 10', sections: ['A', 'B', 'C'], students: 120, head: 'Mr. Smith' },
-    { id: 2, name: 'Grade 11', sections: ['A', 'B'], students: 85, head: 'Ms. Johnson' },
-    { id: 3, name: 'Grade 12', sections: ['A', 'B', 'C', 'D'], students: 150, head: 'Dr. Brown' }
+    { id: 1, name: 'Grade 10', sections: ['A', 'B', 'C'], students: 120, head: 'Mr. Amit Sharma' },
+    { id: 2, name: 'Grade 11', sections: ['A', 'B'], students: 85, head: 'Ms. Priya Patel' },
+    { id: 3, name: 'Grade 12', sections: ['A', 'B', 'C', 'D'], students: 150, head: 'Dr. Sanjay Gupta' }
   ]);
 
   const [schoolData, setSchoolData] = useState({
     name: 'EduPro Elite International',
     tagline: 'Empowering the next generation of leaders.',
     email: 'admin@edupro-elite.com',
-    phone: '+1 (555) 000-1234',
-    address: '123 Academic Way, Silicon Valley, CA',
+    phone: '+91 98765 43210',
+    address: '123 Academic Way, New Delhi, India',
     website: 'https://edupro-elite.com',
-    timezone: '(GMT-08:00) Pacific Time',
-    language: 'English (US)'
+    timezone: '(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi',
+    language: 'English (IN)'
   });
 
   const triggerToast = (message, type = 'success') => {

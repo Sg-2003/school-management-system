@@ -29,30 +29,30 @@ const AddGuardian = ({ mode = 'add' }) => {
   // Form State initialized synchronously (best practice)
   const [formData, setFormData] = useState(() => {
     // 1. Initial Load of Guardians list in localStorage if not exist
-    const storedGuardians = localStorage.getItem('guardians');
-    if (!storedGuardians) {
+    if (!localStorage.getItem('guardians')) {
       const defaultList = [
-        { 
-          id: 'GDN-2026-001', name: 'Robert Wilson', email: 'robert.w@example.com', phone: '+1 234 567 8901', 
-          students: ['Sarah Wilson'], status: 'active', lastLogin: '2 hours ago', 
-          role: 'Parent', avatar: 'RW', address: '123 Oak Lane, NY',
-          relation: 'Father', occupation: 'Senior Software Engineer', company: 'TechCorp Solutions',
-          dob: '1980-03-15', gender: 'Male', emergencyContact: '+1 (234) 567-8999',
-          username: 'robert_wilson', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop',
+        {
+          id: 'GDN-2026-001', name: 'Rajesh Verma', email: 'rajesh.v@example.com', phone: '+91 98765 43299',
+          students: ['Aman Verma'], status: 'active', lastLogin: '2 hours ago',
+          role: 'Parent', avatar: 'RV', address: 'Block C, Sector 62, Noida, UP 201301',
+          relation: 'Father', occupation: 'Senior Software Architect', company: 'Tech Solutions India',
+          dob: '1980-03-15', gender: 'Male', emergencyContact: '+91 98765 43290',
+          username: 'rajesh_verma', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma',
           linkedStudents: [
-            { id: 'STU-2026-045', name: 'Sarah Wilson', grade: '10A', attendance: '98%', perf: 'A+' },
-            { id: 'STU-2026-089', name: 'Emma Wilson', grade: '07B', attendance: '95%', perf: 'B+' }
+            { id: 'STU101', name: 'Aman Verma', grade: '10A', attendance: '98%', perf: 'A+' },
+            { id: 'STU108', name: 'Neha Sharma', grade: '12C', attendance: '95%', perf: 'B+' }
           ]
         },
-        { 
-          id: 'GDN-2026-002', name: 'Linda Thompson', email: 'linda.t@example.com', phone: '+1 234 567 8902', 
-          students: ['Emma Thompson', 'James Thompson'], status: 'active', lastLogin: '1 day ago', 
-          role: 'Guardian', avatar: 'LT', address: '456 Maple St, CA',
-          relation: 'Mother', occupation: 'Marketing Executive', company: 'BrandGlow',
-          dob: '1983-07-22', gender: 'Female', emergencyContact: '+1 (234) 567-8902',
-          username: 'linda_t', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop',
+        {
+          id: 'GDN-2026-002', name: 'Meeta Devi', email: 'meeta.d@example.com', phone: '+91 98765 43296',
+          students: ['Divya Joshi', 'Rohan Das'], status: 'active', lastLogin: '1 day ago',
+          role: 'Guardian', avatar: 'MD', address: 'Preet Vihar, New Delhi 110092',
+          relation: 'Mother', occupation: 'Principal Consultant', company: 'Devi & Associates',
+          dob: '1983-07-22', gender: 'Female', emergencyContact: '+91 98765 43290',
+          username: 'meeta_d', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Meeta%20Devi',
           linkedStudents: [
-            { id: 'STU-2026-088', name: 'Emma Thompson', grade: '09C', attendance: '94%', perf: 'B' }
+            { id: 'STU102', name: 'Divya Joshi', grade: '11A', attendance: '92%', perf: 'A-' },
+            { id: 'STU103', name: 'Rohan Das', grade: '10A', attendance: '89%', perf: 'B' }
           ]
         }
       ];
@@ -60,39 +60,39 @@ const AddGuardian = ({ mode = 'add' }) => {
     }
 
     const currentId = mode === 'edit' ? (id || 'GDN-2026-001') : 'new';
-    const draftKey = `guardian_draft_${currentId}`;
+    const draftKey = 'guardian_draft_' + currentId;
     const savedDraft = localStorage.getItem(draftKey);
 
     if (savedDraft) {
       return JSON.parse(savedDraft);
     }
-    
+
     if (mode === 'edit') {
       const targetId = id || 'GDN-2026-001';
       const parsedGuardians = JSON.parse(localStorage.getItem('guardians') || '[]');
-      const found = parsedGuardians.find(g => g.id === targetId);
-      
+      const found = parsedGuardians.find(function(g) { return g.id === targetId; });
+
       if (found) {
         const names = found.name.split(' ');
         const firstName = names[0] || '';
         const lastName = names.slice(1).join(' ') || '';
         return {
-          firstName,
-          lastName,
+          firstName: firstName,
+          lastName: lastName,
           relation: found.relation || 'Father',
-          occupation: found.occupation || 'Senior Software Engineer',
-          company: found.company || 'TechCorp Solutions',
+          occupation: found.occupation || 'Senior Software Architect',
+          company: found.company || 'Tech Solutions India',
           dob: found.dob || '1980-03-15',
           gender: found.gender || 'Male',
-          email: found.email || 'robert.w@example.com',
-          phone: found.phone || '+1 (234) 567-8901',
-          address: found.address || '123 Oakmound Road, Chicago, IL',
-          emergencyContact: found.emergencyContact || '+1 (234) 567-8999',
-          username: found.username || 'robert_wilson',
-          password: '••••••••',
-          img: found.avatarUrl || found.img || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop',
+          email: found.email || 'rajesh.v@example.com',
+          phone: found.phone || '+91 98765 43299',
+          address: found.address || 'Block C, Sector 62, Noida, UP 201301',
+          emergencyContact: found.emergencyContact || '+91 98765 43290',
+          username: found.username || 'rajesh_verma',
+          password: '...',
+          img: found.avatarUrl || found.img || 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma',
           linkedStudents: found.linkedStudents || [
-            { id: 'STU-2026-045', name: 'Sarah Wilson', grade: '10A', attendance: '98%', perf: 'A+' }
+            { id: 'STU101', name: 'Aman Verma', grade: '10A', attendance: '98%', perf: 'A+' }
           ]
         };
       }
@@ -114,7 +114,7 @@ const AddGuardian = ({ mode = 'add' }) => {
       password: '',
       img: '',
       linkedStudents: [
-        { id: 'STU-2026-045', name: 'Sarah Wilson', grade: '10A', attendance: '98%', perf: 'A+' }
+        { id: 'STU101', name: 'Aman Verma', grade: '10A', attendance: '98%', perf: 'A+' }
       ]
     };
   });
@@ -193,7 +193,7 @@ const AddGuardian = ({ mode = 'add' }) => {
         password: '',
         img: '',
         linkedStudents: [
-          { id: 'STU-2026-045', name: 'Sarah Wilson', grade: '10A', attendance: '98%', perf: 'A+' }
+          { id: 'STU101', name: 'Aman Verma', grade: '10A', attendance: '98%', perf: 'A+' }
         ]
       });
     }
@@ -254,9 +254,9 @@ const AddGuardian = ({ mode = 'add' }) => {
     // Simulate lookup of mock students
     setTimeout(() => {
       const mockStudents = [
-        { id: 'STU-2026-045', name: 'Sarah Wilson', grade: '10A', attendance: '98%', perf: 'A+' },
-        { id: 'STU-2026-089', name: 'Emma Wilson', grade: '07B', attendance: '95%', perf: 'B+' },
-        { id: 'STU-2026-112', name: 'Alexander Thompson', grade: '12C', attendance: '92%', perf: 'A-' }
+        { id: 'STU101', name: 'Aman Verma', grade: '10A', attendance: '98%', perf: 'A+' },
+        { id: 'STU108', name: 'Neha Sharma', grade: '12C', attendance: '96%', perf: 'A' },
+        { id: 'STU102', name: 'Divya Joshi', grade: '11A', attendance: '92%', perf: 'A-' }
       ];
       
       const matched = mockStudents.filter(s => 
@@ -347,8 +347,8 @@ const AddGuardian = ({ mode = 'add' }) => {
           gender: formData.gender,
           emergencyContact: formData.emergencyContact,
           username: formData.username || formData.email.split('@')[0],
-          img: formData.img || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop',
-          avatarUrl: formData.img || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop',
+          img: formData.img || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fullName)}`,
+          avatarUrl: formData.img || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fullName)}`,
           linkedStudents: formData.linkedStudents
         };
 
@@ -377,7 +377,7 @@ const AddGuardian = ({ mode = 'add' }) => {
           action: mode === 'edit' ? 'Profile Updated' : 'Registration Finalized',
           ip: '192.168.1.1',
           device: 'Chrome 124 / Windows 11',
-          location: 'Chicago, IL',
+          location: 'New Delhi, IN',
           status: 'Authorized',
           iconName: mode === 'edit' ? 'Edit' : 'BadgeCheck',
           color: '#10B981',
@@ -754,7 +754,7 @@ const AddGuardian = ({ mode = 'add' }) => {
                          className="form-input" 
                          value={formData.firstName}
                          onChange={(e) => handleInputChange('firstName', e.target.value)}
-                         placeholder="e.g. Robert" 
+                         placeholder="e.g. Rajesh" 
                        />
                     </div>
                     <div className="form-group">
@@ -764,7 +764,7 @@ const AddGuardian = ({ mode = 'add' }) => {
                          className="form-input" 
                          value={formData.lastName}
                          onChange={(e) => handleInputChange('lastName', e.target.value)}
-                         placeholder="e.g. Wilson" 
+                         placeholder="e.g. Verma" 
                        />
                     </div>
                     <div className="form-group">

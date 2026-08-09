@@ -9,18 +9,18 @@ const Department = () => {
   
   // Lazy initialize departments with localStorage persistence
   const [departments, setDepartments] = useState(() => {
-    const stored = localStorage.getItem('institutional_departments');
+    const stored = localStorage.getItem('institutional_departments_v2');
     if (stored) {
       return JSON.parse(stored);
     } else {
       const initial = [
-        { id: 1, name: 'Mathematics & Science', head: 'Dr. Robert Carter', staff: 24, budget: '$45,000', status: 'Active' },
-        { id: 2, name: 'Languages & Arts', head: 'Sarah Jenkins', staff: 18, budget: '$32,000', status: 'Active' },
-        { id: 3, name: 'Physical Education', head: "Michael O'Brien", staff: 12, budget: '$28,000', status: 'Active' },
-        { id: 4, name: 'Campus Administration', head: 'Elena Gilbert', staff: 15, budget: '$60,000', status: 'Active' },
-        { id: 5, name: 'IT & Infrastructure', head: 'David Miller', staff: 8, budget: '$55,000', status: 'Active' },
+        { id: 1, name: 'Mathematics & Science', head: 'Dr. Rajesh Malhotra', staff: 24, budget: '$45,000', status: 'Active' },
+        { id: 2, name: 'Languages & Arts', head: 'Sunita Rao', staff: 18, budget: '$32,000', status: 'Active' },
+        { id: 3, name: 'Physical Education', head: 'Amit Bose', staff: 12, budget: '$28,000', status: 'Active' },
+        { id: 4, name: 'Campus Administration', head: 'Priya Patel', staff: 15, budget: '$60,000', status: 'Active' },
+        { id: 5, name: 'IT & Infrastructure', head: 'Vikram Malhotra', staff: 8, budget: '$55,000', status: 'Active' },
       ];
-      localStorage.setItem('institutional_departments', JSON.stringify(initial));
+      localStorage.setItem('institutional_departments_v2', JSON.stringify(initial));
       return initial;
     }
   });
@@ -32,11 +32,11 @@ const Department = () => {
       return JSON.parse(stored);
     }
     return [
-      { name: 'Dr. Robert Carter' },
-      { name: 'Sarah Jenkins' },
-      { name: "Michael O'Brien" },
-      { name: 'Elena Gilbert' },
-      { name: 'David Miller' }
+      { name: 'Dr. Rajesh Malhotra' },
+      { name: 'Sunita Rao' },
+      { name: 'Amit Bose' },
+      { name: 'Priya Patel' },
+      { name: 'Vikram Malhotra' }
     ];
   }, []);
 
@@ -87,7 +87,7 @@ const Department = () => {
     if (window.confirm(`Are you sure you want to permanently delete the department "${name}"?`)) {
       const updated = departments.filter(d => d.id !== id);
       setDepartments(updated);
-      localStorage.setItem('institutional_departments', JSON.stringify(updated));
+      localStorage.setItem('institutional_departments_v2', JSON.stringify(updated));
       if (editingDept && editingDept.id === id) {
         handleResetForm();
       }
@@ -132,7 +132,7 @@ const Department = () => {
     }
 
     setDepartments(updated);
-    localStorage.setItem('institutional_departments', JSON.stringify(updated));
+    localStorage.setItem('institutional_departments_v2', JSON.stringify(updated));
     handleResetForm();
   };
 

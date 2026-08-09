@@ -32,17 +32,17 @@ const useDarkMode = () => {
 const StudentAvatar = ({ name, size = 40, border = '1px solid rgba(99,102,241,0.25)', borderRadius = '12px' }) => {
   const [imgError, setImgError] = useState(false);
   const avatars = {
-    'Alice Johnson': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-    'Bob Wilson': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-    'Charlie Davis': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-    'Diana Prince': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop',
-    'Edward Norton': 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&h=150&fit=crop',
-    'Fiona Gallagher': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop',
-    'George Miller': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop',
-    'Hannah Abbott': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop',
+    'Aanya Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Aanya%20Sharma',
+    'Rohan Malhotra': 'https://api.dicebear.com/7.x/initials/svg?seed=Rohan%20Malhotra',
+    'Karan Mehta': 'https://api.dicebear.com/7.x/initials/svg?seed=Karan%20Mehta',
+    'Divya Joshi': 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi',
+    'Aman Verma': 'https://api.dicebear.com/7.x/initials/svg?seed=Aman%20Verma',
+    'Neha Patel': 'https://api.dicebear.com/7.x/initials/svg?seed=Neha%20Patel',
+    'Kabir Sen': 'https://api.dicebear.com/7.x/initials/svg?seed=Kabir%20Sen',
+    'Aditi Nair': 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair',
   };
 
-  const url = avatars[name] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`;
+  const url = avatars[name] || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
 
   if (imgError) {
     return (
@@ -121,15 +121,15 @@ const MessSubscriptions = () => {
   };
 
   const defaultSubs = [
-    { id: 1, name: 'Alice Johnson', idNo: 'STU-2026-001', plan: 'Premium (3 Meals)', status: 'Active', renewal: 'June 15, 2026', color: '#4f46e5', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' },
-    { id: 2, name: 'Bob Wilson', idNo: 'STU-2026-045', plan: 'Standard (Lunch Only)', status: 'Expiring Soon', renewal: 'May 20, 2026', color: '#ec4899', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' },
-    { id: 3, name: 'Charlie Davis', idNo: 'STU-2026-122', plan: 'Premium (3 Meals)', status: 'Active', renewal: 'July 01, 2026', color: '#10b981', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop' },
-    { id: 4, name: 'Diana Prince', idNo: 'STU-2026-089', plan: 'Eco (Breakfast & Dinner)', status: 'Active', renewal: 'June 10, 2026', color: '#f59e0b', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop' },
-    { id: 5, name: 'Edward Norton', idNo: 'STU-2026-156', plan: 'Standard (Lunch Only)', status: 'Inactive', renewal: '---', color: '#64748b', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&h=150&fit=crop' }
+    { id: 1, name: 'Aanya Sharma', idNo: 'STU-2026-001', plan: 'Premium (3 Meals)', status: 'Active', renewal: 'June 15, 2026', color: '#4f46e5', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Aanya%20Sharma' },
+    { id: 2, name: 'Rohan Malhotra', idNo: 'STU-2026-045', plan: 'Standard (Lunch Only)', status: 'Expiring Soon', renewal: 'May 20, 2026', color: '#ec4899', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Rohan%20Malhotra' },
+    { id: 3, name: 'Karan Mehta', idNo: 'STU-2026-122', plan: 'Premium (3 Meals)', status: 'Active', renewal: 'July 01, 2026', color: '#10b981', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Karan%20Mehta' },
+    { id: 4, name: 'Divya Joshi', idNo: 'STU-2026-089', plan: 'Eco (Breakfast & Dinner)', status: 'Active', renewal: 'June 10, 2026', color: '#f59e0b', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi' },
+    { id: 5, name: 'Aman Verma', idNo: 'STU-2026-156', plan: 'Standard (Lunch Only)', status: 'Inactive', renewal: '---', color: '#64748b', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Aman%20Verma' }
   ];
 
   const [subscriptions, setSubscriptions] = useState(() => {
-    const saved = localStorage.getItem('mess_subscriptions');
+    const saved = localStorage.getItem('mess_subscriptions_v2');
     return saved ? JSON.parse(saved) : defaultSubs;
   });
 
@@ -396,7 +396,7 @@ const MessSubscriptions = () => {
                    <div>
                       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: T.textSub, marginBottom: '10px' }}>Full Name</label>
                       <input 
-                        required type="text" placeholder="e.g. John Doe"
+                        required type="text" placeholder="e.g. Aarav Sharma"
                         value={newEnrollment.name} onChange={(e) => setNewEnrollment({...newEnrollment, name: e.target.value})}
                         style={{ width: '100%', padding: '16px 20px', borderRadius: '14px', border: `1px solid ${T.inputBorder}`, backgroundColor: T.inputBg, color: T.textMain, outline: 'none', fontWeight: 700, fontSize: '0.95rem', transition: 'all 0.3s' }}
                       />

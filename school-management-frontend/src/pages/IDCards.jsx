@@ -3,6 +3,11 @@ import { User, Printer, Download, CreditCard, ShieldCheck, Search, X, Plus, Minu
 import { motion, AnimatePresence } from 'framer-motion';
 import { getStudents } from '../services/service';
 
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+import indianMan2 from '../assets/indian_man_portrait_2.png';
+import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import indianWoman2 from '../assets/indian_woman_portrait_2.png';
+
 const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
 
 const IDCards = () => {
@@ -30,9 +35,9 @@ const IDCards = () => {
     try {
       // Clear old storage if version is outdated to ensure Liam Fox with distinct classmates loads properly
       const storedVersion = localStorage.getItem('students_version');
-      if (storedVersion !== '2026-v4') {
+      if (storedVersion !== '2026-v11') {
         localStorage.removeItem('students');
-        localStorage.setItem('students_version', '2026-v4');
+        localStorage.setItem('students_version', '2026-v11');
       }
 
       const stored = localStorage.getItem('students');
@@ -45,22 +50,46 @@ const IDCards = () => {
 
       const data = await getStudents();
       if (data && data.length > 0) {
-        setStudents(data);
-        setSelectedStudent(data[0]);
-        localStorage.setItem('students', JSON.stringify(data));
+        // Map avatars to database-seeded students to prevent silhouette fallbacks
+        const avatarMap = {
+          'STU101': indianMan1,
+          'STU102': indianWoman1,
+          'STU103': indianMan2,
+          'STU104': indianMan1,
+          'STU105': indianWoman2,
+          'STU106': indianWoman1,
+          'STU107': indianMan2,
+          'STU108': indianWoman2,
+          'STU109': indianWoman1,
+          'STU110': indianMan1,
+          'STU212': indianWoman2,
+          'STU213': indianMan1,
+          'STU214': indianWoman1,
+          'STU215': indianWoman2,
+          'STU216': indianMan2,
+          '1': indianMan2,
+          'STU-2026-001': indianMan1
+        };
+        const mappedData = data.map(student => ({
+          ...student,
+          avatar: student.avatar || avatarMap[student.student_id] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${student.name}`
+        }));
+        setStudents(mappedData);
+        setSelectedStudent(mappedData[0]);
+        localStorage.setItem('students', JSON.stringify(mappedData));
       } else {
         const mockData = [
-          { student_id: 'STU101', name: 'Liam Fox', email: 'liam.fox@edupro.edu', phone: '+1 234 567 890', class_id: '10', section: 'A', rollNo: '24', admission_date: '2026-01-12', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop', dob: '2010-05-12', bloodGroup: 'O+', religion: 'Christianity', parentName: 'Fox Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 654 321', parentEmail: 'fox.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU102', name: 'Jane Cooper', email: 'jane.cooper@edupro.edu', phone: '+1 234 567 891', class_id: '11', section: 'A', rollNo: '12', admission_date: '2026-01-15', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&h=200&fit=crop', dob: '2009-08-18', bloodGroup: 'A-', religion: 'Christianity', parentName: 'Cooper Sr.', parentOccupation: 'Executive', parentPhone: '+1 987 654 322', parentEmail: 'cooper.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU103', name: 'Wade Warren', email: 'wade.warren@edupro.edu', phone: '+1 234 567 892', class_id: '10', section: 'A', rollNo: '08', admission_date: '2026-02-02', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=200&h=200&fit=crop', dob: '2010-03-05', bloodGroup: 'B+', religion: 'Christianity', parentName: 'Warren Sr.', parentOccupation: 'Manager', parentPhone: '+1 987 654 323', parentEmail: 'warren.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU104', name: 'Cody Fisher', email: 'cody.fisher@school.edu', phone: '+1 234 567 893', class_id: '12', section: 'B', rollNo: '14', admission_date: '2026-02-10', gender: 'Male', status: 'Inactive', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&h=200&fit=crop', dob: '2008-04-12', bloodGroup: 'AB+', religion: 'Christianity', parentName: 'Fisher Sr.', parentOccupation: 'Business', parentPhone: '+1 987 654 324', parentEmail: 'fisher.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU105', name: 'Esther Howard', email: 'esther.howard@school.edu', phone: '+1 234 567 894', class_id: '10', section: 'A', rollNo: '15', admission_date: '2026-03-05', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop', dob: '2010-09-23', bloodGroup: 'O+', religion: 'Christianity', parentName: 'Howard Sr.', parentOccupation: 'Lawyer', parentPhone: '+1 987 654 325', parentEmail: 'howard.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU106', name: 'Brooklyn Simmons', email: 'brooklyn.simmons@school.edu', phone: '+1 234 567 895', class_id: '09', section: 'C', rollNo: '02', admission_date: '2026-03-12', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?w=200&h=200&fit=crop', dob: '2011-03-12', bloodGroup: 'A+', religion: 'Christianity', parentName: 'Simmons Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 654 326', parentEmail: 'simmons.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU107', name: 'Guy Hawkins', email: 'guy.hawkins@school.edu', phone: '+1 234 567 896', class_id: '11', section: 'B', rollNo: '05', admission_date: '2026-04-01', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop', dob: '2009-04-01', bloodGroup: 'B-', religion: 'Christianity', parentName: 'Hawkins Sr.', parentOccupation: 'Accountant', parentPhone: '+1 987 654 327', parentEmail: 'hawkins.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU108', name: 'Leslie Alexander', email: 'leslie.alexander@school.edu', phone: '+1 234 567 897', class_id: '12', section: 'A', rollNo: '07', admission_date: '2026-04-15', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop', dob: '2008-04-15', bloodGroup: 'AB-', religion: 'Christianity', parentName: 'Alexander Sr.', parentOccupation: 'Architect', parentPhone: '+1 987 654 328', parentEmail: 'alexander.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU109', name: 'Jenny Wilson', email: 'jenny.wilson@school.edu', phone: '+1 234 567 898', class_id: '10', section: 'D', rollNo: '11', admission_date: '2026-05-01', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=200&h=200&fit=crop', dob: '2010-05-01', bloodGroup: 'O-', religion: 'Christianity', parentName: 'Wilson Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 654 329', parentEmail: 'wilson.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU110', name: 'Cameron Williamson', email: 'cameron.williamson@school.edu', phone: '+1 234 567 899', class_id: '11', section: 'A', rollNo: '18', admission_date: '2026-05-05', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=200&h=200&fit=crop', dob: '2009-05-05', bloodGroup: 'A+', religion: 'Christianity', parentName: 'Williamson Sr.', parentOccupation: 'Dentist', parentPhone: '+1 987 654 330', parentEmail: 'williamson.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-          { student_id: 'STU212', name: 'Sarah Williams', email: 'sarah.w@example.com', phone: '+1 234 567 891', class_id: '11', section: 'A', rollNo: '03', admission_date: '2026-11-14', gender: 'Female', status: 'Suspended', avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&h=200&fit=crop', dob: '2009-11-14', bloodGroup: 'A+', religion: 'Christianity', parentName: 'Williams Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 654 326', parentEmail: 'williams.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' }
+          { student_id: 'STU101', name: 'Aman Verma', email: 'aman.verma@edupro.edu', phone: '+91 98765 43210', class_id: '10', section: 'A', rollNo: '24', admission_date: '2026-01-12', gender: 'Male', status: 'Active', avatar: indianMan1, dob: '2010-05-12', bloodGroup: 'O+', religion: 'Hinduism', parentName: 'Ramesh Verma', parentOccupation: 'Engineer', parentPhone: '+91 98765 43210', parentEmail: 'ramesh.v@example.com', presentAddress: 'Block C, Sector 62, Noida, UP', permanentAddress: 'Block C, Sector 62, Noida, UP' },
+          { student_id: 'STU102', name: 'Divya Joshi', email: 'divya.joshi@edupro.edu', phone: '+91 98765 43211', class_id: '11', section: 'A', rollNo: '12', admission_date: '2026-01-15', gender: 'Female', status: 'Active', avatar: indianWoman1, dob: '2009-08-18', bloodGroup: 'A-', religion: 'Hinduism', parentName: 'Suresh Joshi', parentOccupation: 'Executive', parentPhone: '+91 98765 43211', parentEmail: 'suresh.j@example.com', presentAddress: 'Preet Vihar, New Delhi', permanentAddress: 'Preet Vihar, New Delhi' },
+          { student_id: 'STU103', name: 'Rohan Das', email: 'rohan.das@edupro.edu', phone: '+91 98765 43212', class_id: '10', section: 'A', rollNo: '08', admission_date: '2026-02-02', gender: 'Male', status: 'Active', avatar: indianMan2, dob: '2010-03-05', bloodGroup: 'B+', religion: 'Hinduism', parentName: 'Manoj Das', parentOccupation: 'Manager', parentPhone: '+91 98765 43212', parentEmail: 'manoj.d@example.com', presentAddress: 'Salt Lake, Kolkata, WB', permanentAddress: 'Salt Lake, Kolkata, WB' },
+          { student_id: 'STU104', name: 'Karan Mehta', email: 'karan.mehta@school.edu', phone: '+91 98765 43213', class_id: '12', section: 'B', rollNo: '14', admission_date: '2026-02-10', gender: 'Male', status: 'Inactive', avatar: indianMan1, dob: '2008-04-12', bloodGroup: 'AB+', religion: 'Hinduism', parentName: 'Harish Mehta', parentOccupation: 'Business', parentPhone: '+91 98765 43213', parentEmail: 'harish.m@example.com', presentAddress: 'Andheri West, Mumbai, MH', permanentAddress: 'Andheri West, Mumbai, MH' },
+          { student_id: 'STU105', name: 'Isha Sen', email: 'isha.sen@school.edu', phone: '+91 98765 43214', class_id: '10', section: 'A', rollNo: '15', admission_date: '2026-03-05', gender: 'Female', status: 'Active', avatar: indianWoman2, dob: '2010-09-23', bloodGroup: 'O+', religion: 'Hinduism', parentName: 'Pradip Sen', parentOccupation: 'Lawyer', parentPhone: '+91 98765 43214', parentEmail: 'pradip.s@example.com', presentAddress: 'Jayanagar, Bangalore, KA', permanentAddress: 'Jayanagar, Bangalore, KA' },
+          { student_id: 'STU106', name: 'Aditi Nair', email: 'aditi.nair@school.edu', phone: '+91 98765 43215', class_id: '09', section: 'C', rollNo: '02', admission_date: '2026-03-12', gender: 'Female', status: 'Active', avatar: indianWoman1, dob: '2011-03-12', bloodGroup: 'A+', religion: 'Hinduism', parentName: 'Narayanan Nair', parentOccupation: 'Doctor', parentPhone: '+91 98765 43215', parentEmail: 'narayanan.n@example.com', presentAddress: 'Adyar, Chennai, TN', permanentAddress: 'Adyar, Chennai, TN' },
+          { student_id: 'STU107', name: 'Rahul Kapoor', email: 'rahul.kapoor@school.edu', phone: '+91 98765 43216', class_id: '11', section: 'B', rollNo: '05', admission_date: '2026-04-01', gender: 'Male', status: 'Active', avatar: indianMan2, dob: '2009-04-01', bloodGroup: 'B-', religion: 'Hinduism', parentName: 'Anil Kapoor', parentOccupation: 'Accountant', parentPhone: '+91 98765 43216', parentEmail: 'anil.k@example.com', presentAddress: 'Banjara Hills, Hyderabad, TS', permanentAddress: 'Banjara Hills, Hyderabad, TS' },
+          { student_id: 'STU108', name: 'Neha Sharma', email: 'neha.sharma@school.edu', phone: '+91 98765 43217', class_id: '12', section: 'A', rollNo: '07', admission_date: '2026-04-15', gender: 'Female', status: 'Active', avatar: indianWoman2, dob: '2008-04-15', bloodGroup: 'AB-', religion: 'Hinduism', parentName: 'Satish Sharma', parentOccupation: 'Architect', parentPhone: '+91 98765 43217', parentEmail: 'satish.s@example.com', presentAddress: 'Kothrud, Pune, MH', permanentAddress: 'Kothrud, Pune, MH' },
+          { student_id: 'STU109', name: 'Riya Banerjee', email: 'riya.banerjee@school.edu', phone: '+91 98765 43218', class_id: '10', section: 'D', rollNo: '11', admission_date: '2026-05-01', gender: 'Female', status: 'Active', avatar: indianWoman1, dob: '2010-05-01', bloodGroup: 'O-', religion: 'Hinduism', parentName: 'Swapan Banerjee', parentOccupation: 'Teacher', parentPhone: '+91 98765 43218', parentEmail: 'swapan.b@example.com', presentAddress: 'Lake Town, Kolkata, WB', permanentAddress: 'Lake Town, Kolkata, WB' },
+          { student_id: 'STU110', name: 'Arjun Reddy', email: 'arjun.reddy@school.edu', phone: '+91 98765 43219', class_id: '11', section: 'A', rollNo: '18', admission_date: '2026-05-05', gender: 'Male', status: 'Active', avatar: indianMan1, dob: '2009-05-05', bloodGroup: 'A+', religion: 'Hinduism', parentName: 'Ramana Reddy', parentOccupation: 'Dentist', parentPhone: '+91 98765 43219', parentEmail: 'ramana.r@example.com', presentAddress: 'Gachibowli, Hyderabad, TS', permanentAddress: 'Gachibowli, Hyderabad, TS' },
+          { student_id: 'STU212', name: 'Kavita Krishnan', email: 'kavita.k@example.com', phone: '+91 98765 43220', class_id: '11', section: 'A', rollNo: '03', admission_date: '2026-11-14', gender: 'Female', status: 'Suspended', avatar: indianWoman2, dob: '2009-11-14', bloodGroup: 'A+', religion: 'Hinduism', parentName: 'Gopal Krishnan', parentOccupation: 'Doctor', parentPhone: '+91 98765 43220', parentEmail: 'gopal.k@example.com', presentAddress: 'Indiranagar, Bangalore, KA', permanentAddress: 'Indiranagar, Bangalore, KA' }
         ];
         setStudents(mockData);
         setSelectedStudent(mockData[0]);
@@ -72,7 +101,240 @@ const IDCards = () => {
   };
 
   const handlePrint = () => {
-    window.print();
+    if (students.length === 0) return;
+
+    // Read active CSS variable values from the live document so the card
+    // always mirrors the current theme, but we embed them as literals so
+    // the isolated print window can render them without any stylesheet.
+    const root = window.getComputedStyle(document.documentElement);
+    const primary   = root.getPropertyValue('--primary').trim()       || '#45b3e0';
+    const danger    = root.getPropertyValue('--danger').trim()        || '#dc3545';
+    const textMuted = root.getPropertyValue('--text-muted').trim()    || '#718096';
+
+    const printWindow = window.open('', '_blank');
+    
+    let cardsHtml = '';
+    students.forEach((student) => {
+      cardsHtml += `
+        <div class="card-wrap">
+          <div class="shimmer-bar"></div>
+          <div class="card-header">
+            <div class="orb1"></div>
+            <div class="orb2"></div>
+            <div class="card-header-inner">
+              <div class="school-name">⚡ EDUPRO ACADEMY</div>
+              <div class="school-sub">Excellence in Education</div>
+            </div>
+          </div>
+
+          <div class="photo-ring">
+            ${(student.avatar || student.img) ? `
+              <img src="${student.avatar || student.img}" style="width: 100%; height: 100%; object-fit: cover;" />
+            ` : `
+              <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 24 24"
+                fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            `}
+          </div>
+
+          <div class="card-body">
+            <div class="student-name">${student.name}</div>
+            <span class="role-badge">STUDENT</span>
+
+            <div class="info-rows">
+              <div class="info-row">
+                <span class="info-label">Student ID</span>
+                <span class="info-value">${student.student_id}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Class</span>
+                <span class="info-value">${student.class_id || 'Not Assigned'}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Blood Group</span>
+                <span class="info-value danger">${student.blood_group || 'O+'}</span>
+              </div>
+              ${student.phone ? `
+              <div class="info-row">
+                <span class="info-label">Contact</span>
+                <span class="info-value">${student.phone}</span>
+              </div>` : ''}
+            </div>
+
+            <div class="card-footer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                fill="none" stroke="${primary}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+              <span class="footer-text">Authorized Signatory</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Print All Student ID Cards</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+          <style>
+            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+            @page { size: 63mm 100mm; margin: 0; }
+            body {
+              margin: 0;
+              background: #f1f5f9;
+              font-family: 'Inter', sans-serif;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 20px;
+              padding: 20px;
+            }
+            .card-wrap {
+              width: 350px;
+              height: 520px;
+              background: #ffffff;
+              border-radius: 28px;
+              box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+              overflow: hidden;
+              position: relative;
+              border: 1px solid #e2e8f0;
+              page-break-after: always;
+              break-after: always;
+            }
+            /* Holographic top strip */
+            .shimmer-bar {
+              position: absolute;
+              top: 0; left: 0; right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, ${primary}, #8B5CF6, #10B981, ${primary});
+              z-index: 10;
+            }
+            /* Header */
+            .card-header {
+              height: 150px;
+              background: linear-gradient(135deg, ${primary} 0%, #8B5CF6 100%);
+              color: white;
+              text-align: center;
+              padding: 32px 24px 20px;
+              position: relative;
+              overflow: hidden;
+            }
+            .card-header .orb1 {
+              position: absolute; top: -30px; right: -30px;
+              width: 120px; height: 120px; border-radius: 50%;
+              background: rgba(255,255,255,0.07);
+            }
+            .card-header .orb2 {
+              position: absolute; bottom: -20px; left: -20px;
+              width: 90px; height: 90px; border-radius: 50%;
+              background: rgba(255,255,255,0.05);
+            }
+            .card-header-inner { position: relative; z-index: 2; }
+            .school-name {
+              font-family: 'Outfit', sans-serif;
+              font-size: 1.25rem; font-weight: 900;
+              letter-spacing: 1px; margin-bottom: 6px;
+            }
+            .school-sub {
+              font-size: 0.68rem; font-weight: 600;
+              letter-spacing: 2px; text-transform: uppercase;
+              opacity: 0.75;
+            }
+            /* Photo ring */
+            .photo-ring {
+              width: 116px; height: 116px; border-radius: 50%;
+              border: 5px solid #ffffff;
+              box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+              background: #f1f5f9;
+              position: absolute; top: 92px; left: 50%;
+              transform: translateX(-50%);
+              display: flex; align-items: center; justify-content: center;
+              overflow: hidden;
+            }
+            .photo-ring svg { display: block; }
+            /* Body */
+            .card-body {
+              margin-top: 72px;
+              text-align: center;
+              padding: 0 24px 24px;
+            }
+            .student-name {
+              font-family: 'Outfit', sans-serif;
+              font-size: 1.2rem; font-weight: 900;
+              color: #1a202c; margin-bottom: 8px;
+            }
+            .role-badge {
+              display: inline-block;
+              background: linear-gradient(135deg, rgba(69,179,224,0.18), rgba(139,92,246,0.18));
+              color: ${primary};
+              padding: 5px 16px; border-radius: 20px;
+              font-size: 0.68rem; font-weight: 800;
+              border: 1px solid rgba(69,179,224,0.3);
+              letter-spacing: 1px;
+            }
+            /* Info rows */
+            .info-rows { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+            .info-row {
+              display: flex; justify-content: space-between; align-items: center;
+              padding: 10px 14px; border-radius: 12px;
+              background: #f8fafc; border: 1px solid #e2e8f0;
+            }
+            .info-label { color: ${textMuted}; font-size: 0.76rem; font-weight: 600; }
+            .info-value { font-weight: 800; font-size: 0.8rem; color: #1a202c; }
+            .info-value.danger { color: ${danger}; }
+            /* Footer */
+            .card-footer {
+              margin-top: 20px; padding-top: 16px;
+              border-top: 1px dashed #e2e8f0;
+              display: flex; align-items: center; justify-content: center; gap: 8px;
+            }
+            .footer-text {
+              font-size: 0.65rem; color: ${textMuted};
+              font-weight: 700; letter-spacing: 0.5px;
+              text-transform: uppercase;
+            }
+            @media print {
+              body {
+                background: none;
+                padding: 0;
+                gap: 0;
+              }
+              .card-wrap {
+                box-shadow: none;
+                margin: 0 auto;
+                page-break-after: always;
+                break-after: always;
+              }
+              .card-wrap:last-child {
+                page-break-after: avoid;
+                break-after: avoid;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          ${cardsHtml}
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+                setTimeout(function() { window.close(); }, 300);
+              }, 600);
+            };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
   };
 
   const handlePrintSingle = () => {

@@ -14,6 +14,10 @@ import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip as Recharts
 import ActionDropdown from '../components/ActionDropdown';
 import { useToast, ToastRenderer } from '../hooks/useToast';
 import studentAvatar from '../assets/student_avatar.png';
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+import indianMan2 from '../assets/indian_man_portrait_2.png';
+import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import indianWoman2 from '../assets/indian_woman_portrait_2.png';
 
 const attendanceDataByMonth = {
   'May 2026': {
@@ -247,10 +251,11 @@ const StudentDetails = () => {
   const targetId = id || 'STU101';
   
   // Version reset to clear old local storage and load Liam Fox with distinct classmates
+  // Version reset to clear old local storage and load Indian student list properly
   const storedVersion = localStorage.getItem('students_version');
-  if (storedVersion !== '2026-v9') {
+  if (storedVersion !== '2026-v11') {
     localStorage.removeItem('students');
-    localStorage.setItem('students_version', '2026-v9');
+    localStorage.setItem('students_version', '2026-v11');
   }
 
   const storedStudents = localStorage.getItem('students');
@@ -259,79 +264,54 @@ const StudentDetails = () => {
     parsedStudents = JSON.parse(storedStudents);
   } else {
     const defaultList = [
-      { student_id: 'STU101', name: 'Liam Fox', email: 'liam.fox@edupro.edu', phone: '+1 234 567 890', class_id: '10', section: 'A', rollNo: '24', admission_date: '2026-01-12', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop', dob: '2010-05-12', bloodGroup: 'O+', religion: 'Christianity', parentName: 'Fox Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 654 321', parentEmail: 'fox.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU102', name: 'Jane Cooper', email: 'jane.cooper@edupro.edu', phone: '+1 234 567 891', class_id: '11', section: 'A', rollNo: '12', admission_date: '2026-01-15', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&h=200&fit=crop', dob: '2009-08-18', bloodGroup: 'A-', religion: 'Christianity', parentName: 'Cooper Sr.', parentOccupation: 'Executive', parentPhone: '+1 987 654 322', parentEmail: 'cooper.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU103', name: 'Wade Warren', email: 'wade.warren@edupro.edu', phone: '+1 234 567 892', class_id: '10', section: 'A', rollNo: '08', admission_date: '2026-02-02', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=200&h=200&fit=crop', dob: '2010-03-05', bloodGroup: 'B+', religion: 'Christianity', parentName: 'Warren Sr.', parentOccupation: 'Manager', parentPhone: '+1 987 654 323', parentEmail: 'warren.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU104', name: 'Cody Fisher', email: 'cody.fisher@school.edu', phone: '+1 234 567 893', class_id: '12', section: 'B', rollNo: '14', admission_date: '2026-02-10', gender: 'Male', status: 'Inactive', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&h=200&fit=crop', dob: '2008-04-12', bloodGroup: 'AB+', religion: 'Christianity', parentName: 'Fisher Sr.', parentOccupation: 'Business', parentPhone: '+1 987 654 324', parentEmail: 'fisher.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU105', name: 'Esther Howard', email: 'esther.howard@school.edu', phone: '+1 234 567 894', class_id: '10', section: 'A', rollNo: '15', admission_date: '2026-03-05', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop', dob: '2010-09-23', bloodGroup: 'O+', religion: 'Christianity', parentName: 'Howard Sr.', parentOccupation: 'Lawyer', parentPhone: '+1 987 654 325', parentEmail: 'howard.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU106', name: 'Brooklyn Simmons', email: 'brooklyn.simmons@school.edu', phone: '+1 234 567 895', class_id: '09', section: 'C', rollNo: '02', admission_date: '2026-03-12', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop', dob: '2011-03-12', bloodGroup: 'A+', religion: 'Christianity', parentName: 'Simmons Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 654 326', parentEmail: 'simmons.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU107', name: 'Guy Hawkins', email: 'guy.hawkins@school.edu', phone: '+1 234 567 896', class_id: '11', section: 'B', rollNo: '05', admission_date: '2026-04-01', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop', dob: '2009-04-01', bloodGroup: 'B-', religion: 'Christianity', parentName: 'Hawkins Sr.', parentOccupation: 'Accountant', parentPhone: '+1 987 654 327', parentEmail: 'hawkins.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU108', name: 'Leslie Alexander', email: 'leslie.alexander@school.edu', phone: '+1 234 567 897', class_id: '12', section: 'A', rollNo: '07', admission_date: '2026-04-15', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop', dob: '2008-04-15', bloodGroup: 'AB-', religion: 'Christianity', parentName: 'Alexander Sr.', parentOccupation: 'Architect', parentPhone: '+1 987 654 328', parentEmail: 'alexander.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU109', name: 'Jenny Wilson', email: 'jenny.wilson@school.edu', phone: '+1 234 567 898', class_id: '10', section: 'D', rollNo: '11', admission_date: '2026-05-01', gender: 'Female', status: 'Active', avatar: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=200&h=200&fit=crop', dob: '2010-05-01', bloodGroup: 'O-', religion: 'Christianity', parentName: 'Wilson Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 654 329', parentEmail: 'wilson.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU110', name: 'Cameron Williamson', email: 'cameron.williamson@school.edu', phone: '+1 234 567 899', class_id: '11', section: 'A', rollNo: '18', admission_date: '2026-05-05', gender: 'Male', status: 'Active', avatar: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=200&h=200&fit=crop', dob: '2009-05-05', bloodGroup: 'A+', religion: 'Christianity', parentName: 'Williamson Sr.', parentOccupation: 'Dentist', parentPhone: '+1 987 654 330', parentEmail: 'williamson.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU212', name: 'Sarah Williams', email: 'sarah.w@example.com', phone: '+1 234 567 891', class_id: '11', section: 'A', rollNo: '03', admission_date: '2026-11-14', gender: 'Female', status: 'Suspended', avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&h=200&fit=crop', dob: '2009-11-14', bloodGroup: 'A+', religion: 'Christianity', parentName: 'Williams Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 654 326', parentEmail: 'williams.sr@example.com', presentAddress: '123 School Lane, Education City, NY 10001', permanentAddress: '456 West Avenue, Hometown, CA 90210' },
-      { student_id: 'STU213', name: 'Alex Johnson', email: 'alex.johnson@example.com', phone: '+1 234 567 900', class_id: '10', section: 'B', rollNo: '22', admission_date: '2026-09-01', gender: 'Male', status: 'Suspended', avatar: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&h=200&fit=crop', dob: '2010-02-15', bloodGroup: 'B+', religion: 'Christianity', parentName: 'Johnson Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 654 331', parentEmail: 'johnson.sr@example.com', presentAddress: '789 School Rd, City, NY 10002', permanentAddress: '1011 West Ave, Hometown, CA 90211' },
-      { student_id: 'STU214', name: 'Maria Garcia', email: 'maria.garcia@example.com', phone: '+1 234 567 901', class_id: '12', section: 'C', rollNo: '05', admission_date: '2026-10-12', gender: 'Female', status: 'Suspended', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop', dob: '2009-07-20', bloodGroup: 'AB+', religion: 'Christianity', parentName: 'Garcia Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 654 332', parentEmail: 'garcia.sr@example.com', presentAddress: '321 Elm St, Town, NY 10003', permanentAddress: '654 Oak Ave, Hometown, CA 90212' },
-      { student_id: 'STU215', name: 'Nina Patel', email: 'nina.patel@example.com', phone: '+1 234 567 902', class_id: '9', section: 'A', rollNo: '10', admission_date: '2026-08-20', gender: 'Female', status: 'Suspended', avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop', dob: '2009-12-05', bloodGroup: 'O-', religion: 'Christianity', parentName: 'Patel Sr.', parentOccupation: 'Nurse', parentPhone: '+1 987 654 333', parentEmail: 'patel.sr@example.com', presentAddress: '555 Maple St, Town, NY 10004', permanentAddress: '777 Oak Ave, Hometown, CA 90213' },
-      { student_id: 'STU216', name: 'Omar Khan', email: 'omar.khan@example.com', phone: '+1 234 567 903', class_id: '10', section: 'C', rollNo: '07', admission_date: '2026-09-15', gender: 'Male', status: 'Suspended', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&h=200&fit=crop', dob: '2008-11-22', bloodGroup: 'B-', religion: 'Christianity', parentName: 'Khan Sr.', parentOccupation: 'Business Owner', parentPhone: '+1 987 654 334', parentEmail: 'khan.sr@example.com', presentAddress: '888 Pine St, City, NY 10005', permanentAddress: '999 Cedar Ave, Hometown, CA 90214' }
+      { student_id: 'STU101', name: 'Aman Verma', email: 'aman.verma@edupro.edu', phone: '+91 98765 43210', class_id: '10', section: 'A', rollNo: '24', admission_date: '2026-01-12', gender: 'Male', status: 'Active', avatar: indianMan1, dob: '2010-05-12', bloodGroup: 'O+', religion: 'Hinduism', parentName: 'Ramesh Verma', parentOccupation: 'Engineer', parentPhone: '+91 98765 43210', parentEmail: 'ramesh.v@example.com', presentAddress: 'Block C, Sector 62, Noida, UP', permanentAddress: 'Block C, Sector 62, Noida, UP' },
+      { student_id: 'STU102', name: 'Divya Joshi', email: 'divya.joshi@edupro.edu', phone: '+91 98765 43211', class_id: '11', section: 'A', rollNo: '12', admission_date: '2026-01-15', gender: 'Female', status: 'Active', avatar: indianWoman1, dob: '2009-08-18', bloodGroup: 'A-', religion: 'Hinduism', parentName: 'Suresh Joshi', parentOccupation: 'Executive', parentPhone: '+91 98765 43211', parentEmail: 'suresh.j@example.com', presentAddress: 'Preet Vihar, New Delhi', permanentAddress: 'Preet Vihar, New Delhi' },
+      { student_id: 'STU103', name: 'Rohan Das', email: 'rohan.das@edupro.edu', phone: '+91 98765 43212', class_id: '10', section: 'A', rollNo: '08', admission_date: '2026-02-02', gender: 'Male', status: 'Active', avatar: indianMan2, dob: '2010-03-05', bloodGroup: 'B+', religion: 'Hinduism', parentName: 'Manoj Das', parentOccupation: 'Manager', parentPhone: '+91 98765 43212', parentEmail: 'manoj.d@example.com', presentAddress: 'Salt Lake, Kolkata, WB', permanentAddress: 'Salt Lake, Kolkata, WB' },
+      { student_id: 'STU104', name: 'Karan Mehta', email: 'karan.mehta@school.edu', phone: '+91 98765 43213', class_id: '12', section: 'B', rollNo: '14', admission_date: '2026-02-10', gender: 'Male', status: 'Inactive', avatar: indianMan1, dob: '2008-04-12', bloodGroup: 'AB+', religion: 'Hinduism', parentName: 'Harish Mehta', parentOccupation: 'Business', parentPhone: '+91 98765 43213', parentEmail: 'harish.m@example.com', presentAddress: 'Andheri West, Mumbai, MH', permanentAddress: 'Andheri West, Mumbai, MH' },
+      { student_id: 'STU105', name: 'Isha Sen', email: 'isha.sen@school.edu', phone: '+91 98765 43214', class_id: '10', section: 'A', rollNo: '15', admission_date: '2026-03-05', gender: 'Female', status: 'Active', avatar: indianWoman2, dob: '2010-09-23', bloodGroup: 'O+', religion: 'Hinduism', parentName: 'Pradip Sen', parentOccupation: 'Lawyer', parentPhone: '+91 98765 43214', parentEmail: 'pradip.s@example.com', presentAddress: 'Jayanagar, Bangalore, KA', permanentAddress: 'Jayanagar, Bangalore, KA' },
+      { student_id: 'STU106', name: 'Aditi Nair', email: 'aditi.nair@school.edu', phone: '+91 98765 43215', class_id: '09', section: 'C', rollNo: '02', admission_date: '2026-03-12', gender: 'Female', status: 'Active', avatar: indianWoman1, dob: '2011-03-12', bloodGroup: 'A+', religion: 'Hinduism', parentName: 'Narayanan Nair', parentOccupation: 'Doctor', parentPhone: '+91 98765 43215', parentEmail: 'narayanan.n@example.com', presentAddress: 'Adyar, Chennai, TN', permanentAddress: 'Adyar, Chennai, TN' },
+      { student_id: 'STU107', name: 'Rahul Kapoor', email: 'rahul.kapoor@school.edu', phone: '+91 98765 43216', class_id: '11', section: 'B', rollNo: '05', admission_date: '2026-04-01', gender: 'Male', status: 'Active', avatar: indianMan2, dob: '2009-04-01', bloodGroup: 'B-', religion: 'Hinduism', parentName: 'Anil Kapoor', parentOccupation: 'Accountant', parentPhone: '+91 98765 43216', parentEmail: 'anil.k@example.com', presentAddress: 'Banjara Hills, Hyderabad, TS', permanentAddress: 'Banjara Hills, Hyderabad, TS' },
+      { student_id: 'STU108', name: 'Neha Sharma', email: 'neha.sharma@school.edu', phone: '+91 98765 43217', class_id: '12', section: 'A', rollNo: '07', admission_date: '2026-04-15', gender: 'Female', status: 'Active', avatar: indianWoman2, dob: '2008-04-15', bloodGroup: 'AB-', religion: 'Hinduism', parentName: 'Satish Sharma', parentOccupation: 'Architect', parentPhone: '+91 98765 43217', parentEmail: 'satish.s@example.com', presentAddress: 'Kothrud, Pune, MH', permanentAddress: 'Kothrud, Pune, MH' },
+      { student_id: 'STU109', name: 'Riya Banerjee', email: 'riya.banerjee@school.edu', phone: '+91 98765 43218', class_id: '10', section: 'D', rollNo: '11', admission_date: '2026-05-01', gender: 'Female', status: 'Active', avatar: indianWoman1, dob: '2010-05-01', bloodGroup: 'O-', religion: 'Hinduism', parentName: 'Swapan Banerjee', parentOccupation: 'Teacher', parentPhone: '+91 98765 43218', parentEmail: 'swapan.b@example.com', presentAddress: 'Lake Town, Kolkata, WB', permanentAddress: 'Lake Town, Kolkata, WB' },
+      { student_id: 'STU110', name: 'Arjun Reddy', email: 'arjun.reddy@school.edu', phone: '+91 98765 43219', class_id: '11', section: 'A', rollNo: '18', admission_date: '2026-05-05', gender: 'Male', status: 'Active', avatar: indianMan1, dob: '2009-05-05', bloodGroup: 'A+', religion: 'Hinduism', parentName: 'Ramana Reddy', parentOccupation: 'Dentist', parentPhone: '+91 98765 43219', parentEmail: 'ramana.r@example.com', presentAddress: 'Gachibowli, Hyderabad, TS', permanentAddress: 'Gachibowli, Hyderabad, TS' },
+      { student_id: 'STU212', name: 'Kavita Krishnan', email: 'kavita.k@example.com', phone: '+91 98765 43220', class_id: '11', section: 'A', rollNo: '03', admission_date: '2026-11-14', gender: 'Female', status: 'Suspended', avatar: indianWoman2, dob: '2009-11-14', bloodGroup: 'A+', religion: 'Hinduism', parentName: 'Gopal Krishnan', parentOccupation: 'Doctor', parentPhone: '+91 98765 43220', parentEmail: 'gopal.k@example.com', presentAddress: 'Indiranagar, Bangalore, KA', permanentAddress: 'Indiranagar, Bangalore, KA' },
+      { student_id: '1', name: 'Devendra Mishra', email: 'devendra.mishra@edupro.edu', phone: '+91 98765 43221', class_id: '10', section: 'A', rollNo: '15', admission_date: '2026-09-01', gender: 'Male', status: 'Active', avatar: indianMan2, dob: '2010-02-15', bloodGroup: 'B+', religion: 'Hinduism', parentName: 'Kailash Mishra', parentOccupation: 'Business', parentPhone: '+91 98765 43221', parentEmail: 'kailash.m@example.com', presentAddress: 'Gomti Nagar, Lucknow, UP', permanentAddress: 'Gomti Nagar, Lucknow, UP' },
+      { student_id: 'STU213', name: 'Abhishek Singh', email: 'abhishek.singh@example.com', phone: '+91 98765 43222', class_id: '10', section: 'B', rollNo: '22', admission_date: '2026-09-01', gender: 'Male', status: 'Suspended', avatar: indianMan1, dob: '2010-02-15', bloodGroup: 'B+', religion: 'Hinduism', parentName: 'Vijay Singh', parentOccupation: 'Teacher', parentPhone: '+91 98765 43222', parentEmail: 'vijay.s@example.com', presentAddress: 'Civil Lines, Jaipur, RJ', permanentAddress: 'Civil Lines, Jaipur, RJ' },
+      { student_id: 'STU214', name: 'Meera Patel', email: 'meera.patel@example.com', phone: '+91 98765 43223', class_id: '12', section: 'C', rollNo: '05', admission_date: '2026-10-12', gender: 'Female', status: 'Suspended', avatar: indianWoman1, dob: '2009-07-20', bloodGroup: 'AB+', religion: 'Hinduism', parentName: 'Dinesh Patel', parentOccupation: 'Engineer', parentPhone: '+91 98765 43223', parentEmail: 'dinesh.p@example.com', presentAddress: 'Satellite, Ahmedabad, GJ', permanentAddress: 'Satellite, Ahmedabad, GJ' },
+      { student_id: 'STU215', name: 'Nisha Patel', email: 'nisha.patel@example.com', phone: '+91 98765 43224', class_id: '9', section: 'A', rollNo: '10', admission_date: '2026-08-20', gender: 'Female', status: 'Suspended', avatar: indianWoman2, dob: '2009-12-05', bloodGroup: 'O-', religion: 'Hinduism', parentName: 'Pravin Patel', parentOccupation: 'Nurse', parentPhone: '+91 98765 43224', parentEmail: 'pravin.p@example.com', presentAddress: 'Vastrapur, Ahmedabad, GJ', permanentAddress: 'Vastrapur, Ahmedabad, GJ' },
+      { student_id: 'STU216', name: 'Sameer Khan', email: 'sameer.khan@example.com', phone: '+91 98765 43225', class_id: '10', section: 'C', rollNo: '07', admission_date: '2026-09-15', gender: 'Male', status: 'Suspended', avatar: indianMan2, dob: '2008-11-22', bloodGroup: 'B-', religion: 'Islam', parentName: 'Salim Khan', parentOccupation: 'Business Owner', parentPhone: '+91 98765 43225', parentEmail: 'salim.k@example.com', presentAddress: 'Bandra, Mumbai, MH', permanentAddress: 'Bandra, Mumbai, MH' }
     ];
     localStorage.setItem('students', JSON.stringify(defaultList));
     parsedStudents = defaultList;
   }
 
   // Hostel pool — maps ADM-2026-xxx IDs to full teenager student profiles
-  const HOSTEL_STUDENT_POOL = [
-    { student_id: 'ADM-2026-001', name: 'Ethan Hunt', gender: 'Male', class_id: '10', section: 'A', rollNo: '01', dob: '2010-03-14', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop', email: 'ethan.hunt@edupro.edu', phone: '+1 234 567 801', parentName: 'Hunt Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 600 801', parentEmail: 'hunt.sr@example.com' },
-    { student_id: 'ADM-2026-002', name: 'Olivia Wilde', gender: 'Female', class_id: '10', section: 'B', rollNo: '02', dob: '2010-06-22', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=200&h=200&fit=crop', email: 'olivia.wilde@edupro.edu', phone: '+1 234 567 802', parentName: 'Wilde Sr.', parentOccupation: 'Lawyer', parentPhone: '+1 987 600 802', parentEmail: 'wilde.sr@example.com' },
-    { student_id: 'ADM-2026-003', name: 'Liam Neeson', gender: 'Male', class_id: '11', section: 'A', rollNo: '03', dob: '2009-04-08', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=200&h=200&fit=crop', email: 'liam.neeson@edupro.edu', phone: '+1 234 567 803', parentName: 'Neeson Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 600 803', parentEmail: 'neeson.sr@example.com' },
-    { student_id: 'ADM-2026-004', name: 'Emma Stone', gender: 'Female', class_id: '12', section: 'C', rollNo: '04', dob: '2008-09-12', bloodGroup: 'AB+', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop', email: 'emma.stone@edupro.edu', phone: '+1 234 567 804', parentName: 'Stone Sr.', parentOccupation: 'Architect', parentPhone: '+1 987 600 804', parentEmail: 'stone.sr@example.com' },
-    { student_id: 'ADM-2026-005', name: 'Noah Centineo', gender: 'Male', class_id: '9', section: 'B', rollNo: '05', dob: '2011-04-03', bloodGroup: 'O-', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop', email: 'noah.centineo@edupro.edu', phone: '+1 234 567 805', parentName: 'Centineo Sr.', parentOccupation: 'Business Owner', parentPhone: '+1 987 600 805', parentEmail: 'centineo.sr@example.com' },
-    { student_id: 'ADM-2026-006', name: 'Sophia Loren', gender: 'Female', class_id: '10', section: 'C', rollNo: '06', dob: '2010-01-18', bloodGroup: 'A-', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=200&h=200&fit=crop', email: 'sophia.loren@edupro.edu', phone: '+1 234 567 806', parentName: 'Loren Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 600 806', parentEmail: 'loren.sr@example.com' },
-    { student_id: 'ADM-2026-007', name: 'Jackson Rathbone', gender: 'Male', class_id: '11', section: 'B', rollNo: '07', dob: '2009-07-21', bloodGroup: 'B-', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&h=200&fit=crop', email: 'jackson.rathbone@edupro.edu', phone: '+1 234 567 807', parentName: 'Rathbone Sr.', parentOccupation: 'Accountant', parentPhone: '+1 987 600 807', parentEmail: 'rathbone.sr@example.com' },
-    { student_id: 'ADM-2026-008', name: 'Mia Farrow', gender: 'Female', class_id: '12', section: 'A', rollNo: '08', dob: '2008-05-30', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop', email: 'mia.farrow@edupro.edu', phone: '+1 234 567 808', parentName: 'Farrow Sr.', parentOccupation: 'Nurse', parentPhone: '+1 987 600 808', parentEmail: 'farrow.sr@example.com' },
-    { student_id: 'ADM-2026-009', name: 'Lucas Hedges', gender: 'Male', class_id: '9', section: 'A', rollNo: '09', dob: '2011-09-04', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=200&h=200&fit=crop', email: 'lucas.hedges@edupro.edu', phone: '+1 234 567 809', parentName: 'Hedges Sr.', parentOccupation: 'Manager', parentPhone: '+1 987 600 809', parentEmail: 'hedges.sr@example.com' },
-    { student_id: 'ADM-2026-010', name: 'Isabella Rossellini', gender: 'Female', class_id: '10', section: 'A', rollNo: '10', dob: '2010-11-01', bloodGroup: 'AB-', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop', email: 'isabella.rossellini@edupro.edu', phone: '+1 234 567 810', parentName: 'Rossellini Sr.', parentOccupation: 'Executive', parentPhone: '+1 987 600 810', parentEmail: 'rossellini.sr@example.com' },
-    { student_id: 'ADM-2026-011', name: 'Mason Mount', gender: 'Male', class_id: '11', section: 'C', rollNo: '11', dob: '2009-02-15', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop', email: 'mason.mount@edupro.edu', phone: '+1 234 567 811', parentName: 'Mount Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 600 811', parentEmail: 'mount.sr@example.com' },
-    { student_id: 'ADM-2026-012', name: 'Amelia Earhart', gender: 'Female', class_id: '12', section: 'B', rollNo: '12', dob: '2008-07-24', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop', email: 'amelia.earhart@edupro.edu', phone: '+1 234 567 812', parentName: 'Earhart Sr.', parentOccupation: 'Pilot', parentPhone: '+1 987 600 812', parentEmail: 'earhart.sr@example.com' },
-    { student_id: 'ADM-2026-013', name: 'Logan Lerman', gender: 'Male', class_id: '10', section: 'B', rollNo: '13', dob: '2010-08-09', bloodGroup: 'A-', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop', email: 'logan.lerman@edupro.edu', phone: '+1 234 567 813', parentName: 'Lerman Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 600 813', parentEmail: 'lerman.sr@example.com' },
-    { student_id: 'ADM-2026-014', name: 'Harper Lee', gender: 'Female', class_id: '11', section: 'A', rollNo: '14', dob: '2009-10-27', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop', email: 'harper.lee@edupro.edu', phone: '+1 234 567 814', parentName: 'Lee Sr.', parentOccupation: 'Author', parentPhone: '+1 987 600 814', parentEmail: 'lee.sr@example.com' },
-    { student_id: 'ADM-2026-015', name: 'Jacob Elordi', gender: 'Male', class_id: '12', section: 'A', rollNo: '15', dob: '2008-03-26', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=200&h=200&fit=crop', email: 'jacob.elordi@edupro.edu', phone: '+1 234 567 815', parentName: 'Elordi Sr.', parentOccupation: 'Architect', parentPhone: '+1 987 600 815', parentEmail: 'elordi.sr@example.com' },
-    { student_id: 'ADM-2026-016', name: 'Evelyn Glennie', gender: 'Female', class_id: '9', section: 'B', rollNo: '16', dob: '2011-06-10', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop', email: 'evelyn.glennie@edupro.edu', phone: '+1 234 567 816', parentName: 'Glennie Sr.', parentOccupation: 'Musician', parentPhone: '+1 987 600 816', parentEmail: 'glennie.sr@example.com' },
-    { student_id: 'ADM-2026-017', name: 'Ethan Hawke', gender: 'Male', class_id: '10', section: 'C', rollNo: '17', dob: '2010-04-30', bloodGroup: 'AB+', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop', email: 'ethan.hawke@edupro.edu', phone: '+1 234 567 817', parentName: 'Hawke Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 600 817', parentEmail: 'hawke.sr@example.com' },
-    { student_id: 'ADM-2026-018', name: 'Abigail Breslin', gender: 'Female', class_id: '11', section: 'C', rollNo: '18', dob: '2009-08-14', bloodGroup: 'O-', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&h=200&fit=crop', email: 'abigail.breslin@edupro.edu', phone: '+1 234 567 818', parentName: 'Breslin Sr.', parentOccupation: 'Dentist', parentPhone: '+1 987 600 818', parentEmail: 'breslin.sr@example.com' },
-    { student_id: 'ADM-2026-019', name: 'Daniel Radcliffe', gender: 'Male', class_id: '12', section: 'C', rollNo: '19', dob: '2008-11-23', bloodGroup: 'B-', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop', email: 'daniel.radcliffe@edupro.edu', phone: '+1 234 567 819', parentName: 'Radcliffe Sr.', parentOccupation: 'Business Owner', parentPhone: '+1 987 600 819', parentEmail: 'radcliffe.sr@example.com' },
-    { student_id: 'ADM-2026-020', name: 'Emily Blunt', gender: 'Female', class_id: '10', section: 'A', rollNo: '20', dob: '2010-02-23', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=200&h=200&fit=crop', email: 'emily.blunt@edupro.edu', phone: '+1 234 567 820', parentName: 'Blunt Sr.', parentOccupation: 'Journalist', parentPhone: '+1 987 600 820', parentEmail: 'blunt.sr@example.com' },
-    { student_id: 'ADM-2026-021', name: 'Matthew McConaughey', gender: 'Male', class_id: '11', section: 'B', rollNo: '21', dob: '2009-01-14', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=200&h=200&fit=crop', email: 'matthew.mcconaughey@edupro.edu', phone: '+1 234 567 821', parentName: 'McConaughey Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 600 821', parentEmail: 'mcconaughey.sr@example.com' },
-    { student_id: 'ADM-2026-022', name: 'Elizabeth Olsen', gender: 'Female', class_id: '12', section: 'B', rollNo: '22', dob: '2008-06-16', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=200&h=200&fit=crop', email: 'elizabeth.olsen@edupro.edu', phone: '+1 234 567 822', parentName: 'Olsen Sr.', parentOccupation: 'Artist', parentPhone: '+1 987 600 822', parentEmail: 'olsen.sr@example.com' },
-    { student_id: 'ADM-2026-023', name: 'Alexander Skarsgard', gender: 'Male', class_id: '9', section: 'C', rollNo: '23', dob: '2011-03-07', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=200&h=200&fit=crop', email: 'alexander.skarsgard@edupro.edu', phone: '+1 234 567 823', parentName: 'Skarsgard Sr.', parentOccupation: 'Actor', parentPhone: '+1 987 600 823', parentEmail: 'skarsgard.sr@example.com' },
-    { student_id: 'ADM-2026-024', name: 'Scarlett Johansson', gender: 'Female', class_id: '10', section: 'B', rollNo: '24', dob: '2010-09-22', bloodGroup: 'A-', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop', email: 'scarlett.johansson@edupro.edu', phone: '+1 234 567 824', parentName: 'Johansson Sr.', parentOccupation: 'Manager', parentPhone: '+1 987 600 824', parentEmail: 'johansson.sr@example.com' },
-    { student_id: 'ADM-2026-025', name: 'William Levy', gender: 'Male', class_id: '11', section: 'A', rollNo: '25', dob: '2009-06-29', bloodGroup: 'AB+', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&h=200&fit=crop', email: 'william.levy@edupro.edu', phone: '+1 234 567 825', parentName: 'Levy Sr.', parentOccupation: 'Banker', parentPhone: '+1 987 600 825', parentEmail: 'levy.sr@example.com' },
-    { student_id: 'ADM-2026-026', name: 'Victoria Beckham', gender: 'Female', class_id: '12', section: 'A', rollNo: '26', dob: '2008-04-17', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=200&h=200&fit=crop', email: 'victoria.beckham@edupro.edu', phone: '+1 234 567 826', parentName: 'Beckham Sr.', parentOccupation: 'Entrepreneur', parentPhone: '+1 987 600 826', parentEmail: 'beckham.sr@example.com' },
-    { student_id: 'ADM-2026-027', name: 'Henry Cavill', gender: 'Male', class_id: '10', section: 'C', rollNo: '27', dob: '2010-05-05', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop', email: 'henry.cavill@edupro.edu', phone: '+1 234 567 827', parentName: 'Cavill Sr.', parentOccupation: 'Lawyer', parentPhone: '+1 987 600 827', parentEmail: 'cavill.sr@example.com' },
-    { student_id: 'ADM-2026-028', name: 'Grace Kelly', gender: 'Female', class_id: '11', section: 'C', rollNo: '28', dob: '2009-12-01', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop', email: 'grace.kelly@edupro.edu', phone: '+1 234 567 828', parentName: 'Kelly Sr.', parentOccupation: 'Designer', parentPhone: '+1 987 600 828', parentEmail: 'kelly.sr@example.com' },
-    { student_id: 'ADM-2026-029', name: 'James Dean', gender: 'Male', class_id: '12', section: 'C', rollNo: '29', dob: '2008-02-08', bloodGroup: 'O-', avatar: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=200&h=200&fit=crop', email: 'james.dean@edupro.edu', phone: '+1 234 567 829', parentName: 'Dean Sr.', parentOccupation: 'Architect', parentPhone: '+1 987 600 829', parentEmail: 'dean.sr@example.com' },
-    { student_id: 'ADM-2026-030', name: 'Audrey Hepburn', gender: 'Female', class_id: '9', section: 'A', rollNo: '30', dob: '2011-08-05', bloodGroup: 'AB-', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop', email: 'audrey.hepburn@edupro.edu', phone: '+1 234 567 830', parentName: 'Hepburn Sr.', parentOccupation: 'Nurse', parentPhone: '+1 987 600 830', parentEmail: 'hepburn.sr@example.com' },
-    { student_id: 'ADM-2026-031', name: 'Marlon Brando', gender: 'Male', class_id: '10', section: 'A', rollNo: '31', dob: '2010-07-18', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop', email: 'marlon.brando@edupro.edu', phone: '+1 234 567 831', parentName: 'Brando Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 600 831', parentEmail: 'brando.sr@example.com' },
-    { student_id: 'ADM-2026-032', name: 'Vivien Leigh', gender: 'Female', class_id: '11', section: 'B', rollNo: '32', dob: '2009-09-14', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=200&h=200&fit=crop', email: 'vivien.leigh@edupro.edu', phone: '+1 234 567 832', parentName: 'Leigh Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 600 832', parentEmail: 'leigh.sr@example.com' },
-    { student_id: 'ADM-2026-033', name: 'Paul Newman', gender: 'Male', class_id: '12', section: 'B', rollNo: '33', dob: '2008-01-26', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=200&h=200&fit=crop', email: 'paul.newman@edupro.edu', phone: '+1 234 567 833', parentName: 'Newman Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 600 833', parentEmail: 'newman.sr@example.com' },
-    { student_id: 'ADM-2026-034', name: 'Ingrid Bergman', gender: 'Female', class_id: '10', section: 'B', rollNo: '34', dob: '2010-10-31', bloodGroup: 'B-', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=200&h=200&fit=crop', email: 'ingrid.bergman@edupro.edu', phone: '+1 234 567 834', parentName: 'Bergman Sr.', parentOccupation: 'Executive', parentPhone: '+1 987 600 834', parentEmail: 'bergman.sr@example.com' },
-    { student_id: 'ADM-2026-035', name: 'Humphrey Bogart', gender: 'Male', class_id: '11', section: 'A', rollNo: '35', dob: '2009-03-19', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop', email: 'humphrey.bogart@edupro.edu', phone: '+1 234 567 835', parentName: 'Bogart Sr.', parentOccupation: 'Manager', parentPhone: '+1 987 600 835', parentEmail: 'bogart.sr@example.com' },
-    { student_id: 'ADM-2026-036', name: 'Bette Davis', gender: 'Female', class_id: '12', section: 'A', rollNo: '36', dob: '2008-08-20', bloodGroup: 'A-', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop', email: 'bette.davis@edupro.edu', phone: '+1 234 567 836', parentName: 'Davis Sr.', parentOccupation: 'Accountant', parentPhone: '+1 987 600 836', parentEmail: 'davis.sr@example.com' },
-    { student_id: 'ADM-2026-037', name: 'Cary Grant', gender: 'Male', class_id: '9', section: 'B', rollNo: '37', dob: '2011-02-07', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=200&h=200&fit=crop', email: 'cary.grant@edupro.edu', phone: '+1 234 567 837', parentName: 'Grant Sr.', parentOccupation: 'Scientist', parentPhone: '+1 987 600 837', parentEmail: 'grant.sr@example.com' },
-    { student_id: 'ADM-2026-038', name: 'Katharine Hepburn', gender: 'Female', class_id: '10', section: 'C', rollNo: '38', dob: '2010-04-04', bloodGroup: 'AB+', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&h=200&fit=crop', email: 'katharine.hepburn@edupro.edu', phone: '+1 234 567 838', parentName: 'Hepburn Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 600 838', parentEmail: 'k.hepburn.sr@example.com' },
-    { student_id: 'ADM-2026-039', name: 'Clark Gable', gender: 'Male', class_id: '11', section: 'C', rollNo: '39', dob: '2009-05-31', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop', email: 'clark.gable@edupro.edu', phone: '+1 234 567 839', parentName: 'Gable Sr.', parentOccupation: 'Business Owner', parentPhone: '+1 987 600 839', parentEmail: 'gable.sr@example.com' },
-    { student_id: 'ADM-2026-040', name: 'Judy Garland', gender: 'Female', class_id: '12', section: 'C', rollNo: '40', dob: '2008-12-12', bloodGroup: 'O-', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=200&h=200&fit=crop', email: 'judy.garland@edupro.edu', phone: '+1 234 567 840', parentName: 'Garland Sr.', parentOccupation: 'Artist', parentPhone: '+1 987 600 840', parentEmail: 'garland.sr@example.com' },
-    { student_id: 'ADM-2026-041', name: 'Gregory Peck', gender: 'Male', class_id: '10', section: 'A', rollNo: '41', dob: '2010-06-03', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop', email: 'gregory.peck@edupro.edu', phone: '+1 234 567 841', parentName: 'Peck Sr.', parentOccupation: 'Lawyer', parentPhone: '+1 987 600 841', parentEmail: 'peck.sr@example.com' },
-    { student_id: 'ADM-2026-042', name: 'Joan Crawford', gender: 'Female', class_id: '11', section: 'B', rollNo: '42', dob: '2009-07-08', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop', email: 'joan.crawford@edupro.edu', phone: '+1 234 567 842', parentName: 'Crawford Sr.', parentOccupation: 'Executive', parentPhone: '+1 987 600 842', parentEmail: 'crawford.sr@example.com' },
-    { student_id: 'ADM-2026-043', name: 'Spencer Tracy', gender: 'Male', class_id: '12', section: 'B', rollNo: '43', dob: '2008-10-14', bloodGroup: 'AB-', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=200&h=200&fit=crop', email: 'spencer.tracy@edupro.edu', phone: '+1 234 567 843', parentName: 'Tracy Sr.', parentOccupation: 'Doctor', parentPhone: '+1 987 600 843', parentEmail: 'tracy.sr@example.com' },
-    { student_id: 'ADM-2026-044', name: 'Elizabeth Taylor', gender: 'Female', class_id: '9', section: 'C', rollNo: '44', dob: '2011-01-23', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop', email: 'elizabeth.taylor@edupro.edu', phone: '+1 234 567 844', parentName: 'Taylor Sr.', parentOccupation: 'Engineer', parentPhone: '+1 987 600 844', parentEmail: 'taylor.sr@example.com' },
-    { student_id: 'ADM-2026-045', name: 'Laurence Olivier', gender: 'Male', class_id: '10', section: 'B', rollNo: '45', dob: '2010-03-22', bloodGroup: 'A-', avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=200&h=200&fit=crop', email: 'laurence.olivier@edupro.edu', phone: '+1 234 567 845', parentName: 'Olivier Sr.', parentOccupation: 'Manager', parentPhone: '+1 987 600 845', parentEmail: 'olivier.sr@example.com' },
-    { student_id: 'ADM-2026-046', name: 'Greta Garbo', gender: 'Female', class_id: '11', section: 'A', rollNo: '46', dob: '2009-11-05', bloodGroup: 'B-', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=200&h=200&fit=crop', email: 'greta.garbo@edupro.edu', phone: '+1 234 567 846', parentName: 'Garbo Sr.', parentOccupation: 'Architect', parentPhone: '+1 987 600 846', parentEmail: 'garbo.sr@example.com' },
-    { student_id: 'ADM-2026-047', name: 'James Stewart', gender: 'Male', class_id: '12', section: 'A', rollNo: '47', dob: '2008-04-18', bloodGroup: 'O+', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&h=200&fit=crop', email: 'james.stewart@edupro.edu', phone: '+1 234 567 847', parentName: 'Stewart Sr.', parentOccupation: 'Accountant', parentPhone: '+1 987 600 847', parentEmail: 'stewart.sr@example.com' },
-    { student_id: 'ADM-2026-048', name: 'Ginger Rogers', gender: 'Female', class_id: '10', section: 'C', rollNo: '48', dob: '2010-12-25', bloodGroup: 'A+', avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&h=200&fit=crop', email: 'ginger.rogers@edupro.edu', phone: '+1 234 567 848', parentName: 'Rogers Sr.', parentOccupation: 'Teacher', parentPhone: '+1 987 600 848', parentEmail: 'rogers.sr@example.com' },
-    { student_id: 'ADM-2026-049', name: 'John Wayne', gender: 'Male', class_id: '11', section: 'C', rollNo: '49', dob: '2009-08-27', bloodGroup: 'B+', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop', email: 'john.wayne@edupro.edu', phone: '+1 234 567 849', parentName: 'Wayne Sr.', parentOccupation: 'Business Owner', parentPhone: '+1 987 600 849', parentEmail: 'wayne.sr@example.com' },
-    { student_id: 'ADM-2026-050', name: 'Shirley Temple', gender: 'Female', class_id: '12', section: 'C', rollNo: '50', dob: '2008-05-19', bloodGroup: 'AB+', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop', email: 'shirley.temple@edupro.edu', phone: '+1 234 567 850', parentName: 'Temple Sr.', parentOccupation: 'Nurse', parentPhone: '+1 987 600 850', parentEmail: 'temple.sr@example.com' },
+  const RAW_HOSTEL_STUDENT_POOL = [
+    { student_id: 'ADM-2026-001', name: 'Aarav Gupta', gender: 'Male', class_id: '10', section: 'A', rollNo: '01', dob: '2010-03-14', bloodGroup: 'O+', avatar: '', email: 'aarav.gupta@edupro.edu', phone: '+91 98765 43226', parentName: 'Gupta Sr.', parentOccupation: 'Engineer', parentPhone: '+91 98765 43226', parentEmail: 'gupta.sr@example.com' },
+    { student_id: 'ADM-2026-002', name: 'Aaradhya Sen', gender: 'Female', class_id: '10', section: 'B', rollNo: '02', dob: '2010-06-22', bloodGroup: 'A+', avatar: '', email: 'aaradhya.sen@edupro.edu', phone: '+91 98765 43227', parentName: 'Sen Sr.', parentOccupation: 'Lawyer', parentPhone: '+91 98765 43227', parentEmail: 'sen.sr@example.com' },
+    { student_id: 'ADM-2026-003', name: 'Kabir Nair', gender: 'Male', class_id: '11', section: 'A', rollNo: '03', dob: '2009-04-08', bloodGroup: 'B+', avatar: '', email: 'kabir.nair@edupro.edu', phone: '+91 98765 43228', parentName: 'Nair Sr.', parentOccupation: 'Doctor', parentPhone: '+91 98765 43228', parentEmail: 'nair.sr@example.com' },
+    { student_id: 'ADM-2026-004', name: 'Ananya Rao', gender: 'Female', class_id: '12', section: 'C', rollNo: '04', dob: '2008-09-12', bloodGroup: 'AB+', avatar: '', email: 'ananya.rao@edupro.edu', phone: '+91 98765 43229', parentName: 'Rao Sr.', parentOccupation: 'Architect', parentPhone: '+91 98765 43229', parentEmail: 'rao.sr@example.com' },
+    { student_id: 'ADM-2026-005', name: 'Vihaan Joshi', gender: 'Male', class_id: '9', section: 'B', rollNo: '05', dob: '2011-04-03', bloodGroup: 'O-', avatar: '', email: 'vihaan.joshi@edupro.edu', phone: '+91 98765 43230', parentName: 'Joshi Sr.', parentOccupation: 'Business Owner', parentPhone: '+91 98765 43230', parentEmail: 'joshi.sr@example.com' },
+    { student_id: 'ADM-2026-006', name: 'Diya Mehta', gender: 'Female', class_id: '10', section: 'C', rollNo: '06', dob: '2010-01-18', bloodGroup: 'A-', avatar: '', email: 'diya.mehta@edupro.edu', phone: '+91 98765 43231', parentName: 'Mehta Sr.', parentOccupation: 'Teacher', parentPhone: '+91 98765 43231', parentEmail: 'mehta.sr@example.com' },
+    { student_id: 'ADM-2026-007', name: 'Advik Reddy', gender: 'Male', class_id: '11', section: 'B', rollNo: '07', dob: '2009-07-21', bloodGroup: 'B-', avatar: '', email: 'advik.reddy@edupro.edu', phone: '+91 98765 43232', parentName: 'Reddy Sr.', parentOccupation: 'Accountant', parentPhone: '+91 98765 43232', parentEmail: 'reddy.sr@example.com' },
+    { student_id: 'ADM-2026-008', name: 'Ishaanvi Bose', gender: 'Female', class_id: '12', section: 'A', rollNo: '08', dob: '2008-05-30', bloodGroup: 'O+', avatar: '', email: 'ishaanvi.bose@edupro.edu', phone: '+91 98765 43233', parentName: 'Bose Sr.', parentOccupation: 'Nurse', parentPhone: '+91 98765 43233', parentEmail: 'bose.sr@example.com' },
+    { student_id: 'ADM-2026-009', name: 'Reyansh Patel', gender: 'Male', class_id: '9', section: 'A', rollNo: '09', dob: '2011-09-04', bloodGroup: 'A+', avatar: '', email: 'reyansh.patel@edupro.edu', phone: '+91 98765 43234', parentName: 'Patel Sr.', parentOccupation: 'Manager', parentPhone: '+91 98765 43234', parentEmail: 'patel.sr@example.com' },
+    { student_id: 'ADM-2026-010', name: 'Myra Iyer', gender: 'Female', class_id: '10', section: 'A', rollNo: '10', dob: '2010-11-01', bloodGroup: 'AB-', avatar: '', email: 'myra.iyer@edupro.edu', phone: '+91 98765 43235', parentName: 'Iyer Sr.', parentOccupation: 'Executive', parentPhone: '+91 98765 43235', parentEmail: 'iyer.sr@example.com' },
+    { student_id: 'ADM-2026-011', name: 'Atharv Singh', gender: 'Male', class_id: '11', section: 'C', rollNo: '11', dob: '2009-02-15', bloodGroup: 'B+', avatar: '', email: 'atharv.singh@edupro.edu', phone: '+91 98765 43236', parentName: 'Singh Sr.', parentOccupation: 'Engineer', parentPhone: '+91 98765 43236', parentEmail: 'singh.sr@example.com' },
+    { student_id: 'ADM-2026-012', name: 'Aadya Sharma', gender: 'Female', class_id: '12', section: 'B', rollNo: '12', dob: '2008-07-24', bloodGroup: 'O+', avatar: '', email: 'aadya.sharma@edupro.edu', phone: '+91 98765 43237', parentName: 'Sharma Sr.', parentOccupation: 'Pilot', parentPhone: '+91 98765 43237', parentEmail: 'sharma.sr@example.com' }
   ];
+
+  const HOSTEL_STUDENT_POOL = RAW_HOSTEL_STUDENT_POOL.map(s => {
+    const isMale = s.gender === 'Male';
+    const nameCode = (s.name || '').charCodeAt(0) || 0;
+    let avatarAsset = isMale ? indianMan1 : indianWoman1;
+    if (isMale) {
+      avatarAsset = nameCode % 2 === 0 ? indianMan1 : indianMan2;
+    } else {
+      avatarAsset = nameCode % 2 === 0 ? indianWoman1 : indianWoman2;
+    }
+    return { ...s, avatar: avatarAsset };
+  });
 
   // Look up student by ID — first check localStorage, then hostel pool for ADM-2026-xxx IDs
   let resolvedStudent = parsedStudents.find(s => s.student_id === targetId);
@@ -354,54 +334,54 @@ const StudentDetails = () => {
   
   if (!resolvedStudent) {
     const attendanceRoster = [
-      { student_id: 'STU-2026-001', name: 'Alex Johnson',      grade: '10', section: 'A', rollNo: '01', email: 'alex.johnson@edupro.edu' },
-      { student_id: 'STU-2026-002', name: 'Sarah Williams',    grade: '10', section: 'A', rollNo: '02', email: 'sarah.williams@edupro.edu' },
-      { student_id: 'STU-2026-003', name: 'Michael Brown',     grade: '10', section: 'A', rollNo: '03', email: 'michael.brown@edupro.edu' },
-      { student_id: 'STU-2026-004', name: 'Emily Davis',       grade: '10', section: 'A', rollNo: '04', email: 'emily.davis@edupro.edu' },
-      { student_id: 'STU-2026-005', name: 'James Miller',      grade: '10', section: 'A', rollNo: '05', email: 'james.miller@edupro.edu' },
-      { student_id: 'STU-2026-006', name: 'Jessica Taylor',    grade: '10', section: 'A', rollNo: '06', email: 'jessica.taylor@edupro.edu' },
-      { student_id: 'STU-2026-007', name: 'Daniel Wilson',     grade: '10', section: 'A', rollNo: '07', email: 'daniel.wilson@edupro.edu' },
-      { student_id: 'STU-2026-008', name: 'Olivia Moore',      grade: '10', section: 'A', rollNo: '08', email: 'olivia.moore@edupro.edu' },
-      { student_id: 'STU-2026-009', name: 'William Anderson',  grade: '10', section: 'A', rollNo: '09', email: 'william.anderson@edupro.edu' },
-      { student_id: 'STU-2026-010', name: 'Sophia Martin',     grade: '10', section: 'A', rollNo: '10', email: 'sophia.martin@edupro.edu' },
-      { student_id: 'STU-2026-011', name: 'Lucas Jackson',     grade: '10', section: 'A', rollNo: '11', email: 'lucas.jackson@edupro.edu' },
-      { student_id: 'STU-2026-012', name: 'Mia Thompson',      grade: '10', section: 'A', rollNo: '12', email: 'mia.thompson@edupro.edu' },
-      { student_id: 'STU-2026-101', name: 'Ethan Thomas',      grade: '10', section: 'B', rollNo: '01', email: 'ethan.thomas@edupro.edu' },
-      { student_id: 'STU-2026-102', name: 'Charlotte White',    grade: '10', section: 'B', rollNo: '02', email: 'charlotte.white@edupro.edu' },
-      { student_id: 'STU-2026-103', name: 'Benjamin Harris',   grade: '10', section: 'B', rollNo: '03', email: 'benjamin.harris@edupro.edu' },
-      { student_id: 'STU-2026-104', name: 'Amelia Martin',     grade: '10', section: 'B', rollNo: '04', email: 'amelia.martin@edupro.edu' },
-      { student_id: 'STU-2026-105', name: 'Henry Garcia',      grade: '10', section: 'B', rollNo: '05', email: 'henry.garcia@edupro.edu' },
-      { student_id: 'STU-2026-106', name: 'Harper Robinson',   grade: '10', section: 'B', rollNo: '06', email: 'harper.robinson@edupro.edu' },
-      { student_id: 'STU-2026-107', name: 'Alexander Clark',   grade: '10', section: 'B', rollNo: '07', email: 'alexander.clark@edupro.edu' },
-      { student_id: 'STU-2026-108', name: 'Evelyn Lewis',      grade: '10', section: 'B', rollNo: '08', email: 'evelyn.lewis@edupro.edu' },
-      { student_id: 'STU-2026-109', name: 'Sebastian Lee',     grade: '10', section: 'B', rollNo: '09', email: 'sebastian.lee@edupro.edu' },
-      { student_id: 'STU-2026-110', name: 'Avery Walker',      grade: '10', section: 'B', rollNo: '10', email: 'avery.walker@edupro.edu' },
-      { student_id: 'STU-2026-111', name: 'Jack Hall',          grade: '10', section: 'B', rollNo: '11', email: 'jack.hall@edupro.edu' },
-      { student_id: 'STU-2026-112', name: 'Abigail Allen',     grade: '10', section: 'B', rollNo: '12', email: 'abigail.allen@edupro.edu' },
-      { student_id: 'STU-2026-201', name: 'Mason Young',       grade: '09', section: 'A', rollNo: '01', email: 'mason.young@edupro.edu' },
-      { student_id: 'STU-2026-202', name: 'Ella King',          grade: '09', section: 'A', rollNo: '02', email: 'ella.king@edupro.edu' },
-      { student_id: 'STU-2026-203', name: 'Elijah Wright',     grade: '09', section: 'A', rollNo: '03', email: 'elijah.wright@edupro.edu' },
-      { student_id: 'STU-2026-204', name: 'Scarlett Lopez',    grade: '09', section: 'A', rollNo: '04', email: 'scarlett.lopez@edupro.edu' },
-      { student_id: 'STU-2026-205', name: 'Logan Hill',        grade: '09', section: 'A', rollNo: '05', email: 'logan.hill@edupro.edu' },
-      { student_id: 'STU-2026-206', name: 'Aria Scott',        grade: '09', section: 'A', rollNo: '06', email: 'aria.scott@edupro.edu' },
-      { student_id: 'STU-2026-207', name: 'James Green',       grade: '09', section: 'A', rollNo: '07', email: 'james.green@edupro.edu' },
-      { student_id: 'STU-2026-208', name: 'Layla Adams',       grade: '09', section: 'A', rollNo: '08', email: 'layla.adams@edupro.edu' },
-      { student_id: 'STU-2026-209', name: 'Jacob Baker',       grade: '09', section: 'A', rollNo: '09', email: 'jacob.baker@edupro.edu' },
-      { student_id: 'STU-2026-210', name: 'Chloe Gonzalez',    grade: '09', section: 'A', rollNo: '10', email: 'chloe.gonzalez@edupro.edu' },
-      { student_id: 'STU-2026-211', name: 'Michael Nelson',    grade: '09', section: 'A', rollNo: '11', email: 'michael.nelson@edupro.edu' },
-      { student_id: 'STU-2026-212', name: 'Lily Carter',       grade: '09', section: 'A', rollNo: '12', email: 'lily.carter@edupro.edu' },
-      { student_id: 'STU-2026-301', name: 'Oliver Mitchell',   grade: '11', section: 'A', rollNo: '01', email: 'oliver.mitchell@edupro.edu' },
-      { student_id: 'STU-2026-302', name: 'Grace Perez',       grade: '11', section: 'A', rollNo: '02', email: 'grace.perez@edupro.edu' },
-      { student_id: 'STU-2026-303', name: 'Lucas Roberts',     grade: '11', section: 'A', rollNo: '03', email: 'lucas.roberts@edupro.edu' },
-      { student_id: 'STU-2026-304', name: 'Zoey Turner',       grade: '11', section: 'A', rollNo: '04', email: 'zoey.turner@edupro.edu' },
-      { student_id: 'STU-2026-305', name: 'Carter Phillips',   grade: '11', section: 'A', rollNo: '05', email: 'carter.phillips@edupro.edu' },
-      { student_id: 'STU-2026-306', name: 'Lily Campbell',     grade: '11', section: 'A', rollNo: '06', email: 'lily.campbell@edupro.edu' },
-      { student_id: 'STU-2026-307', name: 'Gabriel Parker',     grade: '11', section: 'A', rollNo: '07', email: 'gabriel.parker@edupro.edu' },
-      { student_id: 'STU-2026-308', name: 'Hannah Evans',      grade: '11', section: 'A', rollNo: '08', email: 'hannah.evans@edupro.edu' },
-      { student_id: 'STU-2026-309', name: 'Luke Edwards',      grade: '11', section: 'A', rollNo: '09', email: 'luke.edwards@edupro.edu' },
-      { student_id: 'STU-2026-310', name: 'Elizabeth Collins', grade: '11', section: 'A', rollNo: '10', email: 'elizabeth.collins@edupro.edu' },
-      { student_id: 'STU-2026-311', name: 'Dylan Stewart',     grade: '11', section: 'A', rollNo: '11', email: 'dylan.stewart@edupro.edu' },
-      { student_id: 'STU-2026-312', name: 'Victoria Morris',    grade: '11', section: 'A', rollNo: '12', email: 'victoria.morris@edupro.edu' }
+      { student_id: 'STU-2026-001', name: 'Aarav Gupta',        grade: '10', section: 'A', rollNo: '01', email: 'aarav.gupta@edupro.edu' },
+      { student_id: 'STU-2026-002', name: 'Aaradhya Sen',       grade: '10', section: 'A', rollNo: '02', email: 'aaradhya.sen@edupro.edu' },
+      { student_id: 'STU-2026-003', name: 'Kabir Nair',         grade: '10', section: 'A', rollNo: '03', email: 'kabir.nair@edupro.edu' },
+      { student_id: 'STU-2026-004', name: 'Ananya Rao',         grade: '10', section: 'A', rollNo: '04', email: 'ananya.rao@edupro.edu' },
+      { student_id: 'STU-2026-005', name: 'Vihaan Joshi',        grade: '10', section: 'A', rollNo: '05', email: 'vihaan.joshi@edupro.edu' },
+      { student_id: 'STU-2026-006', name: 'Diya Mehta',         grade: '10', section: 'A', rollNo: '06', email: 'diya.mehta@edupro.edu' },
+      { student_id: 'STU-2026-007', name: 'Advik Reddy',        grade: '10', section: 'A', rollNo: '07', email: 'advik.reddy@edupro.edu' },
+      { student_id: 'STU-2026-008', name: 'Ishaanvi Bose',      grade: '10', section: 'A', rollNo: '08', email: 'ishaanvi.bose@edupro.edu' },
+      { student_id: 'STU-2026-009', name: 'Reyansh Patel',      grade: '10', section: 'A', rollNo: '09', email: 'reyansh.patel@edupro.edu' },
+      { student_id: 'STU-2026-010', name: 'Myra Iyer',          grade: '10', section: 'A', rollNo: '10', email: 'myra.iyer@edupro.edu' },
+      { student_id: 'STU-2026-011', name: 'Atharv Singh',       grade: '10', section: 'A', rollNo: '11', email: 'atharv.singh@edupro.edu' },
+      { student_id: 'STU-2026-012', name: 'Aadya Sharma',       grade: '10', section: 'A', rollNo: '12', email: 'aadya.sharma@edupro.edu' },
+      { student_id: 'STU-2026-101', name: 'Ishaan Sharma',      grade: '10', section: 'B', rollNo: '01', email: 'ishaan.sharma@edupro.edu' },
+      { student_id: 'STU-2026-102', name: 'Kriti Verma',        grade: '10', section: 'B', rollNo: '02', email: 'kriti.verma@edupro.edu' },
+      { student_id: 'STU-2026-103', name: 'Arjun Malhotra',     grade: '10', section: 'B', rollNo: '03', email: 'arjun.malhotra@edupro.edu' },
+      { student_id: 'STU-2026-104', name: 'Riya Kapoor',        grade: '10', section: 'B', rollNo: '04', email: 'riya.kapoor@edupro.edu' },
+      { student_id: 'STU-2026-105', name: 'Devendra Mishra',    grade: '10', section: 'B', rollNo: '05', email: 'devendra.mishra@edupro.edu' },
+      { student_id: 'STU-2026-106', name: 'Neha Sharma',        grade: '10', section: 'B', rollNo: '06', email: 'neha.sharma@edupro.edu' },
+      { student_id: 'STU-2026-107', name: 'Abhishek Singh',      grade: '10', section: 'B', rollNo: '07', email: 'abhishek.singh@edupro.edu' },
+      { student_id: 'STU-2026-108', name: 'Meera Patel',        grade: '10', section: 'B', rollNo: '08', email: 'meera.patel@edupro.edu' },
+      { student_id: 'STU-2026-109', name: 'Rohan Das',          grade: '10', section: 'B', rollNo: '09', email: 'rohan.das@edupro.edu' },
+      { student_id: 'STU-2026-110', name: 'Nisha Patel',        grade: '10', section: 'B', rollNo: '10', email: 'nisha.patel@edupro.edu' },
+      { student_id: 'STU-2026-111', name: 'Sameer Khan',        grade: '10', section: 'B', rollNo: '11', email: 'sameer.khan@edupro.edu' },
+      { student_id: 'STU-2026-112', name: 'Divya Joshi',        grade: '10', section: 'B', rollNo: '12', email: 'divya.joshi@edupro.edu' },
+      { student_id: 'STU-2026-201', name: 'Madhav Yadav',        grade: '09', section: 'A', rollNo: '01', email: 'madhav.yadav@edupro.edu' },
+      { student_id: 'STU-2026-202', name: 'Ekta Kinger',        grade: '09', section: 'A', rollNo: '02', email: 'ekta.kinger@edupro.edu' },
+      { student_id: 'STU-2026-203', name: 'Alok Verma',          grade: '09', section: 'A', rollNo: '03', email: 'alok.verma@edupro.edu' },
+      { student_id: 'STU-2026-204', name: 'Shalini Sharma',      grade: '09', section: 'A', rollNo: '04', email: 'shalini.sharma@edupro.edu' },
+      { student_id: 'STU-2026-205', name: 'Lokesh Hila',        grade: '09', section: 'A', rollNo: '05', email: 'lokesh.hila@edupro.edu' },
+      { student_id: 'STU-2026-206', name: 'Aria Swamy',          grade: '09', section: 'A', rollNo: '06', email: 'aria.swamy@edupro.edu' },
+      { student_id: 'STU-2026-207', name: 'Jatin Saxena',        grade: '09', section: 'A', rollNo: '07', email: 'jatin.saxena@edupro.edu' },
+      { student_id: 'STU-2026-208', name: 'Lata Adhikari',      grade: '09', section: 'A', rollNo: '08', email: 'lata.adhikari@edupro.edu' },
+      { student_id: 'STU-2026-209', name: 'Jagdish Bakshi',      grade: '09', section: 'A', rollNo: '09', email: 'jagdish.bakshi@edupro.edu' },
+      { student_id: 'STU-2026-210', name: 'Charu Gokhale',      grade: '09', section: 'A', rollNo: '10', email: 'charu.gokhale@edupro.edu' },
+      { student_id: 'STU-2026-211', name: 'Mukul Das',           grade: '09', section: 'A', rollNo: '11', email: 'mukul.das@edupro.edu' },
+      { student_id: 'STU-2026-212', name: 'Lila Nair',           grade: '09', section: 'A', rollNo: '12', email: 'lila.nair@edupro.edu' },
+      { student_id: 'STU-2026-301', name: 'Ojas Misra',         grade: '11', section: 'A', rollNo: '01', email: 'ojas.misra@edupro.edu' },
+      { student_id: 'STU-2026-302', name: 'Geeta Patel',        grade: '11', section: 'A', rollNo: '02', email: 'geeta.patel@edupro.edu' },
+      { student_id: 'STU-2026-303', name: 'Lokesh Roy',         grade: '11', section: 'A', rollNo: '03', email: 'lokesh.roy@edupro.edu' },
+      { student_id: 'STU-2026-304', name: 'Zoya Tandon',        grade: '11', section: 'A', rollNo: '04', email: 'zoya.tandon@edupro.edu' },
+      { student_id: 'STU-2026-305', name: 'Chetan Prasad',      grade: '11', section: 'A', rollNo: '05', email: 'chetan.prasad@edupro.edu' },
+      { student_id: 'STU-2026-306', name: 'Leela Iyer',          grade: '11', section: 'A', rollNo: '06', email: 'leela.iyer@edupro.edu' },
+      { student_id: 'STU-2026-307', name: 'Gaurav Pathak',      grade: '11', section: 'A', rollNo: '07', email: 'gaurav.pathak@edupro.edu' },
+      { student_id: 'STU-2026-308', name: 'Himani Joshi',        grade: '11', section: 'A', rollNo: '08', email: 'himani.joshi@edupro.edu' },
+      { student_id: 'STU-2026-309', name: 'Lokesh Ekka',        grade: '11', section: 'A', rollNo: '09', email: 'lokesh.ekka@edupro.edu' },
+      { student_id: 'STU-2026-310', name: 'Esha Choudhury',     grade: '11', section: 'A', rollNo: '10', email: 'esha.choudhury@edupro.edu' },
+      { student_id: 'STU-2026-311', name: 'Dilip Swaminathan',  grade: '11', section: 'A', rollNo: '11', email: 'dilip.swaminathan@edupro.edu' },
+      { student_id: 'STU-2026-312', name: 'Vasundhara Sen',      grade: '11', section: 'A', rollNo: '12', email: 'vasundhara.sen@edupro.edu' }
     ];
 
     const matchedRef = attendanceRoster.find(r => r.student_id === targetId);
@@ -409,117 +389,113 @@ const StudentDetails = () => {
     if (matchedRef) {
       const idNum = parseInt(targetId.replace(/\D/g, '')) || 1;
       const rollNoNum = parseInt(matchedRef.rollNo);
+      const isFemale = rollNoNum % 2 === 0;
       
       resolvedStudent = {
         student_id: targetId,
         name: matchedRef.name,
         email: matchedRef.email,
-        phone: `+1 234 567 ${String(100 + rollNoNum).slice(1)}`,
+        phone: `+91 98765 43${String(100 + rollNoNum).slice(1)}`,
         class_id: matchedRef.grade,
         section: matchedRef.section,
         rollNo: matchedRef.rollNo,
         admission_date: '2026-01-12',
-        gender: rollNoNum % 2 === 0 ? 'Female' : 'Male',
+        gender: isFemale ? 'Female' : 'Male',
         status: 'Active',
-        avatar: `https://images.unsplash.com/photo-${[
-          '1534528741775-53994a69daeb',
-          '1539571696357-5a69c17a67c6',
-          '1494790108377-be9c29b29330',
-          '1507003211169-0a1dd7228f2d',
-          '1500648767791-00dcc994a43e',
-          '1438761681033-6461ffad8d80',
-          '1544005313-94ddf0286df2',
-          '1517841905240-472988babdf9',
-          '1506794778202-cad84cf45f1d',
-          '1522075469751-3a6694fb2f61',
-          '1524504388940-b1c1722653e1',
-          '1531746020798-e6953c6e8e04'
-        ][idNum % 12]}?w=150&h=150&fit=crop`,
+        avatar: '',
         dob: `2010-${String(100 + (rollNoNum % 12) + 1).slice(1)}-12`,
         bloodGroup: ['O+', 'A+', 'B+', 'AB+', 'O-', 'A-'][rollNoNum % 6],
-        religion: 'Christianity',
-        parentName: `${matchedRef.name.split(' ').slice(1).join(' ') || 'Johnson'} Sr.`,
+        religion: 'Hinduism',
+        parentName: `${matchedRef.name.split(' ').slice(1).join(' ') || 'Verma'} Sr.`,
         parentOccupation: ['Engineer', 'Doctor', 'Teacher', 'Architect', 'Business Manager'][rollNoNum % 5],
-        parentPhone: `+1 987 654 ${String(300 + rollNoNum).slice(1)}`,
+        parentPhone: `+91 98765 43${String(300 + rollNoNum).slice(1)}`,
         parentEmail: `${matchedRef.name.split(' ').slice(1).join('.').toLowerCase() || 'parent'}@example.com`,
-        presentAddress: '123 School Lane, Education City, NY 10001',
-        permanentAddress: '456 West Avenue, Hometown, CA 90210'
+        presentAddress: 'Block C, Sector 62, Noida, UP',
+        permanentAddress: 'Block C, Sector 62, Noida, UP'
       };
     } else {
       const idNum = parseInt(targetId.replace(/\D/g, '')) || 999;
       if (targetId === '1' || idNum === 1) {
         resolvedStudent = {
           student_id: '1',
-          name: 'Devon Lane',
-          email: 'devon.lane@edupro.edu',
-          phone: '+1 234 567 492',
+          name: 'Devendra Mishra',
+          email: 'devendra.mishra@edupro.edu',
+          phone: '+91 98765 43221',
           class_id: '10',
           section: 'A',
           rollNo: '42',
           admission_date: '2026-01-12',
           gender: 'Male',
           status: 'Active',
-          avatar: studentAvatar,
+          avatar: indianMan2,
           dob: '2010-05-12',
           bloodGroup: 'O+',
-          religion: 'Christianity',
-          parentName: 'Robert Lane',
-          parentOccupation: 'Senior Software Engineer',
-          parentPhone: '+1 234 567 8901',
-          parentEmail: 'robert.lane@example.com',
-          presentAddress: '123 Oak Lane, Chicago, IL 60601',
-          permanentAddress: '123 Oak Lane, Chicago, IL 60601'
+          religion: 'Hinduism',
+          parentName: 'Kailash Mishra',
+          parentOccupation: 'Senior Business Executive',
+          parentPhone: '+91 98765 43221',
+          parentEmail: 'kailash.m@example.com',
+          presentAddress: 'Gomti Nagar, Lucknow, UP',
+          permanentAddress: 'Gomti Nagar, Lucknow, UP'
         };
       } else {
         resolvedStudent = {
           student_id: targetId,
           name: `Student ${targetId}`,
           email: `student.${idNum}@edupro.edu`,
-          phone: `+1 234 567 ${String(100 + (idNum % 100)).slice(1)}`,
+          phone: `+91 98765 43${String(100 + (idNum % 100)).slice(1)}`,
           class_id: '10',
           section: 'A',
           rollNo: String(idNum % 30),
           admission_date: '2026-01-12',
           gender: idNum % 2 === 0 ? 'Female' : 'Male',
           status: 'Active',
-          avatar: `https://images.unsplash.com/photo-${[
-            '1534528741775-53994a69daeb',
-            '1539571696357-5a69c17a67c6',
-            '1494790108377-be9c29b29330',
-            '1507003211169-0a1dd7228f2d',
-            '1500648767791-00dcc994a43e',
-            '1438761681033-6461ffad8d80',
-            '1544005313-94ddf0286df2',
-            '1517841905240-472988babdf9',
-            '1506794778202-cad84cf45f1d',
-            '1522075469751-3a6694fb2f61',
-            '1524504388940-b1c1722653e1',
-            '1531746020798-e6953c6e8e04'
-          ][idNum % 12]}?w=150&h=150&fit=crop`,
+          avatar: '',
           dob: '2010-05-12',
           bloodGroup: 'O+',
-          religion: 'Christianity',
+          religion: 'Hinduism',
           parentName: 'Parent Contact',
           parentOccupation: 'Employee',
-          parentPhone: '+1 987 654 321',
+          parentPhone: `+91 98765 43${String(300 + (idNum % 100)).slice(1)}`,
           parentEmail: 'parent@example.com',
-          presentAddress: '123 School Lane, Education City, NY 10001',
-          permanentAddress: '456 West Avenue, Hometown, CA 90210'
+          presentAddress: 'Block C, Sector 62, Noida, UP',
+          permanentAddress: 'Block C, Sector 62, Noida, UP'
         };
       }
     }
   }
 
-  if (resolvedStudent && (
-    resolvedStudent.name === 'Alex Johnson' || 
-    resolvedStudent.name === 'Liam Fox' || 
-    resolvedStudent.name === 'Devon Lane' ||
-    resolvedStudent.student_id === 'STU213' || 
-    resolvedStudent.student_id === 'STU-2026-001' ||
-    resolvedStudent.student_id === 'STU101' ||
-    resolvedStudent.student_id === '1'
-  )) {
-    resolvedStudent.avatar = studentAvatar;
+  if (resolvedStudent) {
+    const isFemale = resolvedStudent.gender && resolvedStudent.gender.toLowerCase() === 'female';
+    const nameCode = (resolvedStudent.name || '').charCodeAt(0) || 0;
+    let defaultAvatar = isFemale ? indianWoman1 : indianMan1;
+    if (isFemale) {
+      defaultAvatar = nameCode % 2 === 0 ? indianWoman1 : indianWoman2;
+    } else {
+      defaultAvatar = nameCode % 2 === 0 ? indianMan1 : indianMan2;
+    }
+
+    const explicitMap = {
+      'STU101': indianMan1,
+      'STU102': indianWoman1,
+      'STU103': indianMan2,
+      'STU104': indianMan1,
+      'STU105': indianWoman2,
+      'STU106': indianWoman1,
+      'STU107': indianMan2,
+      'STU108': indianWoman2,
+      'STU109': indianWoman1,
+      'STU110': indianMan1,
+      'STU212': indianWoman2,
+      'STU213': indianMan1,
+      'STU214': indianWoman1,
+      'STU215': indianWoman2,
+      'STU216': indianMan2,
+      '1': indianMan2,
+      'STU-2026-001': indianMan1
+    };
+
+    resolvedStudent.avatar = resolvedStudent.avatar && resolvedStudent.avatar !== studentAvatar ? resolvedStudent.avatar : (explicitMap[resolvedStudent.student_id] || defaultAvatar);
   }
 
   const [studentStatus, setStudentStatus] = useState(resolvedStudent.status);
@@ -579,7 +555,7 @@ const StudentDetails = () => {
       guardian: { 
         name: resolvedStudent.parentName || 'Guardian Contact', 
         relation: 'Father', 
-        phone: resolvedStudent.parentPhone || '+1 987 654 323' 
+        phone: resolvedStudent.parentPhone || '+91 98765 43210' 
       }
     },
     bank: {
@@ -587,9 +563,7 @@ const StudentDetails = () => {
       accountNo: '8877665544',
       ifsc: 'GTB0001234'
     },
-    avatar: resolvedStudent.avatar || resolvedStudent.img || (resolvedStudent.gender?.toLowerCase() === 'female' 
-      ? 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&h=200&fit=crop'
-      : 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop')
+    avatar: resolvedStudent.avatar || resolvedStudent.img || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(resolvedStudent.name)}`
   };
 
   const handleDownload = (docName, fileType = 'PDF') => {

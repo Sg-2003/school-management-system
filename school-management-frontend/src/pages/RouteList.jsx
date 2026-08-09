@@ -3,16 +3,21 @@ import { MapPin, Plus, Search, Filter, MoreVertical, Navigation, Users, Clock, A
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SEED_ROUTES = [
-  { id: 1, name: 'North Express Route', startPoint: 'Sector 12 Mall', endPoint: 'Main Campus', totalStops: 12, vehicle: 'Bus 01', driver: 'Robert Wilson', timing: '07:30 AM', fare: '$45.00', status: 'Active' },
-  { id: 2, name: 'Downtown Shuttle', startPoint: 'City Center', endPoint: 'West Campus', totalStops: 8, vehicle: 'Bus 02', driver: 'David Miller', timing: '08:00 AM', fare: '$30.00', status: 'Active' },
-  { id: 3, name: 'Staff Loop', startPoint: 'East Suburb', endPoint: 'Admin Block', totalStops: 5, vehicle: 'Van 04', driver: 'Sarah Parker', timing: '07:00 AM', fare: '$0.00', status: 'Inactive' },
-  { id: 4, name: 'Residency Express', startPoint: 'Hills Estate', endPoint: 'Main Campus', totalStops: 15, vehicle: 'Bus 05', driver: 'Michael Chen', timing: '07:15 AM', fare: '$55.00', status: 'Active' },
-  { id: 5, name: 'South Connect', startPoint: 'Old Town', endPoint: 'Secondary Block', totalStops: 10, vehicle: 'Bus 08', driver: 'James Bond', timing: '07:45 AM', fare: '$40.00', status: 'Active' },
+  { id: 1, name: 'North Express Route', startPoint: 'Sector 12 Mall', endPoint: 'Main Campus', totalStops: 12, vehicle: 'Bus 01', driver: 'Suresh Yadav', timing: '07:30 AM', fare: '$45.00', status: 'Active' },
+  { id: 2, name: 'Downtown Shuttle', startPoint: 'City Center', endPoint: 'West Campus', totalStops: 8, vehicle: 'Bus 02', driver: 'Mukesh Tiwari', timing: '08:00 AM', fare: '$30.00', status: 'Active' },
+  { id: 3, name: 'Staff Loop', startPoint: 'East Suburb', endPoint: 'Admin Block', totalStops: 5, vehicle: 'Van 04', driver: 'Geeta Pillai', timing: '07:00 AM', fare: '$0.00', status: 'Inactive' },
+  { id: 4, name: 'Residency Express', startPoint: 'Hills Estate', endPoint: 'Main Campus', totalStops: 15, vehicle: 'Bus 05', driver: 'Ramesh Gupta', timing: '07:15 AM', fare: '$55.00', status: 'Active' },
+  { id: 5, name: 'South Connect', startPoint: 'Old Town', endPoint: 'Secondary Block', totalStops: 10, vehicle: 'Bus 08', driver: 'Karan Singh', timing: '07:45 AM', fare: '$40.00', status: 'Active' },
 ];
 
 const RouteList = () => {
   const [routes, setRoutes] = useState(() => {
     try {
+      const storedVersion = localStorage.getItem('transport_routes_version');
+      if (storedVersion !== '2026-v2') {
+        localStorage.removeItem('transport_routes');
+        localStorage.setItem('transport_routes_version', '2026-v2');
+      }
       const s = localStorage.getItem('transport_routes');
       if (s) return JSON.parse(s);
     } catch(e) {}

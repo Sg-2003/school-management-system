@@ -13,26 +13,26 @@ import janeAvatar from '../assets/jane_avatar.png';
 import robertAvatar from '../assets/robert_avatar.png';
 
 const academicProgress = [
-  { subject: 'Math', Devon: 95, Jane: 88 },
-  { subject: 'Physics', Devon: 88, Jane: 92 },
-  { subject: 'English', Devon: 85, Jane: 90 },
-  { subject: 'History', Devon: 78, Jane: 85 },
+  { subject: 'Math', Aman: 95, Divya: 88 },
+  { subject: 'Physics', Aman: 88, Divya: 92 },
+  { subject: 'English', Aman: 85, Divya: 90 },
+  { subject: 'History', Aman: 78, Divya: 85 },
 ];
 
 const childrenAttendanceData = {
-  'Devon': [
+  'Aman': [
     { name: 'Present', value: 92, color: 'var(--success)' },
     { name: 'Absent', value: 8, color: 'var(--danger)' },
   ],
-  'Jane': [
+  'Divya': [
     { name: 'Present', value: 85, color: 'var(--success)' },
     { name: 'Absent', value: 15, color: 'var(--danger)' },
   ]
 };
 
 const linkedChildren = [
-  { name: 'Devon Lane', grade: 'Grade 10A', avatar: studentAvatar, status: 'In Class', id: 1 },
-  { name: 'Jane Lane', grade: 'Grade 8B', avatar: janeAvatar, status: 'In Library', id: 2 }
+  { name: 'Aman Verma', grade: 'Grade 10A', avatar: studentAvatar, status: 'In Class', id: 1 },
+  { name: 'Divya Joshi', grade: 'Grade 8B', avatar: janeAvatar, status: 'In Library', id: 2 }
 ];
 
 const notices = [
@@ -44,14 +44,14 @@ const notices = [
 ];
 
 const feeHistory = [
-  { type: 'Term 1 Tuition', date: '01 Sep 2025', amount: '$1,200', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 01 Sep 2025. Receipt Audit: #TXN-9029-A. Status: Certified Secure.' },
-  { type: 'Bus Fee', date: '01 Sep 2025', amount: '$150', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 01 Sep 2025. Receipt Audit: #TXN-9029-B. Status: Certified Secure.' },
-  { type: 'Term 2 Tuition', date: '15 Jan 2026', amount: '$1,200', status: 'Pending', color: '#f59e0b', remarks: 'Awaiting parent checkout. Payment deadline: 15 June 2026. Account status: Active.' },
-  { type: 'Library Fine', date: '05 Feb 2026', amount: '$15', status: 'Unpaid', color: 'var(--danger)', remarks: 'Unpaid fine. Reason: Overdue physics textbooks in Grade 10 division.' },
-  { type: 'Extracurricular: Robotics', date: '10 Feb 2026', amount: '$100', status: 'Pending', color: '#f59e0b', remarks: 'Awaiting parent checkout confirmation for the summer league registration.' },
-  { type: 'Cafeteria Plan', date: '01 Sep 2025', amount: '$300', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 01 Sep 2025. Receipt Audit: #TXN-9030-A.' },
-  { type: 'Annual Uniform Fee', date: '15 Aug 2025', amount: '$250', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 15 Aug 2025. Receipt Audit: #TXN-8942-A.' },
-  { type: 'Field Trip: Science Museum', date: '12 Oct 2025', amount: '$45', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 12 Oct 2025. Receipt Audit: #TXN-8998-A.' }
+  { type: 'Term 1 Tuition', date: '01 Sep 2025', amount: '₹25,000', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 01 Sep 2025. Receipt Audit: #TXN-9029-A. Status: Certified Secure.' },
+  { type: 'Bus Fee', date: '01 Sep 2025', amount: '₹3,000', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 01 Sep 2025. Receipt Audit: #TXN-9029-B. Status: Certified Secure.' },
+  { type: 'Term 2 Tuition', date: '15 Jan 2026', amount: '₹25,000', status: 'Pending', color: '#f59e0b', remarks: 'Awaiting parent checkout. Payment deadline: 15 June 2026. Account status: Active.' },
+  { type: 'Library Fine', date: '05 Feb 2026', amount: '₹300', status: 'Unpaid', color: 'var(--danger)', remarks: 'Unpaid fine. Reason: Overdue physics textbooks in Grade 10 division.' },
+  { type: 'Extracurricular: Robotics', date: '10 Feb 2026', amount: '₹2,000', status: 'Pending', color: '#f59e0b', remarks: 'Awaiting parent checkout confirmation for the summer league registration.' },
+  { type: 'Cafeteria Plan', date: '01 Sep 2025', amount: '₹6,000', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 01 Sep 2025. Receipt Audit: #TXN-9030-A.' },
+  { type: 'Annual Uniform Fee', date: '15 Aug 2025', amount: '₹5,000', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 15 Aug 2025. Receipt Audit: #TXN-8942-A.' },
+  { type: 'Field Trip: Science Museum', date: '12 Oct 2025', amount: '₹1,000', status: 'Paid', color: 'var(--success)', remarks: 'Paid on 12 Oct 2025. Receipt Audit: #TXN-8998-A.' }
 ];
 
 const ParentDashboard = () => {
@@ -59,7 +59,7 @@ const ParentDashboard = () => {
   const location = useLocation();
   const [noticeFilter, setNoticeFilter] = useState('All');
   const [eventFilter, setEventFilter] = useState('All');
-  const [selectedChildAttendance, setSelectedChildAttendance] = useState('Devon');
+  const [selectedChildAttendance, setSelectedChildAttendance] = useState('Aman');
   const [toast, setToast] = useState(null);
   const userName = localStorage.getItem('userName') || 'Parent';
 
@@ -110,15 +110,15 @@ const ParentDashboard = () => {
               showToast("Generating comprehensive payment ledger receipts...", "info", "Payment Ledger YTD");
               const csvContent = [
                 ['Date', 'Item Description', 'Amount', 'Status', 'Payment Method'],
-                ['01 Sep 2025', 'Term 1 Tuition', '$1,200', 'Paid', 'Credit Card'],
-                ['01 Sep 2025', 'Bus Fee', '$150', 'Paid', 'Credit Card'],
-                ['15 Jan 2026', 'Term 2 Tuition', '$1,200', 'Pending', 'Awaiting Checkout'],
-                ['05 Feb 2026', 'Library Fine', '$15', 'Unpaid', 'Overdue Fine'],
-                ['10 Feb 2026', 'Extracurricular: Robotics', '$100', 'Pending', 'Awaiting Checkout'],
-                ['01 Sep 2025', 'Cafeteria Plan', '$300', 'Paid', 'Credit Card'],
-                ['15 Aug 2025', 'Annual Uniform Fee', '$250', 'Paid', 'Debit Card'],
-                ['12 Oct 2025', 'Field Trip: Science Museum', '$45', 'Paid', 'Credit Card'],
-                ['Parent Name', 'Robert Lane'],
+                ['01 Sep 2025', 'Term 1 Tuition', '₹25,000', 'Paid', 'Credit Card'],
+                ['01 Sep 2025', 'Bus Fee', '₹3,000', 'Paid', 'Credit Card'],
+                ['15 Jan 2026', 'Term 2 Tuition', '₹25,000', 'Pending', 'Awaiting Checkout'],
+                ['05 Feb 2026', 'Library Fine', '₹300', 'Unpaid', 'Overdue Fine'],
+                ['10 Feb 2026', 'Extracurricular: Robotics', '₹2,000', 'Pending', 'Awaiting Checkout'],
+                ['01 Sep 2025', 'Cafeteria Plan', '₹6,000', 'Paid', 'Credit Card'],
+                ['15 Aug 2025', 'Annual Uniform Fee', '₹5,000', 'Paid', 'Debit Card'],
+                ['12 Oct 2025', 'Field Trip: Science Museum', '₹1,000', 'Paid', 'Credit Card'],
+                ['Parent Name', 'Rajesh Verma'],
                 ['Date Exported', new Date().toLocaleDateString()]
               ].map(e => e.join(",")).join("\n");
               
@@ -148,11 +148,11 @@ const ParentDashboard = () => {
         <motion.div 
           className="card" 
           whileHover={{ y: -4 }}
-          onClick={() => showToast("Guardian Name: Robert Lane. Linked student profiles: 2 active accounts.", "info", "Guardian Profile")}
+          onClick={() => showToast("Guardian Name: Rajesh Verma. Linked student profiles: 2 active accounts.", "info", "Guardian Profile")}
           style={{ gridColumn: 'span 1', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '32px 24px', cursor: 'pointer' }}
         >
-          <img src={robertAvatar} alt="Robert Lane" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '16px', objectFit: 'cover' }} />
-          <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Robert Lane</h3>
+          <img src={robertAvatar} alt="Rajesh Verma" style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '16px', objectFit: 'cover' }} />
+          <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Rajesh Verma</h3>
           <p style={{ margin: '4px 0 16px 0', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Guardian / Father</p>
           <button 
             className="btn" 
@@ -174,14 +174,14 @@ const ParentDashboard = () => {
               value: '2', 
               icon: <Users size={24} />, 
               color: 'var(--primary)',
-              onClick: () => showToast("Robert's linked child profiles: Devon Lane (Grade 10A) and Jane Lane (Grade 8B). Both active.", "info", "Linked Students")
+              onClick: () => showToast("Rajesh's linked child profiles: Aman Verma (Grade 10A) and Divya Joshi (Grade 8B). Both active.", "info", "Linked Students")
             },
             { 
               title: 'Pending Fees', 
-              value: '$1,215', 
+              value: '₹27,300', 
               icon: <DollarSign size={24} />, 
               color: '#f59e0b',
-              onClick: () => showToast("Outstanding Balance YTD: $1,215 ($1,200 Term 2 Tuition and $15 Overdue Library Fine). Due by 15th.", "warning", "Dues Outstanding")
+              onClick: () => showToast("Outstanding Balance YTD: ₹27,300 (₹25,000 Term 2 Tuition and ₹300 Overdue Library Fine and ₹2,000 Extracurricular). Due by 15th.", "warning", "Dues Outstanding")
             },
             { 
               title: 'Unread Messages', 
@@ -224,13 +224,13 @@ const ParentDashboard = () => {
               onChange={(e) => {
                 const val = e.target.value;
                 setSelectedChildAttendance(val);
-                const pct = val === 'Devon' ? '92%' : '85%';
+                const pct = val === 'Aman' ? '92%' : '85%';
                 showToast(`Loaded ${val}'s attendance report. Semester average: ${pct}.`, "info", "Attendance Logs");
               }}
               style={{ border: 'none', backgroundColor: 'var(--bg-body)', padding: '4px 8px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' }}
             >
-              <option value="Devon">Devon</option>
-              <option value="Jane">Jane</option>
+              <option value="Aman">Aman</option>
+              <option value="Divya">Divya</option>
             </select>
           </div>
           <div style={{ width: '100%', height: '250px' }}>
@@ -282,20 +282,20 @@ const ParentDashboard = () => {
                 <Tooltip cursor={{ fill: 'var(--bg-body)' }} contentStyle={{ borderRadius: '12px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-card)', fontWeight: 600 }} />
                 <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '0.8rem', fontWeight: 600 }} />
                 <Bar 
-                  dataKey="Devon" 
+                  dataKey="Aman" 
                   fill="var(--primary)" 
                   radius={[4, 4, 0, 0]} 
                   barSize={16} 
                   style={{ cursor: 'pointer' }}
-                  onClick={(data) => showToast(`Devon scored ${data.Devon}% in ${data.subject}.`, "success", `Devon - ${data.subject}`)}
+                  onClick={(data) => showToast(`Aman scored ${data.Aman}% in ${data.subject}.`, "success", `Aman - ${data.subject}`)}
                 />
                 <Bar 
-                  dataKey="Jane" 
+                  dataKey="Divya" 
                   fill="#f59e0b" 
                   radius={[4, 4, 0, 0]} 
                   barSize={16} 
                   style={{ cursor: 'pointer' }}
-                  onClick={(data) => showToast(`Jane scored ${data.Jane}% in ${data.subject}.`, "warning", `Jane - ${data.subject}`)}
+                  onClick={(data) => showToast(`Divya scored ${data.Divya}% in ${data.subject}.`, "warning", `Divya - ${data.subject}`)}
                 />
               </BarChart>
             </ResponsiveContainer>

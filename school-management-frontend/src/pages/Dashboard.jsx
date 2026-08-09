@@ -63,20 +63,20 @@ const Dashboard = () => {
 
   const teacherDatasets = {
     'All Departments': [
-      { name: 'Theresa Webb', role: 'Mathematics', rating: 4.9, img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' },
-      { name: 'Darrell Steward', role: 'Science', rating: 4.8, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' },
-      { name: 'Jane Cooper', role: 'English', rating: 4.8, img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop' },
-      { name: 'Savannah Nguyen', role: 'History', rating: 4.7, img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop' },
-      { name: 'Eleanor Pena', role: 'Art', rating: 4.7, img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop' }
+      { name: 'Priya Malhotra', role: 'Mathematics', rating: 4.9, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Malhotra' },
+      { name: 'Vikram Nair', role: 'Science', rating: 4.8, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Vikram%20Nair' },
+      { name: 'Sunita Sharma', role: 'English', rating: 4.8, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Sharma' },
+      { name: 'Meena Iyer', role: 'History', rating: 4.7, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Meena%20Iyer' },
+      { name: 'Kavya Reddy', role: 'Art', rating: 4.7, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Kavya%20Reddy' }
     ],
     'Science & Math': [
-      { name: 'Theresa Webb', role: 'Mathematics', rating: 4.9, img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' },
-      { name: 'Darrell Steward', role: 'Science', rating: 4.8, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' }
+      { name: 'Priya Malhotra', role: 'Mathematics', rating: 4.9, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Malhotra' },
+      { name: 'Vikram Nair', role: 'Science', rating: 4.8, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Vikram%20Nair' }
     ],
     'Humanities & Arts': [
-      { name: 'Jane Cooper', role: 'English', rating: 4.8, img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop' },
-      { name: 'Savannah Nguyen', role: 'History', rating: 4.7, img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop' },
-      { name: 'Eleanor Pena', role: 'Art', rating: 4.7, img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop' }
+      { name: 'Sunita Sharma', role: 'English', rating: 4.8, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Sharma' },
+      { name: 'Meena Iyer', role: 'History', rating: 4.7, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Meena%20Iyer' },
+      { name: 'Kavya Reddy', role: 'Art', rating: 4.7, img: 'https://api.dicebear.com/7.x/initials/svg?seed=Kavya%20Reddy' }
     ]
   };
 
@@ -100,30 +100,30 @@ const Dashboard = () => {
 
   const studentDatasets = {
     'Top Performers': [
-      { name: 'Brooklyn Simmons', grade: 'Grade 10', marks: '98%', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop' },
-      { name: 'Floyd Miles', grade: 'Grade 9', marks: '97%', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop' },
-      { name: 'Courtney Henry', grade: 'Grade 11', marks: '96%', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&h=150&fit=crop' },
-      { name: 'Kathryn Murphy', grade: 'Grade 12', marks: '95%', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop' },
-      { name: 'Annette Black', grade: 'Grade 8', marks: '94%', img: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&h=150&fit=crop' }
+      { name: 'Divya Joshi', grade: 'Grade 10', marks: '98%', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi' },
+      { name: 'Rahul Kapoor', grade: 'Grade 9', marks: '97%', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Rahul%20Kapoor' },
+      { name: 'Arjun Reddy', grade: 'Grade 11', marks: '96%', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Arjun%20Reddy' },
+      { name: 'Neha Sharma', grade: 'Grade 12', marks: '95%', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Neha%20Sharma' },
+      { name: 'Isha Sen', grade: 'Grade 8', marks: '94%', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Isha%20Sen' }
     ],
     'Math Olympiad': [
-      { name: 'Annette Black', grade: 'Grade 8', marks: '1st Place', img: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&h=150&fit=crop' },
-      { name: 'Brooklyn Simmons', grade: 'Grade 10', marks: '2nd Place', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop' },
-      { name: 'Courtney Henry', grade: 'Grade 11', marks: 'Honorable Mention', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&h=150&fit=crop' }
+      { name: 'Isha Sen', grade: 'Grade 8', marks: '1st Place', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Isha%20Sen' },
+      { name: 'Divya Joshi', grade: 'Grade 10', marks: '2nd Place', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi' },
+      { name: 'Arjun Reddy', grade: 'Grade 11', marks: 'Honorable Mention', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Arjun%20Reddy' }
     ],
     'Sports Captains': [
-      { name: 'Floyd Miles', grade: 'Grade 9', marks: 'Football Captain', img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop' },
-      { name: 'Kathryn Murphy', grade: 'Grade 12', marks: 'Basketball Captain', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop' },
-      { name: 'Brooklyn Simmons', grade: 'Grade 10', marks: 'Volleyball Captain', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop' }
+      { name: 'Rahul Kapoor', grade: 'Grade 9', marks: 'Football Captain', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Rahul%20Kapoor' },
+      { name: 'Neha Sharma', grade: 'Grade 12', marks: 'Basketball Captain', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Neha%20Sharma' },
+      { name: 'Divya Joshi', grade: 'Grade 10', marks: 'Volleyball Captain', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi' }
     ]
   };
 
   const [leaveRequests, setLeaveRequests] = useState(() => {
     const seed = [
-      { name: 'Darlene Robertson', date: '10 April', reason: 'Medical Leave', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop' },
-      { name: 'Esther Howard', date: '10 April', reason: 'Family Emergency', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop' },
-      { name: 'Kristin Watson', date: '10 April', reason: 'Sick Leave', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' },
-      { name: 'Albert Flores', date: '12 April', reason: 'Personal Leave', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' },
+      { name: 'Meera Patel', date: '10 April', reason: 'Medical Leave', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Meera%20Patel' },
+      { name: 'Kavita Krishnan', date: '10 April', reason: 'Family Emergency', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Kavita%20Krishnan' },
+      { name: 'Aditi Nair', date: '10 April', reason: 'Sick Leave', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair' },
+      { name: 'Aman Verma', date: '12 April', reason: 'Personal Leave', img: 'https://api.dicebear.com/7.x/initials/svg?seed=Aman%20Verma' },
     ];
     try {
       const saved = localStorage.getItem('leave_requests');
@@ -184,11 +184,11 @@ const Dashboard = () => {
       const fromDate = targetReq ? targetReq.from : new Date().toISOString().split('T')[0];
       const toDate = targetReq ? targetReq.to : new Date().toISOString().split('T')[0];
       const avatarUrl = targetReq ? targetReq.avatar : (
-        name === 'Albert Flores' ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' :
-        name === 'Darlene Robertson' ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop' :
-        name === 'Esther Howard' ? 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop' :
-        name === 'Kristin Watson' ? 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' :
-        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop'
+        name === 'Aman Verma' ? 'https://api.dicebear.com/7.x/initials/svg?seed=Aman%20Verma' :
+        name === 'Meera Patel' ? 'https://api.dicebear.com/7.x/initials/svg?seed=Meera%20Patel' :
+        name === 'Kavita Krishnan' ? 'https://api.dicebear.com/7.x/initials/svg?seed=Kavita%20Krishnan' :
+        name === 'Aditi Nair' ? 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair' :
+        `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`
       );
 
       const existingId = targetReq ? targetReq.id : Date.now();
@@ -220,7 +220,7 @@ const Dashboard = () => {
       const s = await getStats();
       setStats(s);
       const n = await getNotices();
-      setNotices(n.slice(0, 5));
+      setNotices(n);
     } catch (err) { console.error(err); }
   };
 
@@ -580,7 +580,7 @@ const Dashboard = () => {
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', overflowY: 'auto', paddingRight: '4px' }}>
-              {notices.filter(notice => noticeFilter === 'All' || notice.type === noticeFilter).map((notice, i) => {
+              {notices.filter(notice => noticeFilter === 'All' || notice.type === noticeFilter).slice(0, 5).map((notice, i) => {
                 let Icon = Megaphone;
                 let color = 'var(--primary)';
                 if (notice.type === 'alert') { Icon = AlertCircle; color = 'var(--danger)'; }

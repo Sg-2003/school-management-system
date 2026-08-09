@@ -9,86 +9,103 @@ import {
 import { 
   RoomAppearanceModal, getRoomAppearance, applyRoomAppearanceStyles 
 } from '../components/RoomAppearanceModal';
+import { HostelApi } from '../services/service';
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+import indianMan2 from '../assets/indian_man_portrait_2.png';
+import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import indianWoman2 from '../assets/indian_woman_portrait_2.png';
 
 const ALLOTMENT_AVATARS = {
-  'John Smith': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-  'Sarah Jenkins': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-  'Michael Ross': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-  'Emma Watson': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop',
-  'David Miller': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
-  'Default': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop'
+  'Aman Verma': indianMan1,
+  'Neha Sharma': indianWoman2,
+  'Rohan Das': indianMan2,
+  'Divya Joshi': indianWoman1,
+  'Rajesh Kumar': indianMan1,
+  'Default': indianMan2
 };
 
 const DEFAULT_STUDENTS = [
-  { student_id: 'STU101', name: 'Liam Fox', gender: 'Male', class_id: '10', section: 'A', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop' },
-  { student_id: 'STU102', name: 'Jane Cooper', gender: 'Female', class_id: '11', section: 'A', avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&h=200&fit=crop' },
-  { student_id: 'STU103', name: 'Wade Warren', gender: 'Male', class_id: '10', section: 'A', avatar: 'https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=200&h=200&fit=crop' },
-  { student_id: 'STU104', name: 'Cody Fisher', gender: 'Male', class_id: '12', section: 'B', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&h=200&fit=crop' },
-  { student_id: 'STU105', name: 'Esther Howard', gender: 'Female', class_id: '10', section: 'A', avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop' },
-  { student_id: 'STU106', name: 'Brooklyn Simmons', gender: 'Female', class_id: '09', section: 'C', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop' },
-  { student_id: 'STU107', name: 'Guy Hawkins', gender: 'Male', class_id: '11', section: 'B', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop' },
-  { student_id: 'STU108', name: 'Leslie Alexander', gender: 'Female', class_id: '12', section: 'A', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop' },
-  { student_id: 'STU109', name: 'Jenny Wilson', gender: 'Female', class_id: '10', section: 'D', avatar: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=200&h=200&fit=crop' },
-  { student_id: 'STU110', name: 'Cameron Williamson', gender: 'Male', class_id: '11', section: 'A', avatar: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=200&h=200&fit=crop' },
-  { student_id: 'STU212', name: 'Sarah Williams', gender: 'Female', class_id: '11', section: 'A', avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&h=200&fit=crop' },
-  { student_id: 'STU213', name: 'Alex Johnson', gender: 'Male', class_id: '10', section: 'B', avatar: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&h=200&fit=crop' },
-  { student_id: 'STU214', name: 'Maria Garcia', gender: 'Female', class_id: '12', section: 'C', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop' },
-  { student_id: 'STU215', name: 'Nina Patel', gender: 'Female', class_id: '09', section: 'A', avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop' },
-  { student_id: 'STU216', name: 'Omar Khan', gender: 'Male', class_id: '10', section: 'C', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&h=200&fit=crop' }
+  { student_id: 'STU101', name: 'Aman Verma', gender: 'Male', class_id: '10', section: 'A', avatar: indianMan1 },
+  { student_id: 'STU102', name: 'Divya Joshi', gender: 'Female', class_id: '11', section: 'A', avatar: indianWoman1 },
+  { student_id: 'STU103', name: 'Rohan Das', gender: 'Male', class_id: '10', section: 'A', avatar: indianMan2 },
+  { student_id: 'STU104', name: 'Karan Mehta', gender: 'Male', class_id: '12', section: 'B', avatar: indianMan1 },
+  { student_id: 'STU105', name: 'Isha Sen', gender: 'Female', class_id: '10', section: 'A', avatar: indianWoman2 },
+  { student_id: 'STU106', name: 'Aditi Nair', gender: 'Female', class_id: '09', section: 'C', avatar: indianWoman1 },
+  { student_id: 'STU107', name: 'Rahul Kapoor', gender: 'Male', class_id: '11', section: 'B', avatar: indianMan2 },
+  { student_id: 'STU108', name: 'Neha Sharma', gender: 'Female', class_id: '12', section: 'A', avatar: indianWoman2 },
+  { student_id: 'STU109', name: 'Riya Banerjee', gender: 'Female', class_id: '10', section: 'D', avatar: indianWoman1 },
+  { student_id: 'STU110', name: 'Arjun Reddy', gender: 'Male', class_id: '11', section: 'A', avatar: indianMan1 },
+  { student_id: 'STU212', name: 'Kavita Krishnan', gender: 'Female', class_id: '11', section: 'A', avatar: indianWoman2 },
+  { student_id: 'STU213', name: 'Abhishek Singh', gender: 'Male', class_id: '10', section: 'B', avatar: indianMan1 },
+  { student_id: 'STU214', name: 'Meera Patel', gender: 'Female', class_id: '12', section: 'C', avatar: indianWoman1 },
+  { student_id: 'STU215', name: 'Nisha Patel', gender: 'Female', class_id: '09', section: 'A', avatar: indianWoman2 },
+  { student_id: 'STU216', name: 'Sameer Khan', gender: 'Male', class_id: '10', section: 'C', avatar: indianMan2 }
 ];
 
-const MOCK_STUDENTS_POOL = [
-  { name: 'Ethan Hunt', id: 'ADM-2026-001', class: '10-A', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Olivia Wilde', id: 'ADM-2026-002', class: '10-B', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Liam Neeson', id: 'ADM-2026-003', class: '11-A', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Emma Stone', id: 'ADM-2026-004', class: '12-C', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Noah Centineo', id: 'ADM-2026-005', class: '9-B', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Sophia Loren', id: 'ADM-2026-006', class: '10-C', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Jackson Rathbone', id: 'ADM-2026-007', class: '11-B', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Mia Farrow', id: 'ADM-2026-008', class: '12-A', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Lucas Hedges', id: 'ADM-2026-009', class: '9-A', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Isabella Rossellini', id: 'ADM-2026-010', class: '10-A', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Mason Mount', id: 'ADM-2026-011', class: '11-C', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Amelia Earhart', id: 'ADM-2026-012', class: '12-B', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Logan Lerman', id: 'ADM-2026-013', class: '10-B', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Harper Lee', id: 'ADM-2026-014', class: '11-A', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Jacob Elordi', id: 'ADM-2026-015', class: '12-A', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Evelyn Glennie', id: 'ADM-2026-016', class: '9-B', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Ethan Hawke', id: 'ADM-2026-017', class: '10-C', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Abigail Breslin', id: 'ADM-2026-018', class: '11-C', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Daniel Radcliffe', id: 'ADM-2026-019', class: '12-C', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Emily Blunt', id: 'ADM-2026-020', class: '10-A', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Matthew McConaughey', id: 'ADM-2026-021', class: '11-B', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Elizabeth Olsen', id: 'ADM-2026-022', class: '12-B', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Alexander Skarsgard', id: 'ADM-2026-023', class: '9-C', avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Scarlett Johansson', id: 'ADM-2026-024', class: '10-B', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'William Levy', id: 'ADM-2026-025', class: '11-A', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Victoria Beckham', id: 'ADM-2026-026', class: '12-A', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Henry Cavill', id: 'ADM-2026-027', class: '10-C', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Grace Kelly', id: 'ADM-2026-028', class: '11-C', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'James Dean', id: 'ADM-2026-029', class: '12-C', avatar: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Audrey Hepburn', id: 'ADM-2026-030', class: '9-A', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Marlon Brando', id: 'ADM-2026-031', class: '10-A', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Vivien Leigh', id: 'ADM-2026-032', class: '11-B', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Paul Newman', id: 'ADM-2026-033', class: '12-B', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Ingrid Bergman', id: 'ADM-2026-034', class: '10-B', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Humphrey Bogart', id: 'ADM-2026-035', class: '11-A', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Bette Davis', id: 'ADM-2026-036', class: '12-A', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Cary Grant', id: 'ADM-2026-037', class: '9-B', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Katharine Hepburn', id: 'ADM-2026-038', class: '10-C', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Clark Gable', id: 'ADM-2026-039', class: '11-C', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Judy Garland', id: 'ADM-2026-040', class: '12-C', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Gregory Peck', id: 'ADM-2026-041', class: '10-A', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Joan Crawford', id: 'ADM-2026-042', class: '11-B', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Spencer Tracy', id: 'ADM-2026-043', class: '12-B', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Elizabeth Taylor', id: 'ADM-2026-044', class: '9-C', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'Laurence Olivier', id: 'ADM-2026-045', class: '10-B', avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Greta Garbo', id: 'ADM-2026-046', class: '11-A', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'James Stewart', id: 'ADM-2026-047', class: '12-A', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Ginger Rogers', id: 'ADM-2026-048', class: '10-C', avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&h=150&fit=crop', gender: 'Female' },
-  { name: 'John Wayne', id: 'ADM-2026-049', class: '11-C', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop', gender: 'Male' },
-  { name: 'Shirley Temple', id: 'ADM-2026-050', class: '12-C', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop', gender: 'Female' }
+const RAW_MOCK_STUDENTS_POOL = [
+  { name: 'Aarav Gupta', id: 'ADM-2026-001', class: '10-A', avatar: '', gender: 'Male' },
+  { name: 'Aaradhya Sen', id: 'ADM-2026-002', class: '10-B', avatar: '', gender: 'Female' },
+  { name: 'Kabir Nair', id: 'ADM-2026-003', class: '11-A', avatar: '', gender: 'Male' },
+  { name: 'Ananya Rao', id: 'ADM-2026-004', class: '12-C', avatar: '', gender: 'Female' },
+  { name: 'Vihaan Joshi', id: 'ADM-2026-005', class: '9-B', avatar: '', gender: 'Male' },
+  { name: 'Diya Mehta', id: 'ADM-2026-006', class: '10-C', avatar: '', gender: 'Female' },
+  { name: 'Advik Reddy', id: 'ADM-2026-007', class: '11-B', avatar: '', gender: 'Male' },
+  { name: 'Ishaanvi Bose', id: 'ADM-2026-008', class: '12-A', avatar: '', gender: 'Female' },
+  { name: 'Reyansh Patel', id: 'ADM-2026-009', class: '9-A', avatar: '', gender: 'Male' },
+  { name: 'Myra Iyer', id: 'ADM-2026-010', class: '10-A', avatar: '', gender: 'Female' },
+  { name: 'Atharv Singh', id: 'ADM-2026-011', class: '11-C', avatar: '', gender: 'Male' },
+  { name: 'Aadya Sharma', id: 'ADM-2026-012', class: '12-B', avatar: '', gender: 'Female' },
+  { name: 'Shaurya Verma', id: 'ADM-2026-013', class: '10-B', avatar: '', gender: 'Male' },
+  { name: 'Avani Krishnan', id: 'ADM-2026-014', class: '11-A', avatar: '', gender: 'Female' },
+  { name: 'Ishaan Kapoor', id: 'ADM-2026-015', class: '12-A', avatar: '', gender: 'Male' },
+  { name: 'Saisha Mukherjee', id: 'ADM-2026-016', class: '9-B', avatar: '', gender: 'Female' },
+  { name: 'Rudra Dubey', id: 'ADM-2026-017', class: '10-C', avatar: '', gender: 'Male' },
+  { name: 'Prisha Choudhury', id: 'ADM-2026-018', class: '11-C', avatar: '', gender: 'Female' },
+  { name: 'Kian Saxena', id: 'ADM-2026-019', class: '12-C', avatar: '', gender: 'Male' },
+  { name: 'Riya Chatterjee', id: 'ADM-2026-020', class: '10-A', avatar: '', gender: 'Female' },
+  { name: 'Aravind Menon', id: 'ADM-2026-021', class: '11-B', avatar: '', gender: 'Male' },
+  { name: 'Sneha Deshmukh', id: 'ADM-2026-022', class: '12-B', avatar: '', gender: 'Female' },
+  { name: 'Devendra Mishra', id: 'ADM-2026-023', class: '9-C', avatar: '', gender: 'Male' },
+  { name: 'Tanvi Bhatia', id: 'ADM-2026-024', class: '10-B', avatar: '', gender: 'Female' },
+  { name: 'Ranveer Gill', id: 'ADM-2026-025', class: '11-A', avatar: '', gender: 'Male' },
+  { name: 'Divya Khanna', id: 'ADM-2026-026', class: '12-A', avatar: '', gender: 'Female' },
+  { name: 'Arjun Ranawat', id: 'ADM-2026-027', class: '10-C', avatar: '', gender: 'Male' },
+  { name: 'Meera Roy', id: 'ADM-2026-028', class: '11-C', avatar: '', gender: 'Female' },
+  { name: 'Yashwardhan Rathore', id: 'ADM-2026-029', class: '12-C', avatar: '', gender: 'Male' },
+  { name: 'Shruti Pillai', id: 'ADM-2026-030', class: '9-A', avatar: '', gender: 'Female' },
+  { name: 'Aditya Gokhale', id: 'ADM-2026-031', class: '10-A', avatar: '', gender: 'Male' },
+  { name: 'Kavya Hegde', id: 'ADM-2026-032', class: '11-B', avatar: '', gender: 'Female' },
+  { name: 'Vivek Trivedi', id: 'ADM-2026-033', class: '12-B', avatar: '', gender: 'Male' },
+  { name: 'Neela Saxena', id: 'ADM-2026-034', class: '10-B', avatar: '', gender: 'Female' },
+  { name: 'Harish Rawat', id: 'ADM-2026-035', class: '11-A', avatar: '', gender: 'Male' },
+  { name: 'Bhavna Chauhan', id: 'ADM-2026-036', class: '12-A', avatar: '', gender: 'Female' },
+  { name: 'Chirag Shetty', id: 'ADM-2026-037', class: '9-B', avatar: '', gender: 'Male' },
+  { name: 'Kiara Malhotra', id: 'ADM-2026-038', class: '10-C', avatar: '', gender: 'Female' },
+  { name: 'Chetan Pandey', id: 'ADM-2026-039', class: '11-C', avatar: '', gender: 'Male' },
+  { name: 'Jyoti Kulkarni', id: 'ADM-2026-040', class: '12-C', avatar: '', gender: 'Female' },
+  { name: 'Gautam Varma', id: 'ADM-2026-041', class: '10-A', avatar: '', gender: 'Male' },
+  { name: 'Janvi Ahluwalia', id: 'ADM-2026-042', class: '11-B', avatar: '', gender: 'Female' },
+  { name: 'Siddharth Nambiar', id: 'ADM-2026-043', class: '12-B', avatar: '', gender: 'Male' },
+  { name: 'Esha Deol', id: 'ADM-2026-044', class: '9-C', avatar: '', gender: 'Female' },
+  { name: 'Lakshya Mahajan', id: 'ADM-2026-045', class: '10-B', avatar: '', gender: 'Male' },
+  { name: 'Geeta Johri', id: 'ADM-2026-046', class: '11-A', avatar: '', gender: 'Female' },
+  { name: 'Jatin Sodhi', id: 'ADM-2026-047', class: '12-A', avatar: '', gender: 'Male' },
+  { name: 'Gauri Sen', id: 'ADM-2026-048', class: '10-C', avatar: '', gender: 'Female' },
+  { name: 'Jaspreet Singh', id: 'ADM-2026-049', class: '11-C', avatar: '', gender: 'Male' },
+  { name: 'Shikha Agrawal', id: 'ADM-2026-050', class: '12-C', avatar: '', gender: 'Female' }
 ];
+
+const MOCK_STUDENTS_POOL = RAW_MOCK_STUDENTS_POOL.map(s => {
+  const isMale = s.gender === 'Male';
+  const nameCode = (s.name || '').charCodeAt(0) || 0;
+  let avatarAsset = isMale ? indianMan1 : indianWoman1;
+  if (isMale) {
+    avatarAsset = nameCode % 2 === 0 ? indianMan1 : indianMan2;
+  } else {
+    avatarAsset = nameCode % 2 === 0 ? indianWoman1 : indianWoman2;
+  }
+  return { ...s, avatar: avatarAsset };
+});
 
 const SEED_ROOMS = [
   { id: 1, room_no: '101', floor: '1st', type: 'Premium', capacity: 2, occupied: 2, status: 'Full', amenities: ['AC', 'Attached Bath'] },
@@ -120,7 +137,7 @@ const populateRoomsWithUniqueStudents = (roomsList) => {
           name: `Student #${randId}`,
           id: `ADM-2026-${randId}`,
           class: '10-A',
-          avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop',
+          avatar: indianMan2,
           gender: 'Male'
         });
       }
@@ -134,11 +151,11 @@ const populateRoomsWithUniqueStudents = (roomsList) => {
 
 const HostelAllotment = () => {
   const defaultAllotments = [
-    { id: 1, studentName: 'John Smith', admissionId: 'ADM-2026-001', hostel: 'Elite Boys Block A', roomNo: '101', type: 'Premium', allotDate: '2026-01-15', status: 'Active', color: '#4f46e5' },
-    { id: 2, studentName: 'Sarah Jenkins', admissionId: 'ADM-2026-045', hostel: 'Elite Girls Block B', roomNo: '205', type: 'Standard', allotDate: '2026-01-18', status: 'Active', color: '#ec4899' },
-    { id: 3, studentName: 'Michael Ross', admissionId: 'ADM-2026-089', hostel: 'Elite Boys Block A', roomNo: '302', type: 'Economy', allotDate: '2026-02-05', status: 'Active', color: '#4f46e5' },
-    { id: 4, studentName: 'Emma Watson', admissionId: 'ADM-2026-122', hostel: 'Elite Girls Block B', roomNo: '102', type: 'Premium', allotDate: '2026-02-10', status: 'Active', color: '#ec4899' },
-    { id: 5, studentName: 'David Miller', admissionId: 'ADM-2026-156', hostel: 'Staff Residency', roomNo: 'S-10', type: 'Premium', allotDate: '2026-02-15', status: 'Pending', color: '#10b981' }
+    { id: 1, studentName: 'Aman Verma', admissionId: 'ADM-2026-001', hostel: 'Elite Boys Block A', roomNo: '101', type: 'Premium', allotDate: '2026-01-15', status: 'Active', color: '#4f46e5' },
+    { id: 2, studentName: 'Neha Sharma', admissionId: 'ADM-2026-045', hostel: 'Elite Girls Block B', roomNo: '205', type: 'Standard', allotDate: '2026-01-18', status: 'Active', color: '#ec4899' },
+    { id: 3, studentName: 'Rohan Das', admissionId: 'ADM-2026-089', hostel: 'Elite Boys Block A', roomNo: '302', type: 'Economy', allotDate: '2026-02-05', status: 'Active', color: '#4f46e5' },
+    { id: 4, studentName: 'Divya Joshi', admissionId: 'ADM-2026-122', hostel: 'Elite Girls Block B', roomNo: '102', type: 'Premium', allotDate: '2026-02-10', status: 'Active', color: '#ec4899' },
+    { id: 5, studentName: 'Rajesh Kumar', admissionId: 'ADM-2026-156', hostel: 'Staff Residency', roomNo: 'S-10', type: 'Premium', allotDate: '2026-02-15', status: 'Pending', color: '#10b981' }
   ];
 
   const [students, setStudents] = useState(() => {
@@ -148,9 +165,9 @@ const HostelAllotment = () => {
 
   const [rooms, setRooms] = useState(() => {
     const storedVersion = localStorage.getItem('hostel_rooms_version');
-    if (storedVersion !== '2026-rooms-v8') {
+    if (storedVersion !== '2026-rooms-v9') {
       localStorage.removeItem('hostel_rooms');
-      localStorage.setItem('hostel_rooms_version', '2026-rooms-v8');
+      localStorage.setItem('hostel_rooms_version', '2026-rooms-v9');
     }
 
     const saved = localStorage.getItem('hostel_rooms');
@@ -162,9 +179,9 @@ const HostelAllotment = () => {
 
   const [allotments, setAllotments] = useState(() => {
     const storedAllotmentsVersion = localStorage.getItem('hostel_allotments_version');
-    if (storedAllotmentsVersion !== '2026-allotments-v8') {
+    if (storedAllotmentsVersion !== '2026-allotments-v9') {
       localStorage.removeItem('hostel_allotments');
-      localStorage.setItem('hostel_allotments_version', '2026-allotments-v8');
+      localStorage.setItem('hostel_allotments_version', '2026-allotments-v9');
     }
 
     const savedAllotments = localStorage.getItem('hostel_allotments');
@@ -188,7 +205,7 @@ const HostelAllotment = () => {
       if (room.occupants) {
         room.occupants.forEach(occ => {
           const existing = loadedAllotments.find(a => a.admissionId === occ.id && a.roomNo === room.room_no);
-          const isFemale = occ.gender === 'Female' || ['Olivia Wilde', 'Emma Stone', 'Sophia Loren', 'Mia Farrow', 'Amelia Earhart', 'Harper Lee', 'Evelyn Glennie', 'Abigail Breslin', 'Emily Blunt', 'Elizabeth Olsen', 'Scarlett Johansson', 'Victoria Beckham', 'Grace Kelly', 'Audrey Hepburn', 'Vivien Leigh', 'Ingrid Bergman', 'Bette Davis', 'Katharine Hepburn', 'Judy Garland', 'Joan Crawford', 'Elizabeth Taylor', 'Greta Garbo', 'Ginger Rogers', 'Shirley Temple', 'Jane Cooper', 'Esther Howard', 'Brooklyn Simmons', 'Leslie Alexander', 'Jenny Wilson', 'Sarah Williams', 'Maria Garcia', 'Nina Patel'].includes(occ.name);
+          const isFemale = occ.gender === 'Female' || ['Aaradhya Sen', 'Ananya Rao', 'Diya Mehta', 'Ishaanvi Bose', 'Aadya Sharma', 'Avani Krishnan', 'Saisha Mukherjee', 'Prisha Choudhury', 'Riya Chatterjee', 'Sneha Deshmukh', 'Tanvi Bhatia', 'Divya Khanna', 'Meera Roy', 'Shruti Pillai', 'Kavya Hegde', 'Neela Saxena', 'Bhavna Chauhan', 'Kiara Malhotra', 'Jyoti Kulkarni', 'Janvi Ahluwalia', 'Esha Deol', 'Geeta Johri', 'Gauri Sen', 'Shikha Agrawal', 'Divya Joshi', 'Isha Sen', 'Aditi Nair', 'Neha Sharma', 'Riya Banerjee', 'Kavita Krishnan', 'Meera Patel', 'Nisha Patel'].includes(occ.name);
           
           derivedAllotments.push({
             id: existing ? existing.id : nextId++,
@@ -301,7 +318,7 @@ const HostelAllotment = () => {
           if (room.occupants) {
             room.occupants.forEach(occ => {
               const existing = loadedAllotments.find(a => a.admissionId === occ.id && a.roomNo === room.room_no);
-              const isFemale = occ.gender === 'Female' || ['Olivia Wilde', 'Emma Stone', 'Sophia Loren', 'Mia Farrow', 'Amelia Earhart', 'Harper Lee', 'Evelyn Glennie', 'Abigail Breslin', 'Emily Blunt', 'Elizabeth Olsen', 'Scarlett Johansson', 'Victoria Beckham', 'Grace Kelly', 'Audrey Hepburn', 'Vivien Leigh', 'Ingrid Bergman', 'Bette Davis', 'Katharine Hepburn', 'Judy Garland', 'Joan Crawford', 'Elizabeth Taylor', 'Greta Garbo', 'Ginger Rogers', 'Shirley Temple', 'Jane Cooper', 'Esther Howard', 'Brooklyn Simmons', 'Leslie Alexander', 'Jenny Wilson', 'Sarah Williams', 'Maria Garcia', 'Nina Patel'].includes(occ.name);
+              const isFemale = occ.gender === 'Female' || ['Aaradhya Sen', 'Ananya Rao', 'Diya Mehta', 'Ishaanvi Bose', 'Aadya Sharma', 'Avani Krishnan', 'Saisha Mukherjee', 'Prisha Choudhury', 'Riya Chatterjee', 'Sneha Deshmukh', 'Tanvi Bhatia', 'Divya Khanna', 'Meera Roy', 'Shruti Pillai', 'Kavya Hegde', 'Neela Saxena', 'Bhavna Chauhan', 'Kiara Malhotra', 'Jyoti Kulkarni', 'Janvi Ahluwalia', 'Esha Deol', 'Geeta Johri', 'Gauri Sen', 'Shikha Agrawal', 'Divya Joshi', 'Isha Sen', 'Aditi Nair', 'Neha Sharma', 'Riya Banerjee', 'Kavita Krishnan', 'Meera Patel', 'Nisha Patel'].includes(occ.name);
               
               derivedAllotments.push({
                 id: existing ? existing.id : nextId++,
@@ -335,6 +352,34 @@ const HostelAllotment = () => {
       observer.disconnect();
     };
   }, [students]);
+
+  // Fetch allotments from backend on mount and merge with local rooms-derived allotments
+  useEffect(() => {
+    HostelApi.getAll()
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          // Map DB allotments to component shape
+          const dbAllotments = data.map((row, idx) => ({
+            id: row.id || idx + 1,
+            studentName: row.student_id || 'Unknown',
+            admissionId: row.student_id || '',
+            hostel: row.block || 'Elite Boys Block A',
+            roomNo: row.room_no || '',
+            type: 'Standard',
+            allotDate: '2026-01-15',
+            status: row.fee_status === 'Paid' ? 'Active' : 'Pending',
+            color: '#4f46e5'
+          }));
+          setAllotments(prev => {
+            // Merge: prefer DB records but keep local-only ones too
+            const dbIds = new Set(dbAllotments.map(a => String(a.id)));
+            const localOnly = prev.filter(a => !dbIds.has(String(a.id)));
+            return [...dbAllotments, ...localOnly];
+          });
+        }
+      })
+      .catch(() => { /* keep localStorage state */ });
+  }, []);
 
   const { isDark, palette, spacing } = applyRoomAppearanceStyles(appearance, systemDark);
 
@@ -390,6 +435,14 @@ const HostelAllotment = () => {
 
     const updated = [allot, ...allotments];
     syncAllotmentsAndRooms(updated);
+
+    // Sync new allotment to backend database
+    HostelApi.assignBed({
+      room_no: allot.roomNo,
+      student_id: allot.admissionId,
+      block: allot.hostel,
+      fee_status: 'Paid'
+    }).catch(() => {});
 
     setShowAllotModal(false);
     setNewAllotment({ student: '', admissionId: '', hostel: 'Elite Boys Block A', room: '', type: 'Standard', date: new Date().toISOString().split('T')[0] });
@@ -830,7 +883,7 @@ const HostelAllotment = () => {
                                       key={room.id}
                                       onClick={() => {
                                         const studentObj = (students.length > 0 ? students : DEFAULT_STUDENTS).find(s => s.name === newAllotment.student || s.student_id === newAllotment.admissionId);
-                                        const isFemale = studentObj?.gender === 'Female' || ['Olivia Wilde', 'Emma Stone', 'Sophia Loren', 'Mia Farrow', 'Amelia Earhart', 'Harper Lee', 'Evelyn Glennie', 'Abigail Breslin', 'Emily Blunt', 'Elizabeth Olsen', 'Scarlett Johansson', 'Victoria Beckham', 'Grace Kelly', 'Audrey Hepburn', 'Vivien Leigh', 'Ingrid Bergman', 'Bette Davis', 'Katharine Hepburn', 'Judy Garland', 'Joan Crawford', 'Elizabeth Taylor', 'Greta Garbo', 'Ginger Rogers', 'Shirley Temple', 'Jane Cooper', 'Esther Howard', 'Brooklyn Simmons', 'Leslie Alexander', 'Jenny Wilson', 'Sarah Williams', 'Maria Garcia', 'Nina Patel'].includes(newAllotment.student);
+                                        const isFemale = studentObj?.gender === 'Female' || ['Aaradhya Sen', 'Ananya Rao', 'Diya Mehta', 'Ishaanvi Bose', 'Aadya Sharma', 'Avani Krishnan', 'Saisha Mukherjee', 'Prisha Choudhury', 'Riya Chatterjee', 'Sneha Deshmukh', 'Tanvi Bhatia', 'Divya Khanna', 'Meera Roy', 'Shruti Pillai', 'Kavya Hegde', 'Neela Saxena', 'Bhavna Chauhan', 'Kiara Malhotra', 'Jyoti Kulkarni', 'Janvi Ahluwalia', 'Esha Deol', 'Geeta Johri', 'Gauri Sen', 'Shikha Agrawal', 'Divya Joshi', 'Isha Sen', 'Aditi Nair', 'Neha Sharma', 'Riya Banerjee', 'Kavita Krishnan', 'Meera Patel', 'Nisha Patel'].includes(newAllotment.student);
                                         
                                         let block = 'Elite Boys Block A';
                                         if (room.room_no.startsWith('S-')) {
@@ -1110,6 +1163,8 @@ const HostelAllotment = () => {
                         const updated = allotments.filter(a => a.id !== deleteConfirmId);
                         syncAllotmentsAndRooms(updated);
                         showToast(`${targetAllot.studentName} has been successfully de-allotted from Room ${targetAllot.roomNo}.`, 'success');
+                        // Sync deletion to backend database
+                        HostelApi.deleteAllotment(deleteConfirmId).catch(() => {});
                         setDeleteConfirmId(null);
                       }}
                       style={{ 

@@ -9,6 +9,8 @@ import { logout } from '../services/service';
 const MainLayout = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isDark, setIsDark] = useState(localStorage.getItem('theme') === 'dark');
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications] = useState([
@@ -22,16 +24,47 @@ const MainLayout = () => {
       const storedTheme = localStorage.getItem('theme');
       setIsDark(storedTheme === 'dark');
     };
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
+        setMobileOpen(false);
+      }
+    };
+    
     window.addEventListener('storage', syncTheme);
+    window.addEventListener('resize', handleResize);
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    return () => window.removeEventListener('storage', syncTheme);
+    
+    return () => {
+      window.removeEventListener('storage', syncTheme);
+      window.removeEventListener('resize', handleResize);
+    };
   }, [isDark]);
 
   return (
     <div>
-      <Sidebar collapsed={collapsed} />
+      {/* Mobile Backdrop Overlay */}
+      {isMobile && mobileOpen && (
+        <div 
+          onClick={() => setMobileOpen(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1015,
+            backdropFilter: 'blur(4px)'
+          }}
+        />
+      )}
+
+      <Sidebar collapsed={collapsed} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} isMobile={isMobile} />
       
-      <Topbar toggleSidebar={() => setCollapsed(!collapsed)} />
+      <Topbar toggleSidebar={() => {
+        if (isMobile) {
+          setMobileOpen(!mobileOpen);
+        } else {
+          setCollapsed(!collapsed);
+        }
+      }} />
 
       <main className="main-content">
         <div style={{ minHeight: 'calc(100vh - 160px)' }}>

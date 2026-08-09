@@ -1,35 +1,40 @@
 import React, { useState } from 'react';
 import { BookOpen, Plus, Users, ChevronRight, X, Trash2, Save, User, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import eleanorAvatar from '../assets/eleanor_avatar.png';
-
 const teacherAvatars = {
-  'Eleanor Pena': eleanorAvatar,
-  'Jane Smith': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-  'Robert Wilson': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
-  'Emily Davis': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-  'Mrs. Sarah Parker': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
-  'Mr. David Miller': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
-  'Ms. Elena Gilbert': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
-  'Mr. Stefan Salvatore': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop'
+  'Ananya Iyer': 'https://api.dicebear.com/7.x/initials/svg?seed=Ananya%20Iyer',
+  'Jane Smith': 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Sharma',
+  'Sunita Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Sharma',
+  'Robert Wilson': 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma',
+  'Rajesh Verma': 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma',
+  'Emily Davis': 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Patel',
+  'Priya Patel': 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Patel',
+  'Mrs. Sarah Parker': 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair',
+  'Mrs. Aditi Nair': 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair',
+  'Mr. David Miller': 'https://api.dicebear.com/7.x/initials/svg?seed=Amit%20Bose',
+  'Mr. Amit Bose': 'https://api.dicebear.com/7.x/initials/svg?seed=Amit%20Bose',
+  'Ms. Elena Gilbert': 'https://api.dicebear.com/7.x/initials/svg?seed=Kavita%20Krishnan',
+  'Ms. Kavita Krishnan': 'https://api.dicebear.com/7.x/initials/svg?seed=Kavita%20Krishnan',
+  'Mr. Stefan Salvatore': 'https://api.dicebear.com/7.x/initials/svg?seed=Sameer%20Khan',
+  'Mr. Sameer Khan': 'https://api.dicebear.com/7.x/initials/svg?seed=Sameer%20Khan'
 };
 
 const Classes = () => {
   const [classesList, setClassesList] = useState([
-    { id: 1, name: 'Class 10', sections: ['Section A', 'Section B'], students: 45, teacher: 'Eleanor Pena' },
-    { id: 2, name: 'Class 9', sections: ['Section A', 'Section C'], students: 38, teacher: 'Robert Wilson' },
-    { id: 3, name: 'Class 8', sections: ['Section B'], students: 42, teacher: 'Emily Davis' },
+    { id: 1, name: 'Class 10', sections: ['Section A', 'Section B'], students: 45, teacher: 'Ananya Iyer' },
+    { id: 2, name: 'Class 9', sections: ['Section A', 'Section C'], students: 38, teacher: 'Rajesh Verma' },
+    { id: 3, name: 'Class 8', sections: ['Section B'], students: 42, teacher: 'Priya Patel' },
   ]);
 
   const teachersList = [
-    'Eleanor Pena',
-    'Jane Smith',
-    'Robert Wilson',
-    'Emily Davis',
-    'Mrs. Sarah Parker',
-    'Mr. David Miller',
-    'Ms. Elena Gilbert',
-    'Mr. Stefan Salvatore'
+    'Ananya Iyer',
+    'Sunita Sharma',
+    'Rajesh Verma',
+    'Priya Patel',
+    'Mrs. Aditi Nair',
+    'Mr. Amit Bose',
+    'Ms. Kavita Krishnan',
+    'Mr. Sameer Khan'
   ];
 
   // Create Class Modal States

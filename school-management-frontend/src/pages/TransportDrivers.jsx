@@ -5,93 +5,94 @@ import {
   CheckCircle2, AlertCircle, Edit, Trash2, Send, Check
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { DriversApi } from '../services/service';
 
 const SEED_DRIVERS = [
   { 
     id: 1, 
-    name: 'Robert Wilson', 
+    name: 'Rajesh Verma', 
     license: 'DL-2024-5501', 
     experience: '12 Years', 
     rating: 4.8, 
     status: 'Active', 
-    phone: '+1 234 567 8901', 
-    email: 'r.wilson@edupro.com', 
+    phone: '+91 98765 43210', 
+    email: 'r.verma@edupro.com', 
     assignment: 'North Express',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma',
     certifications: { cdl: true, medical: true, background: true, defensive: true },
     metrics: { completedTrips: 1250, onTimeRate: '98.5%', satisfaction: '4.8', incidentLog: [] }
   },
   { 
     id: 2, 
-    name: 'David Miller', 
+    name: 'Vikram Malhotra', 
     license: 'DL-2023-9982', 
     experience: '8 Years', 
     rating: 4.5, 
     status: 'Active', 
-    phone: '+1 234 567 8902', 
-    email: 'd.miller@edupro.com', 
+    phone: '+91 98765 43211', 
+    email: 'v.malhotra@edupro.com', 
     assignment: 'Downtown Shuttle',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Vikram%20Malhotra',
     certifications: { cdl: true, medical: true, background: true, defensive: true },
     metrics: { completedTrips: 840, onTimeRate: '96.2%', satisfaction: '4.6', incidentLog: [] }
   },
   { 
     id: 3, 
-    name: 'Sarah Parker', 
+    name: 'Suman Sharma', 
     license: 'DL-2025-1104', 
     experience: '15 Years', 
     rating: 5.0, 
     status: 'On Leave', 
-    phone: '+1 234 567 8903', 
-    email: 's.parker@edupro.com', 
+    phone: '+91 98765 43212', 
+    email: 's.sharma@edupro.com', 
     assignment: 'Staff Loop',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Suman%20Sharma',
     certifications: { cdl: true, medical: true, background: true, defensive: true },
     metrics: { completedTrips: 1890, onTimeRate: '99.8%', satisfaction: '5.0', incidentLog: [] }
   },
   { 
     id: 4, 
-    name: 'Michael Chen', 
+    name: 'Manoj Kumar', 
     license: 'DL-2022-4433', 
     experience: '6 Years', 
     rating: 4.2, 
     status: 'Active', 
-    phone: '+1 234 567 8904', 
-    email: 'm.chen@edupro.com', 
+    phone: '+91 98765 43213', 
+    email: 'm.kumar@edupro.com', 
     assignment: 'Residency Express',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Manoj%20Kumar',
     certifications: { cdl: true, medical: true, background: true, defensive: false },
     metrics: { completedTrips: 520, onTimeRate: '94.8%', satisfaction: '4.3', incidentLog: [{ date: '2026-04-12', detail: 'Minor mirror scrape at gate entry.' }] }
   },
   { 
     id: 5, 
-    name: 'James Bond', 
+    name: 'Jaspreet Singh', 
     license: 'DL-007-GOLD', 
     experience: '20 Years', 
     rating: 4.9, 
     status: 'Active', 
-    phone: '+1 234 567 0007', 
-    email: 'j.bond@edupro.com', 
+    phone: '+91 98765 43214', 
+    email: 'j.singh@edupro.com', 
     assignment: 'South Connect',
-    avatar: 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=150&h=150&fit=crop',
+    avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=Jaspreet%20Singh',
     certifications: { cdl: true, medical: true, background: true, defensive: true },
     metrics: { completedTrips: 2450, onTimeRate: '99.1%', satisfaction: '4.9', incidentLog: [] }
   },
 ];
 
 const PRESET_AVATARS = [
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-  'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=150&h=150&fit=crop'
+  'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma',
+  'https://api.dicebear.com/7.x/initials/svg?seed=Vikram%20Malhotra',
+  'https://api.dicebear.com/7.x/initials/svg?seed=Suman%20Sharma',
+  'https://api.dicebear.com/7.x/initials/svg?seed=Manoj%20Kumar',
+  'https://api.dicebear.com/7.x/initials/svg?seed=Jaspreet%20Singh'
 ];
 
 const TransportDrivers = () => {
   // State variables
   const [drivers, setDrivers] = useState(() => {
     try {
-      const saved = localStorage.getItem('transport_drivers');
+      const saved = localStorage.getItem('transport_drivers_v2');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
@@ -107,6 +108,7 @@ const TransportDrivers = () => {
     } catch (e) {}
     return SEED_DRIVERS;
   });
+  const [loading, setLoading] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
@@ -168,10 +170,29 @@ const TransportDrivers = () => {
     };
   });
 
-  // Persist drivers helper
+  // Fetch drivers from backend on mount
+  useEffect(() => {
+    setLoading(true);
+    DriversApi.getAll()
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          const enriched = data.map(d => ({
+            ...d,
+            certifications: d.certifications || { cdl: true, medical: true, background: true, defensive: true },
+            metrics: d.metrics || { completedTrips: 0, onTimeRate: '100%', satisfaction: String(d.rating || 5), incidentLog: [] }
+          }));
+          setDrivers(enriched);
+          localStorage.setItem('transport_drivers_v2', JSON.stringify(enriched));
+        }
+      })
+      .catch(() => { /* keep localStorage fallback already in state */ })
+      .finally(() => setLoading(false));
+  }, []);
+
+  // Persist drivers helper (local cache only)
   const persist = (updated) => {
     setDrivers(updated);
-    localStorage.setItem('transport_drivers', JSON.stringify(updated));
+    localStorage.setItem('transport_drivers_v2', JSON.stringify(updated));
   };
 
   // Toast notifier
@@ -188,34 +209,40 @@ const TransportDrivers = () => {
   }, [chatMessages, showChatDrawer, isTyping]);
 
   // Form submit handler (Add or Edit)
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.license || !form.phone || !form.email || !form.assignment) {
       showToast('error', 'Please fill all required fields.');
       return;
     }
 
-    let updatedDrivers;
+    const payload = { ...form, rating: parseFloat(form.rating) || 5.0 };
+
     if (editingDriver) {
-      updatedDrivers = drivers.map(d => d.id === editingDriver.id ? { 
-        ...d, 
-        ...form,
-        rating: parseFloat(form.rating) || 5.0
-      } : d);
+      // Optimistic update
+      const updatedDrivers = drivers.map(d => d.id === editingDriver.id ? { ...d, ...payload } : d);
+      persist(updatedDrivers);
       showToast('success', `${form.name}'s profile updated successfully.`);
+      // Sync to database
+      DriversApi.update(editingDriver.id, payload).catch(() =>
+        showToast('error', 'Failed to sync update to database.')
+      );
     } else {
       const newDriver = {
         id: Date.now(),
-        ...form,
-        rating: parseFloat(form.rating) || 5.0,
+        ...payload,
         certifications: { cdl: true, medical: true, background: true, defensive: true },
         metrics: { completedTrips: 0, onTimeRate: '100%', satisfaction: '5.0', incidentLog: [] }
       };
-      updatedDrivers = [...drivers, newDriver];
+      const updatedDrivers = [...drivers, newDriver];
+      persist(updatedDrivers);
       showToast('success', `New driver ${form.name} registered successfully.`);
+      // Sync to database
+      DriversApi.create({ ...payload, id: undefined }).catch(() =>
+        showToast('error', 'Failed to sync new driver to database.')
+      );
     }
 
-    persist(updatedDrivers);
     setShowFormModal(false);
   };
 
@@ -251,10 +278,16 @@ const TransportDrivers = () => {
     setShowFormModal(true);
   };
 
-  // Delete driver handler
-  const handleDeleteDriver = (driverId) => {
-    setDeleteConfirmId(driverId);
+  // Delete driver handler (confirm then sync to DB)
+  const handleDeleteDriver = async (driverId) => {
+    const updatedDrivers = drivers.filter(d => d.id !== driverId);
+    persist(updatedDrivers);
+    setDeleteConfirmId(null);
     setShowActionsMenu(null);
+    showToast('success', 'Driver record removed successfully.');
+    DriversApi.delete(driverId).catch(() =>
+      showToast('error', 'Failed to sync deletion to database.')
+    );
   };
 
   // Toggle duty status
@@ -264,6 +297,10 @@ const TransportDrivers = () => {
     persist(updated);
     showToast('success', `${driver.name}'s status updated to ${nextStatus}.`);
     setShowActionsMenu(null);
+    // Sync to database
+    DriversApi.update(driver.id, { ...driver, status: nextStatus }).catch(() =>
+      showToast('error', 'Failed to sync status to database.')
+    );
   };
 
   // Toggle Certification Checklist item
@@ -552,7 +589,7 @@ const TransportDrivers = () => {
                     value={form.name} 
                     onChange={e => setForm({...form, name: e.target.value})} 
                     style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-body)', color: 'var(--text-main)', fontWeight: 700, outline: 'none' }} 
-                    placeholder="e.g. Robert Wilson" 
+                    placeholder="e.g. Rajesh Verma" 
                   />
                 </div>
 

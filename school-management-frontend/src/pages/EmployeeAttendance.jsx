@@ -13,15 +13,15 @@ import ActionDropdown from '../components/ActionDropdown';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const INITIAL_DATA = [
-  { id: 'EMP-2026-001', name: 'Dr. Robert Carter', dept: 'Mathematics',    role: 'Senior Professor',  status: 'P', time: '08:30 AM', avatar: 'RC', color: '#4880FF', remark: '' },
-  { id: 'EMP-2026-002', name: 'Sarah Jenkins',     dept: 'Administration', role: 'Admin Coordinator', status: 'L', time: '09:05 AM', avatar: 'SJ', color: '#10B981', remark: '' },
-  { id: 'EMP-2026-003', name: "Michael O'Brien",   dept: 'Technical',      role: 'IT Specialist',     status: 'P', time: '08:20 AM', avatar: 'MO', color: '#F59E0B', remark: '' },
-  { id: 'EMP-2026-004', name: 'Elena Gilbert',     dept: 'Student Welfare',role: 'Counselor',         status: 'A', time: '-',        avatar: 'EG', color: '#8B5CF6', remark: '' },
-  { id: 'EMP-2026-005', name: 'Robert Taylor',     dept: 'Transport',      role: 'Logistics Head',    status: 'P', time: '08:45 AM', avatar: 'RT', color: '#EF4444', remark: '' },
-  { id: 'EMP-2026-006', name: 'Linda Anderson',    dept: 'Cafeteria',      role: 'Chef Manager',      status: 'H', time: '08:40 AM', avatar: 'LA', color: '#4880FF', remark: '' },
-  { id: 'EMP-2026-007', name: 'Michael Brown',     dept: 'IT Support',     role: 'Systems Admin',     status: 'P', time: '08:50 AM', avatar: 'MB', color: '#10B981', remark: '' },
-  { id: 'EMP-2026-008', name: 'Angela White',      dept: 'Administration', role: 'HR Coordinator',    status: 'P', time: '08:35 AM', avatar: 'AW', color: '#8B5CF6', remark: '' },
-  { id: 'EMP-2026-009', name: 'Thomas Harris',     dept: 'Maintenance',    role: 'Tech Supervisor',   status: 'A', time: '-',        avatar: 'TH', color: '#EF4444', remark: '' },
+  { id: 'EMP-2026-001', name: 'Dr. Rajesh Malhotra', dept: 'Mathematics',    role: 'Senior Professor',  status: 'P', time: '08:30 AM', avatar: 'RM', color: '#4880FF', remark: '' },
+  { id: 'EMP-2026-002', name: 'Sunita Rao',          dept: 'Administration', role: 'Admin Coordinator', status: 'L', time: '09:05 AM', avatar: 'SR', color: '#10B981', remark: '' },
+  { id: 'EMP-2026-003', name: 'Amit Bose',           dept: 'Technical',      role: 'IT Specialist',     status: 'P', time: '08:20 AM', avatar: 'AB', color: '#F59E0B', remark: '' },
+  { id: 'EMP-2026-004', name: 'Priya Patel',         dept: 'Student Welfare',role: 'Counselor',         status: 'A', time: '-',        avatar: 'PP', color: '#8B5CF6', remark: '' },
+  { id: 'EMP-2026-005', name: 'Rajinder Singh',      dept: 'Transport',      role: 'Logistics Head',    status: 'P', time: '08:45 AM', avatar: 'RS', color: '#EF4444', remark: '' },
+  { id: 'EMP-2026-006', name: 'Meeta Devi',          dept: 'Cafeteria',      role: 'Chef Manager',      status: 'H', time: '08:40 AM', avatar: 'MD', color: '#4880FF', remark: '' },
+  { id: 'EMP-2026-007', name: 'Sameer Khan',         dept: 'IT Support',     role: 'Systems Admin',     status: 'P', time: '08:50 AM', avatar: 'SK', color: '#10B981', remark: '' },
+  { id: 'EMP-2026-008', name: 'Ananya Iyer',         dept: 'Administration', role: 'HR Coordinator',    status: 'P', time: '08:35 AM', avatar: 'AI', color: '#8B5CF6', remark: '' },
+  { id: 'EMP-2026-009', name: 'Sohan Lal',           dept: 'Maintenance',    role: 'Tech Supervisor',   status: 'A', time: '-',        avatar: 'SL', color: '#EF4444', remark: '' },
 ];
 
 const DEPTS    = ['All', 'Administration', 'Maintenance', 'Mathematics', 'Technical', 'Student Welfare', 'Transport', 'Cafeteria', 'IT Support'];
@@ -55,23 +55,29 @@ const EmployeeAttendance = () => {
   const [employeesRegistry, setEmployeesRegistry] = useState([]);
 
   useEffect(() => {
+    const version = localStorage.getItem('employees_version');
     const stored = localStorage.getItem('employees');
+    if (version !== '2026-v2') {
+      localStorage.removeItem('employees');
+      localStorage.setItem('employees_version', '2026-v2');
+    }
+    const updatedStored = localStorage.getItem('employees');
     let registryList = [];
 
     const defaultEmployees = [
-      { id: 'EMP-2026-001', name: 'Dr. Robert Carter', role: 'Senior Professor',  department: 'Mathematics',    status: 'On Duty',  color: '#4880FF' },
-      { id: 'EMP-2026-002', name: 'Sarah Jenkins',     role: 'Admin Coordinator', department: 'Administration', status: 'On Duty',  color: '#10B981' },
-      { id: 'EMP-2026-003', name: "Michael O'Brien",   role: 'IT Specialist',     department: 'Technical',      status: 'On Leave', color: '#F59E0B' },
-      { id: 'EMP-2026-004', name: 'Elena Gilbert',     role: 'Counselor',         department: 'Student Welfare',status: 'On Duty',  color: '#8B5CF6' },
-      { id: 'EMP-2026-005', name: 'Robert Taylor',     role: 'Logistics Head',    department: 'Transport',      status: 'On Duty',  color: '#EF4444' },
-      { id: 'EMP-2026-006', name: 'Linda Anderson',    role: 'Chef Manager',      department: 'Cafeteria',      status: 'On Duty',  color: '#4880FF' },
-      { id: 'EMP-2026-007', name: 'Michael Brown',     role: 'Systems Admin',     department: 'IT Support',     status: 'On Duty',  color: '#10B981' },
-      { id: 'EMP-2026-008', name: 'Angela White',      role: 'HR Coordinator',    department: 'Administration', status: 'On Duty',  color: '#8B5CF6' },
-      { id: 'EMP-2026-009', name: 'Thomas Harris',     role: 'Tech Supervisor',   department: 'Maintenance',    status: 'On Leave', color: '#EF4444' }
+      { id: 'EMP-2026-001', name: 'Dr. Rajesh Malhotra', role: 'Senior Professor',  department: 'Mathematics',    status: 'On Duty',  color: '#4880FF' },
+      { id: 'EMP-2026-002', name: 'Sunita Rao',          role: 'Admin Coordinator', department: 'Administration', status: 'On Duty',  color: '#10B981' },
+      { id: 'EMP-2026-003', name: 'Amit Bose',           role: 'IT Specialist',     department: 'Technical',      status: 'On Leave', color: '#F59E0B' },
+      { id: 'EMP-2026-004', name: 'Priya Patel',         role: 'Counselor',         department: 'Student Welfare',status: 'On Duty',  color: '#8B5CF6' },
+      { id: 'EMP-2026-005', name: 'Rajinder Singh',      role: 'Logistics Head',    department: 'Transport',      status: 'On Duty',  color: '#EF4444' },
+      { id: 'EMP-2026-006', name: 'Meeta Devi',          role: 'Chef Manager',      department: 'Cafeteria',      status: 'On Duty',  color: '#4880FF' },
+      { id: 'EMP-2026-007', name: 'Sameer Khan',         role: 'Systems Admin',     department: 'IT Support',     status: 'On Duty',  color: '#10B981' },
+      { id: 'EMP-2026-008', name: 'Ananya Iyer',         role: 'HR Coordinator',    department: 'Administration', status: 'On Duty',  color: '#8B5CF6' },
+      { id: 'EMP-2026-009', name: 'Sohan Lal',           role: 'Tech Supervisor',   department: 'Maintenance',    status: 'On Leave', color: '#EF4444' }
     ];
 
-    if (stored) {
-      const parsed = JSON.parse(stored);
+    if (updatedStored) {
+      const parsed = JSON.parse(updatedStored);
       if (parsed.length < 9) {
         localStorage.setItem('employees', JSON.stringify(defaultEmployees));
         registryList = defaultEmployees;
@@ -513,26 +519,9 @@ const EmployeeAttendance = () => {
                         flexShrink: 0
                       }}>
                         <img 
-                          src={`https://images.unsplash.com/photo-${[
-                            '1494790108377-be9c29b29330',
-                            '1507003211169-0a1dd7228f2d',
-                            '1438761681033-6461ffad8d80',
-                            '1517841905240-472988babdf9',
-                            '1544005313-94ddf0286df2',
-                            '1534528741775-53994a69daeb',
-                            '1539571696357-5a69c17a67c6',
-                            '1500648767791-00dcc994a43e',
-                            '1506794778202-cad84cf45f1d',
-                            '1522075469751-3a6694fb2f61',
-                            '1524504388940-b1c1722653e1',
-                            '1531746020798-e6953c6e8e04'
-                          ][((parseInt(emp.id.replace(/\D/g, '')) || 0) % 12)]}?w=150&h=150&fit=crop`}
+                          src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(emp.name)}`}
                           alt={emp.name} 
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(emp.name)}`;
-                          }}
                         />
                       </div>
                       <div>

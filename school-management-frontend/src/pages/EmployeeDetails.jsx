@@ -18,7 +18,7 @@ const EmployeeDetails = () => {
   const [documentsList, setDocumentsList] = useState([
      { name: 'Employment Contract', type: 'PDF Document', size: '1.2 MB', date: 'Jan 10, 2021', status: 'Verified' },
      { name: 'PhD Certificate', type: 'Scanned Image', size: '2.4 MB', date: 'Jan 12, 2021', status: 'Verified' },
-     { name: 'Identity Proof (SSN)', type: 'PDF Document', size: '0.8 MB', date: 'Jan 10, 2021', status: 'Verified' },
+     { name: 'Identity Proof (Aadhaar Card)', type: 'PDF Document', size: '0.8 MB', date: 'Jan 10, 2021', status: 'Verified' },
      { name: 'Experience Certificate', type: 'PDF Document', size: '1.5 MB', date: 'Feb 05, 2021', status: 'Pending' },
      { name: 'Background Check', type: 'Official Report', size: '0.5 MB', date: 'Jan 15, 2021', status: 'Verified' }
   ]);
@@ -113,70 +113,75 @@ const EmployeeDetails = () => {
 
   // Fetch employee from unified registry
   useEffect(() => {
+    const version = localStorage.getItem('employees_version');
     const stored = localStorage.getItem('employees');
+    if (version !== '2026-v2') {
+      localStorage.removeItem('employees');
+      localStorage.setItem('employees_version', '2026-v2');
+    }
     let empList = [];
     
     const defaultEmployees = [
       { 
         id: 'EMP-2026-001', 
-        name: 'Dr. Robert Carter', 
+        name: 'Dr. Rajesh Malhotra', 
         role: 'Senior Professor', 
         department: 'Mathematics', 
         type: 'Full-time', 
         status: 'On Duty', 
         joiningDate: '12 Jan 2021', 
-        email: 'r.carter@school.edu', 
-        phone: '+1 234-567-8901',
-        address: '452 Academic Circle, Science District, NY 10001',
-        salary: '$85,000 / annum',
-        biography: 'Dr. Carter has been a cornerstone of the Mathematics department for over 4 years. He specializes in advanced calculus and linear algebra, contributing significantly to the curriculum development and student mentorship programs.',
+        email: 'rajesh.malhotra@school.edu', 
+        phone: '+91 98765 43291',
+        address: '452 Academic Block, Sector 62, Noida, UP 201301',
+        salary: '₹8,50,000 / annum',
+        biography: 'Dr. Malhotra has been a cornerstone of the Mathematics department for over 4 years. He specializes in advanced calculus and linear algebra, contributing significantly to the curriculum development and student mentorship programs.',
         education: [
-          { degree: 'Ph.D. in Pure Mathematics', institution: 'Stanford University', year: '2018', result: 'GPA 4.0' },
-          { degree: 'M.Sc. in Mathematics', institution: 'MIT', year: '2014', result: 'GPA 3.9' },
-          { degree: 'B.Sc. in Physics & Math', institution: 'Harvard University', year: '2012', result: 'First Class' }
+          { degree: 'Ph.D. in Pure Mathematics', institution: 'IIT Bombay', year: '2018', result: 'GPA 9.8/10' },
+          { degree: 'M.Sc. in Mathematics', institution: 'IIT Delhi', year: '2014', result: 'GPA 9.5/10' },
+          { degree: 'B.Sc. in Physics & Math', institution: 'IISc Bangalore', year: '2012', result: 'First Class with Distinction' }
         ],
         workExperience: [
-          { role: 'Associate Professor', organization: 'Greenwood University', period: '2018 - 2021', description: 'Led research in quantum topology and supervised 5 Ph.D. candidates.' },
-          { role: 'Research Fellow', organization: 'Stanford Math Research Lab', period: '2015 - 2018', description: 'Contributed to the development of novel algebraic structures.' },
-          { role: 'Teaching Assistant', organization: 'Harvard University', period: '2012 - 2014', description: 'Assisted in undergraduate calculus and linear algebra courses.' }
+          { role: 'Associate Professor', organization: 'BITS Pilani', period: '2018 - 2021', description: 'Led research in quantum topology and supervised 5 Ph.D. candidates.' },
+          { role: 'Research Fellow', organization: 'TIFR Mumbai', period: '2015 - 2018', description: 'Contributed to the development of novel algebraic structures.' },
+          { role: 'Teaching Assistant', organization: 'IISc Bangalore', period: '2012 - 2014', description: 'Assisted in undergraduate calculus and linear algebra courses.' }
         ]
       },
       {
         id: 'EMP-2026-002',
-        name: 'Sarah Jenkins',
+        name: 'Sunita Rao',
         role: 'Admin Coordinator',
         department: 'Administration',
         type: 'Full-time',
         status: 'On Duty',
         joiningDate: '05 Mar 2022',
-        email: 's.jenkins@school.edu',
-        phone: '+1 234-567-8902',
-        address: '102 Main Administration Block, NY 10002',
-        salary: '$55,000 / annum',
-        biography: 'Sarah Jenkins coordinates departmental synchronization and schedules.',
+        email: 'sunita.rao@school.edu',
+        phone: '+91 98765 43292',
+        address: '102 Main Administration Block, New Delhi 110092',
+        salary: '₹5,50,000 / annum',
+        biography: 'Sunita Rao coordinates departmental synchronization, scheduling, and administrative logistics.',
         education: [
-          { degree: 'MBA in Operations', institution: 'Columbia University', year: '2020', result: 'GPA 3.8' },
-          { degree: 'B.BA in Management', institution: 'NYU', year: '2016', result: 'GPA 3.6' }
+          { degree: 'MBA in Operations', institution: 'FMS Delhi', year: '2020', result: 'GPA 8.8/10' },
+          { degree: 'B.BA in Management', institution: 'Delhi University', year: '2016', result: 'First Class' }
         ],
         workExperience: [
-          { role: 'Operations Officer', organization: 'Apex Admin Services', period: '2020 - 2022', description: 'Coordinated inter-departmental logistics and records archiving.' }
+          { role: 'Operations Officer', organization: 'Apex Administrative Services', period: '2020 - 2022', description: 'Coordinated inter-departmental logistics and records archiving.' }
         ]
       },
       {
         id: 'EMP-2026-003',
-        name: "Michael O'Brien",
+        name: 'Amit Bose',
         role: 'IT Specialist',
         department: 'Technical',
         type: 'Contract',
         status: 'On Leave',
         joiningDate: '15 Sep 2023',
-        email: 'm.obrien@school.edu',
-        phone: '+1 234-567-8903',
-        address: 'Room 305, Tech Lab Wing, NY 10001',
-        salary: '$62,000 / annum',
-        biography: 'Michael ensures campus hardware and network capabilities are functioning.',
+        email: 'amit.bose@school.edu',
+        phone: '+91 98765 43293',
+        address: 'Room 305, Tech Lab Wing, Kolkata, WB 700091',
+        salary: '₹6,20,000 / annum',
+        biography: 'Amit ensures campus hardware, server integration, and secure networking capabilities are functioning.',
         education: [
-          { degree: 'B.Sc. in Computer Engineering', institution: 'Georgia Tech', year: '2019', result: 'First Class' }
+          { degree: 'B.Tech in Computer Engineering', institution: 'BITS Pilani', year: '2019', result: 'First Class' }
         ],
         workExperience: [
           { role: 'IT Support Engineer', organization: 'NextGen Solutions', period: '2019 - 2023', description: 'Maintained enterprise networking frameworks and system firewalls.' }
@@ -184,128 +189,129 @@ const EmployeeDetails = () => {
       },
       {
         id: 'EMP-2026-004',
-        name: 'Elena Gilbert',
+        name: 'Priya Patel',
         role: 'Counselor',
         department: 'Student Welfare',
         type: 'Part-time',
         status: 'On Duty',
         joiningDate: '20 Feb 2024',
-        email: 'e.gilbert@school.edu',
-        phone: '+1 234-567-8904',
-        address: 'Building C, Student Counseling Suite, NY 10003',
-        salary: '$48,000 / annum',
-        biography: 'Elena Gilbert coordinates support and student mental hygiene programs.',
+        email: 'priya.patel@school.edu',
+        phone: '+91 98765 43294',
+        address: 'Building C, Student Counseling Suite, Ahmedabad, GJ 380015',
+        salary: '₹4,80,000 / annum',
+        biography: 'Priya Patel works to coordinate student support, mental wellbeing, and career guidance programs.',
         education: [
-          { degree: 'M.Sc. in Child Psychology', institution: 'Boston University', year: '2021', result: 'GPA 3.9' }
+          { degree: 'M.Sc. in Child Psychology', institution: 'MS University Vadodara', year: '2021', result: 'GPA 9.0/10' }
         ],
         workExperience: [
-          { role: 'Counseling Fellow', organization: 'Beacon High School', period: '2021 - 2024', description: 'Provided one-on-one counseling services and student mentoring.' }
+          { role: 'Counseling Fellow', organization: 'DPS Ahmedabad', period: '2021 - 2024', description: 'Provided one-on-one counseling services and student mentoring.' }
         ]
       },
       {
         id: 'EMP-2026-005',
-        name: 'Robert Taylor',
+        name: 'Rajinder Singh',
         role: 'Logistics Head',
         department: 'Transport',
         type: 'Full-time',
         status: 'On Duty',
         joiningDate: '10 May 2022',
-        email: 'r.taylor@school.edu',
-        phone: '+1 234-567-8905',
-        address: 'Garage & Transport Bay, NY 10004',
-        salary: '$58,000 / annum',
-        biography: 'Robert coordinates institutional logistics, transport routing, and vehicle registry logs.',
+        email: 'rajinder.singh@school.edu',
+        phone: '+91 98765 43295',
+        address: 'Garage & Transport Bay, Mohali, PB 160055',
+        salary: '₹5,80,000 / annum',
+        biography: 'Rajinder coordinates institutional logistics, transport routing, and vehicle registry logs.',
         education: [
-          { degree: 'B.Sc. in Logistics & Supply Chain', institution: 'Rutgers University', year: '2018', result: 'GPA 3.7' }
+          { degree: 'B.Tech in Logistics & Supply Chain', institution: 'Amity University', year: '2018', result: 'GPA 8.5/10' }
         ],
         workExperience: [
-          { role: 'Logistics Coordinator', organization: 'Transit Corp', period: '2018 - 2022', description: 'Scheduled fleet operations and managed vehicle compliance logs.' }
+          { role: 'Logistics Coordinator', organization: 'Transit Corp India', period: '2018 - 2022', description: 'Scheduled fleet operations and managed vehicle compliance logs.' }
         ]
       },
       {
         id: 'EMP-2026-006',
-        name: 'Linda Anderson',
+        name: 'Meeta Devi',
         role: 'Chef Manager',
         department: 'Cafeteria',
         type: 'Full-time',
         status: 'On Duty',
         joiningDate: '18 Nov 2021',
-        email: 'l.anderson@school.edu',
-        phone: '+1 234-567-8906',
-        address: 'Central Cafeteria Kitchen, NY 10001',
-        salary: '$50,000 / annum',
-        biography: 'Linda designs culinary menus and directs cafeteria kitchen staff.',
+        email: 'meeta.devi@school.edu',
+        phone: '+91 98765 43296',
+        address: 'Central Cafeteria Kitchen, Lucknow, UP 226010',
+        salary: '₹5,00,000 / annum',
+        biography: 'Meeta designs culinary menus and directs cafeteria kitchen staff.',
         education: [
-          { degree: 'Associate Degree in Culinary Arts', institution: 'Culinary Institute of America', year: '2016', result: 'Honor Roll' }
+          { degree: 'Diploma in Culinary Arts', institution: 'IHM Pusa', year: '2016', result: 'Distinction' }
         ],
         workExperience: [
-          { role: 'Sous Chef', organization: 'Grand Bistro', period: '2016 - 2021', description: 'Prepared upscale menus and managed kitchen safety standards.' }
+          { role: 'Sous Chef', organization: 'The Oberoi Group', period: '2016 - 2021', description: 'Prepared upscale menus and managed kitchen safety standards.' }
         ]
       },
       {
         id: 'EMP-2026-007',
-        name: 'Michael Brown',
+        name: 'Sameer Khan',
         role: 'Systems Admin',
         department: 'IT Support',
         type: 'Full-time',
         status: 'On Duty',
         joiningDate: '14 Feb 2023',
-        email: 'm.brown@school.edu',
-        phone: '+1 234-567-8907',
-        address: 'Server Room 202, Admin Wing, NY 10001',
-        salary: '$66,000 / annum',
-        biography: 'Michael maintains institution servers, cloud frameworks, and hardware systems.',
+        email: 'sameer.khan@school.edu',
+        phone: '+91 98765 43297',
+        address: 'Server Room 202, Admin Wing, Mumbai, MH 400050',
+        salary: '₹6,60,000 / annum',
+        biography: 'Sameer maintains institution servers, cloud frameworks, and hardware systems.',
         education: [
-          { degree: 'B.Sc. in Computer Science', institution: 'Penn State University', year: '2020', result: 'First Class' }
+          { degree: 'B.Tech in Computer Science', institution: 'VJTI Mumbai', year: '2020', result: 'First Class' }
         ],
         workExperience: [
-          { role: 'System Administrator', organization: 'CloudTech Solutions', period: '2020 - 2023', description: 'Administered enterprise network architectures and cloud backups.' }
+          { role: 'System Administrator', organization: 'CloudTech India', period: '2020 - 2023', description: 'Administered enterprise network architectures and cloud backups.' }
         ]
       },
       {
         id: 'EMP-2026-008',
-        name: 'Angela White',
+        name: 'Ananya Iyer',
         role: 'HR Coordinator',
         department: 'Administration',
         type: 'Full-time',
         status: 'On Duty',
         joiningDate: '09 Sep 2022',
-        email: 'a.white@school.edu',
-        phone: '+1 234-567-8908',
-        address: 'HR Desk, Administration Building, NY 10002',
-        salary: '$54,000 / annum',
-        biography: 'Angela coordinates staff recruitments, files, benefits registry, and organizational culture.',
+        email: 'ananya.iyer@school.edu',
+        phone: '+91 98765 43298',
+        address: 'HR Desk, Administration Building, Bangalore, KA 560001',
+        salary: '₹5,40,000 / annum',
+        biography: 'Ananya coordinates staff recruitments, files, benefits registry, and organizational culture.',
         education: [
-          { degree: 'B.A. in Human Resources', institution: 'Temple University', year: '2019', result: 'GPA 3.6' }
+          { degree: 'B.A. in Human Resources', institution: 'Christ University', year: '2019', result: 'GPA 8.2/10' }
         ],
         workExperience: [
-          { role: 'HR Generalist', organization: 'Staffing Source Inc.', period: '2019 - 2022', description: 'Conducted interviews, onboarding procedures, and payroll sync.' }
+          { role: 'HR Generalist', organization: 'Staffing Source Ltd.', period: '2019 - 2022', description: 'Conducted interviews, onboarding procedures, and payroll sync.' }
         ]
       },
       {
         id: 'EMP-2026-009',
-        name: 'Thomas Harris',
+        name: 'Sohan Lal',
         role: 'Tech Supervisor',
         department: 'Maintenance',
         type: 'Full-time',
         status: 'On Leave',
         joiningDate: '22 Jul 2021',
-        email: 't.harris@school.edu',
-        phone: '+1 234-567-8909',
-        address: 'Facilities & Workshop Area, NY 10005',
-        salary: '$52,000 / annum',
-        biography: 'Thomas leads maintenance personnel and facilities repair/renovations.',
+        email: 'sohan.lal@school.edu',
+        phone: '+91 98765 43299',
+        address: 'Facilities & Workshop Area, Jaipur, RJ 302001',
+        salary: '₹5,20,000 / annum',
+        biography: 'Sohan leads maintenance personnel and facilities repair/renovations.',
         education: [
-          { degree: 'Vocational Degree in Building Tech', institution: 'Apex Technical School', year: '2015', result: 'Certified Operator' }
+          { degree: 'Vocational Diploma in Building Tech', institution: 'ITI Jaipur', year: '2015', result: 'Certified Operator' }
         ],
         workExperience: [
-          { role: 'Maintenance Lead', organization: 'Metro Facilities', period: '2015 - 2021', description: 'Supervised building plumbing, electrical repairs, and structure maintenance.' }
+          { role: 'Maintenance Lead', organization: 'Metro Facilities India', period: '2015 - 2021', description: 'Supervised building plumbing, electrical repairs, and structure maintenance.' }
         ]
       }
     ];
-
-    if (stored) {
-      const parsed = JSON.parse(stored);
+    
+    const currentStored = localStorage.getItem('employees');
+    if (currentStored) {
+      const parsed = JSON.parse(currentStored);
       if (parsed.length < 9) {
         localStorage.setItem('employees', JSON.stringify(defaultEmployees));
         empList = defaultEmployees;
@@ -330,15 +336,15 @@ const EmployeeDetails = () => {
         status: 'On Duty',
         joiningDate: '01 Jan 2026',
         email: `emp.${idNum}@school.edu`,
-        phone: `+1 234-567-${idNum.padStart(4, '0')}`,
-        address: 'Main Campus Building, NY 10001',
-        salary: '$50,000 / annum',
+        phone: `+91 98765 ${idNum.padStart(5, '0')}`,
+        address: 'Sector 62, Noida, UP 201301',
+        salary: '₹5,00,000 / annum',
         biography: `Staff member at school, registered under ID ${id}.`,
         education: [
-          { degree: 'B.Sc. in General Education', institution: 'State University', year: '2018', result: 'Second Class' }
+          { degree: 'B.Sc. in General Education', institution: 'Delhi University', year: '2018', result: 'Second Class' }
         ],
         workExperience: [
-          { role: 'Assistant Roster Analyst', organization: 'District Services', period: '2018 - 2021', description: 'Archived roster lists and coordinated support scheduling.' }
+          { role: 'Assistant Analyst', organization: 'Delhi Educational Services', period: '2018 - 2021', description: 'Archived roster lists and coordinated support scheduling.' }
         ]
       };
     }
@@ -349,10 +355,10 @@ const EmployeeDetails = () => {
       const hydratedEmp = {
         ...currentEmp,
         education: currentEmp.education || [
-          { degree: 'B.Sc. in General Education', institution: 'State University', year: '2018', result: 'Second Class' }
+          { degree: 'B.Sc. in General Education', institution: 'Delhi University', year: '2018', result: 'Second Class' }
         ],
         workExperience: currentEmp.workExperience || [
-          { role: 'Assistant Roster Analyst', organization: 'District Services', period: '2018 - 2021', description: 'Archived roster lists and coordinated support scheduling.' }
+          { role: 'Assistant Analyst', organization: 'Delhi Educational Services', period: '2018 - 2021', description: 'Archived roster lists and coordinated support scheduling.' }
         ]
       };
       
@@ -512,25 +518,8 @@ const EmployeeDetails = () => {
                     border: '3px solid var(--bg-card)'
                   }}>
                     <img 
-                      src={`https://images.unsplash.com/photo-${[
-                        '1494790108377-be9c29b29330',
-                        '1507003211169-0a1dd7228f2d',
-                        '1438761681033-6461ffad8d80',
-                        '1517841905240-472988babdf9',
-                        '1544005313-94ddf0286df2',
-                        '1534528741775-53994a69daeb',
-                        '1539571696357-5a69c17a67c6',
-                        '1500648767791-00dcc994a43e',
-                        '1506794778202-cad84cf45f1d',
-                        '1522075469751-3a6694fb2f61',
-                        '1524504388940-b1c1722653e1',
-                        '1531746020798-e6953c6e8e04'
-                      ][((parseInt(employee.id.replace(/\D/g, '')) || 0) % 12)]}?w=150&h=150&fit=crop`}
+                      src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(employee.name)}`}
                       alt={employee.name} 
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(employee.name)}`;
-                      }}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </div>

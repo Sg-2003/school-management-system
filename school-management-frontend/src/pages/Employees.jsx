@@ -34,137 +34,144 @@ const Employees = () => {
 
   // Load from local storage with initial default seed
   useEffect(() => {
+    const version = localStorage.getItem('employees_version');
     const stored = localStorage.getItem('employees');
+    if (version !== '2026-v2') {
+      localStorage.removeItem('employees');
+      localStorage.setItem('employees_version', '2026-v2');
+    }
     const defaultEmployees = [
       { 
         id: 'EMP-2026-001', 
-        name: 'Dr. Robert Carter', 
+        name: 'Dr. Rajesh Malhotra', 
         role: 'Senior Professor', 
         department: 'Mathematics', 
         type: 'Full-time', 
         status: 'On Duty', 
         joiningDate: '12 Jan 2021', 
-        email: 'r.carter@school.edu', 
-        phone: '+1 234-567-8901',
-        address: '452 Academic Circle, Science District, NY 10001',
-        salary: '$85,000 / annum',
-        biography: 'Dr. Carter has been a cornerstone of the Mathematics department for over 4 years. He specializes in advanced calculus and linear algebra, contributing significantly to the curriculum development and student mentorship programs.'
+        email: 'rajesh.malhotra@school.edu', 
+        phone: '+91 98765 43291',
+        address: '452 Academic Block, Sector 62, Noida, UP 201301',
+        salary: '₹8,50,000 / annum',
+        biography: 'Dr. Malhotra has been a cornerstone of the Mathematics department for over 4 years. He specializes in advanced calculus and linear algebra, contributing significantly to the curriculum development and student mentorship programs.'
       },
       { 
         id: 'EMP-2026-002', 
-        name: 'Sarah Jenkins', 
+        name: 'Sunita Rao', 
         role: 'Admin Coordinator', 
         department: 'Administration', 
         type: 'Full-time', 
         status: 'On Duty', 
         joiningDate: '05 Mar 2022', 
-        email: 's.jenkins@school.edu', 
-        phone: '+1 234-567-8902',
-        address: '102 Main Administration Block, NY 10002',
-        salary: '$55,000 / annum',
-        biography: 'Sarah Jenkins coordinates departmental synchronization and schedules.'
+        email: 'sunita.rao@school.edu', 
+        phone: '+91 98765 43292',
+        address: '102 Main Administration Block, New Delhi 110092',
+        salary: '₹5,50,000 / annum',
+        biography: 'Sunita Rao coordinates departmental synchronization, scheduling, and administrative logistics.'
       },
       { 
         id: 'EMP-2026-003', 
-        name: "Michael O'Brien", 
+        name: 'Amit Bose', 
         role: 'IT Specialist', 
         department: 'Technical', 
         type: 'Contract', 
         status: 'On Leave', 
         joiningDate: '15 Sep 2023', 
-        email: 'm.obrien@school.edu', 
-        phone: '+1 234-567-8903',
-        address: 'Room 305, Tech Lab Wing, NY 10001',
-        salary: '$62,000 / annum',
-        biography: 'Michael ensures campus hardware and network capabilities are functioning.'
+        email: 'amit.bose@school.edu', 
+        phone: '+91 98765 43293',
+        address: 'Room 305, Tech Lab Wing, Kolkata, WB 700091',
+        salary: '₹6,20,000 / annum',
+        biography: 'Amit ensures campus hardware, server integration, and secure networking capabilities are functioning.'
       },
       { 
         id: 'EMP-2026-004', 
-        name: 'Elena Gilbert', 
+        name: 'Priya Patel', 
         role: 'Counselor', 
         department: 'Student Welfare', 
         type: 'Part-time', 
         status: 'On Duty', 
         joiningDate: '20 Feb 2024', 
-        email: 'e.gilbert@school.edu', 
-        phone: '+1 234-567-8904',
-        address: 'Building C, Student Counseling Suite, NY 10003',
-        salary: '$48,000 / annum',
-        biography: 'Elena works to coordinate student support and mental wellbeing programs.'
+        email: 'priya.patel@school.edu', 
+        phone: '+91 98765 43294',
+        address: 'Building C, Student Counseling Suite, Ahmedabad, GJ 380015',
+        salary: '₹4,80,000 / annum',
+        biography: 'Priya Patel works to coordinate student support, mental wellbeing, and career guidance programs.'
       },
-      {
-        id: 'EMP-2026-005',
-        name: 'Robert Taylor',
-        role: 'Logistics Head',
-        department: 'Transport',
-        type: 'Full-time',
-        status: 'On Duty',
-        joiningDate: '10 May 2022',
-        email: 'r.taylor@school.edu',
-        phone: '+1 234-567-8905',
-        address: 'Garage & Transport Bay, NY 10004',
-        salary: '$58,000 / annum',
-        biography: 'Robert coordinates institutional logistics, transport routing, and vehicle registry logs.'
+      { 
+        id: 'EMP-2026-005', 
+        name: 'Rajinder Singh', 
+        role: 'Logistics Head', 
+        department: 'Transport', 
+        type: 'Full-time', 
+        status: 'On Duty', 
+        joiningDate: '10 May 2022', 
+        email: 'rajinder.singh@school.edu', 
+        phone: '+91 98765 43295',
+        address: 'Garage & Transport Bay, Mohali, PB 160055',
+        salary: '₹5,80,000 / annum',
+        biography: 'Rajinder coordinates institutional logistics, transport routing, and vehicle registry logs.'
       },
-      {
-        id: 'EMP-2026-006',
-        name: 'Linda Anderson',
-        role: 'Chef Manager',
-        department: 'Cafeteria',
-        type: 'Full-time',
-        status: 'On Duty',
-        joiningDate: '18 Nov 2021',
-        email: 'l.anderson@school.edu',
-        phone: '+1 234-567-8906',
-        address: 'Central Cafeteria Kitchen, NY 10001',
-        salary: '$50,000 / annum',
-        biography: 'Linda designs culinary menus and directs cafeteria kitchen staff.'
+      { 
+        id: 'EMP-2026-006', 
+        name: 'Meeta Devi', 
+        role: 'Chef Manager', 
+        department: 'Cafeteria', 
+        type: 'Full-time', 
+        status: 'On Duty', 
+        joiningDate: '18 Nov 2021', 
+        email: 'meeta.devi@school.edu', 
+        phone: '+91 98765 43296',
+        address: 'Central Cafeteria Kitchen, Lucknow, UP 226010',
+        salary: '₹5,00,000 / annum',
+        biography: 'Meeta designs culinary menus and directs cafeteria kitchen staff.'
       },
-      {
-        id: 'EMP-2026-007',
-        name: 'Michael Brown',
-        role: 'Systems Admin',
-        department: 'IT Support',
-        type: 'Full-time',
-        status: 'On Duty',
-        joiningDate: '14 Feb 2023',
-        email: 'm.brown@school.edu',
-        phone: '+1 234-567-8907',
-        address: 'Server Room 202, Admin Wing, NY 10001',
-        salary: '$66,000 / annum',
-        biography: 'Michael maintains institution servers, cloud frameworks, and hardware systems.'
+      { 
+        id: 'EMP-2026-007', 
+        name: 'Sameer Khan', 
+        role: 'Systems Admin', 
+        department: 'IT Support', 
+        type: 'Full-time', 
+        status: 'On Duty', 
+        joiningDate: '14 Feb 2023', 
+        email: 'sameer.khan@school.edu', 
+        phone: '+91 98765 43297',
+        address: 'Server Room 202, Admin Wing, Mumbai, MH 400050',
+        salary: '₹6,60,000 / annum',
+        biography: 'Sameer maintains institution servers, cloud frameworks, and hardware systems.'
       },
-      {
-        id: 'EMP-2026-008',
-        name: 'Angela White',
-        role: 'HR Coordinator',
-        department: 'Administration',
-        type: 'Full-time',
-        status: 'On Duty',
-        joiningDate: '09 Sep 2022',
-        email: 'a.white@school.edu',
-        phone: '+1 234-567-8908',
-        address: 'HR Desk, Administration Building, NY 10002',
-        salary: '$54,000 / annum',
-        biography: 'Angela coordinates staff recruitments, files, benefits registry, and organizational culture.'
+      { 
+        id: 'EMP-2026-008', 
+        name: 'Ananya Iyer', 
+        role: 'HR Coordinator', 
+        department: 'Administration', 
+        type: 'Full-time', 
+        status: 'On Duty', 
+        joiningDate: '09 Sep 2022', 
+        email: 'ananya.iyer@school.edu', 
+        phone: '+91 98765 43298',
+        address: 'HR Desk, Administration Building, Bangalore, KA 560001',
+        salary: '₹5,40,000 / annum',
+        biography: 'Ananya coordinates staff recruitments, files, benefits registry, and organizational culture.'
       },
-      {
-        id: 'EMP-2026-009',
-        name: 'Thomas Harris',
-        role: 'Tech Supervisor',
-        department: 'Maintenance',
-        type: 'Full-time',
-        status: 'On Leave',
-        joiningDate: '22 Jul 2021',
-        email: 't.harris@school.edu',
-        phone: '+1 234-567-8909',
-        address: 'Facilities & Workshop Area, NY 10005',
-        salary: '$52,000 / annum',
-        biography: 'Thomas leads maintenance personnel and facilities repair/renovations.'
+      { 
+        id: 'EMP-2026-009', 
+        name: 'Sohan Lal', 
+        role: 'Tech Supervisor', 
+        department: 'Maintenance', 
+        type: 'Full-time', 
+        status: 'On Leave', 
+        joiningDate: '22 Jul 2021', 
+        email: 'sohan.lal@school.edu', 
+        phone: '+91 98765 43299',
+        address: 'Facilities & Workshop Area, Jaipur, RJ 302001',
+        salary: '₹5,20,000 / annum',
+        biography: 'Sohan leads maintenance personnel and facilities repair/renovations.'
       }
     ];
-    if (stored) {
-      const parsed = JSON.parse(stored);
+    
+    const currentStored = localStorage.getItem('employees');
+    if (currentStored) {
+      const parsed = JSON.parse(currentStored);
       if (parsed.length < 9) {
         localStorage.setItem('employees', JSON.stringify(defaultEmployees));
         setEmployees(defaultEmployees);
@@ -459,26 +466,9 @@ const Employees = () => {
                               flexShrink: 0
                             }}>
                                <img 
-                                 src={`https://images.unsplash.com/photo-${[
-                                   '1494790108377-be9c29b29330',
-                                   '1507003211169-0a1dd7228f2d',
-                                   '1438761681033-6461ffad8d80',
-                                   '1517841905240-472988babdf9',
-                                   '1544005313-94ddf0286df2',
-                                   '1534528741775-53994a69daeb',
-                                   '1539571696357-5a69c17a67c6',
-                                   '1500648767791-00dcc994a43e',
-                                   '1506794778202-cad84cf45f1d',
-                                   '1522075469751-3a6694fb2f61',
-                                   '1524504388940-b1c1722653e1',
-                                   '1531746020798-e6953c6e8e04'
-                                 ][((parseInt(emp.id.replace(/\D/g, '')) || 0) % 12)]}?w=150&h=150&fit=crop`}
+                                 src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(emp.name)}`}
                                  alt={emp.name} 
                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                 onError={(e) => {
-                                   e.currentTarget.onerror = null;
-                                   e.currentTarget.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(emp.name)}`;
-                                 }}
                                />
                            </div>
                            <div>

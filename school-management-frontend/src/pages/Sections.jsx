@@ -4,35 +4,35 @@ import { motion, AnimatePresence } from 'framer-motion';
 import eleanorAvatar from '../assets/eleanor_avatar.png';
 
 const teacherAvatars = {
-  'Eleanor Pena': eleanorAvatar,
-  'Jane Smith': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-  'Robert Wilson': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
-  'Emily Davis': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-  'Mrs. Sarah Parker': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
-  'Mr. David Miller': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
-  'Ms. Elena Gilbert': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
-  'Mr. Stefan Salvatore': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop'
+  'Sunita Rao': 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Rao',
+  'Meeta Devi': 'https://api.dicebear.com/7.x/initials/svg?seed=Meeta%20Devi',
+  'Rajesh Verma': 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma',
+  'Divya Joshi': 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi',
+  'Mrs. Priya Patel': 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Patel',
+  'Mr. Rajesh Malhotra': 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Malhotra',
+  'Ms. Ananya Iyer': 'https://api.dicebear.com/7.x/initials/svg?seed=Ananya%20Iyer',
+  'Mr. Amit Bose': 'https://api.dicebear.com/7.x/initials/svg?seed=Amit%20Bose'
 };
 
 const Sections = () => {
   const [sections, setSections] = useState([
-    { id: 1, name: 'Section A', class: 'Class 10', strength: 40, room: 'Room 101', teacher: 'Eleanor Pena' },
-    { id: 2, name: 'Section B', class: 'Class 10', strength: 38, room: 'Room 102', teacher: 'Mr. David Miller' },
-    { id: 3, name: 'Section A', class: 'Class 9', strength: 42, room: 'Room 201', teacher: 'Ms. Elena Gilbert' },
-    { id: 4, name: 'Section C', class: 'Class 8', strength: 35, room: 'Room 305', teacher: 'Mr. Stefan Salvatore' },
+    { id: 1, name: 'Section A', class: 'Class 10', strength: 40, room: 'Room 101', teacher: 'Sunita Rao' },
+    { id: 2, name: 'Section B', class: 'Class 10', strength: 38, room: 'Room 102', teacher: 'Mr. Rajesh Malhotra' },
+    { id: 3, name: 'Section A', class: 'Class 9', strength: 42, room: 'Room 201', teacher: 'Ms. Ananya Iyer' },
+    { id: 4, name: 'Section C', class: 'Class 8', strength: 35, room: 'Room 305', teacher: 'Mr. Amit Bose' },
   ]);
 
   const classesList = ['Class 10', 'Class 9', 'Class 8', 'Class 7', 'Class 6'];
   
   const teachersList = [
-    'Eleanor Pena',
-    'Mrs. Sarah Parker',
-    'Mr. David Miller',
-    'Ms. Elena Gilbert',
-    'Mr. Stefan Salvatore',
-    'Jane Smith',
-    'Robert Wilson',
-    'Emily Davis'
+    'Sunita Rao',
+    'Mrs. Priya Patel',
+    'Mr. Rajesh Malhotra',
+    'Ms. Ananya Iyer',
+    'Mr. Amit Bose',
+    'Meeta Devi',
+    'Rajesh Verma',
+    'Divya Joshi'
   ];
 
   // Search & Filter States

@@ -11,23 +11,23 @@ const ContactAvatar = ({ name, size = 40, borderRadius = '12px', border = '2px s
   const [imgError, setImgError] = useState(false);
   
   const avatars = {
-    'Principal Office': 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop',
-    'Prof. John Smith': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-    'Admin Support': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
-    'Sarah Wilson': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
-    'Prof. Emily Davis': 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop',
-    'Accounts Office': 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop',
-    'Coach Mike Miller': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
-    'Security Gate 1': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop',
-    'Dr. Robert Chen': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-    'Parent Association': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop',
-    'Dean Arthur Pendelton': 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop',
-    'Nurse Clara Oswald': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop',
-    'Librarian Marian Paroo': 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop',
-    'Registrar Jane Doe': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop',
+    'Principal Office': 'https://api.dicebear.com/7.x/initials/svg?seed=Principal%20Office',
+    'Prof. Amit Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Amit%20Sharma',
+    'Admin Support': 'https://api.dicebear.com/7.x/initials/svg?seed=Admin%20Support',
+    'Aditi Nair': 'https://api.dicebear.com/7.x/initials/svg?seed=Aditi%20Nair',
+    'Prof. Priya Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Sharma',
+    'Accounts Office': 'https://api.dicebear.com/7.x/initials/svg?seed=Accounts%20Office',
+    'Coach Rajesh Malhotra': 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Malhotra',
+    'Security Gate 1': 'https://api.dicebear.com/7.x/initials/svg?seed=Security%20Gate%201',
+    'Dr. Sanjay Gupta': 'https://api.dicebear.com/7.x/initials/svg?seed=Sanjay%20Gupta',
+    'Parent Association': 'https://api.dicebear.com/7.x/initials/svg?seed=Parent%20Association',
+    'Dean Anand Verma': 'https://api.dicebear.com/7.x/initials/svg?seed=Anand%20Verma',
+    'Nurse Neha Patel': 'https://api.dicebear.com/7.x/initials/svg?seed=Neha%20Patel',
+    'Librarian Divya Joshi': 'https://api.dicebear.com/7.x/initials/svg?seed=Divya%20Joshi',
+    'Registrar Sunita Sharma': 'https://api.dicebear.com/7.x/initials/svg?seed=Sunita%20Sharma',
   };
 
-  const url = avatars[name] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`;
+  const url = avatars[name] || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
 
   if (imgError) {
     return (
@@ -74,7 +74,7 @@ const InstantChat = () => {
       unread: 2,
       blocked: false,
       email: 'principal@school.edu',
-      phone: '+1 (555) 123-4567',
+      phone: '+91 98765 43210',
       location: 'Admin Block, Room 101',
       messages: [
         { id: 1, sender: 'them', text: "Hello, I've reviewed the documents you sent over. Everything looks correct for the upcoming audit.", time: '09:15 AM' },
@@ -85,14 +85,14 @@ const InstantChat = () => {
     },
     {
       id: 1,
-      name: 'Prof. John Smith',
+      name: 'Prof. Amit Sharma',
       role: 'Science Faculty',
       status: 'online',
-      avatar: 'JS',
+      avatar: 'AS',
       unread: 0,
       blocked: false,
-      email: 'john.smith@school.edu',
-      phone: '+1 (555) 234-8910',
+      email: 'amit.sharma@school.edu',
+      phone: '+91 98765 43211',
       location: 'Science Center, Lab 3',
       messages: [
         { id: 1, sender: 'them', text: "Hi, did the new science lab equipment arrive yet? The students are eager to begin their practicals.", time: 'Yesterday, 02:00 PM' },
@@ -110,7 +110,7 @@ const InstantChat = () => {
       unread: 0,
       blocked: false,
       email: 'support@school.edu',
-      phone: '+1 (555) 901-2345',
+      phone: '+91 98765 43212',
       location: 'Main Server Room, Block C',
       messages: [
         { id: 1, sender: 'me', text: "Hi Support, I am unable to log in to the new portal. Could you reset my credentials?", time: 'Monday, 10:00 AM' },
@@ -121,30 +121,30 @@ const InstantChat = () => {
     },
     {
       id: 3,
-      name: 'Sarah Wilson',
+      name: 'Aditi Nair',
       role: 'Parent (Grade 8)',
       status: 'online',
-      avatar: 'SW',
+      avatar: 'AN',
       unread: 1,
       blocked: false,
-      email: 'sarah.wilson@mail.com',
-      phone: '+1 (555) 345-6789',
+      email: 'aditi.nair@mail.com',
+      phone: '+91 98765 43213',
       location: 'Off-campus Parent Affiliate',
       messages: [
-        { id: 1, sender: 'me', text: "Dear Mrs. Wilson, just a reminder that the report card distribution is scheduled for this Friday.", time: 'Yesterday, 09:30 AM' },
+        { id: 1, sender: 'me', text: "Dear Mrs. Nair, just a reminder that the report card distribution is scheduled for this Friday.", time: 'Yesterday, 09:30 AM' },
         { id: 2, sender: 'them', text: "Thank you for the update. I will make sure to attend between 10 AM and noon.", time: 'Yesterday, 09:45 AM' }
       ]
     },
     {
       id: 4,
-      name: 'Prof. Emily Davis',
+      name: 'Prof. Priya Sharma',
       role: 'English Faculty',
       status: 'online',
-      avatar: 'ED',
+      avatar: 'PS',
       unread: 0,
       blocked: false,
-      email: 'emily.davis@school.edu',
-      phone: '+1 (555) 456-7890',
+      email: 'priya.sharma@school.edu',
+      phone: '+91 98765 43214',
       location: 'Humanities Wing, Room 302',
       messages: [
         { id: 1, sender: 'me', text: "Hi Prof. Davis, did you finalize the syllabus for the Grade 11 literature block?", time: '08:00 AM' },
@@ -162,7 +162,7 @@ const InstantChat = () => {
       unread: 0,
       blocked: false,
       email: 'finance@school.edu',
-      phone: '+1 (555) 567-8901',
+      phone: '+91 98765 43215',
       location: 'Finance Wing, Office 4B',
       messages: [
         { id: 1, sender: 'them', text: "Hi Admin, the Q1 ledger reconciliation has been completed.", time: 'Friday, 02:00 PM' },
@@ -172,14 +172,14 @@ const InstantChat = () => {
     },
     {
       id: 6,
-      name: 'Coach Mike Miller',
+      name: 'Coach Rajesh Malhotra',
       role: 'Sports Academy',
       status: 'online',
-      avatar: 'MM',
+      avatar: 'RM',
       unread: 0,
       blocked: false,
-      email: 'mike.miller@school.edu',
-      phone: '+1 (555) 678-9012',
+      email: 'rajesh.malhotra@school.edu',
+      phone: '+91 98765 43216',
       location: 'Athletics Office, Fieldhouse',
       messages: [
         { id: 1, sender: 'them', text: "Hey Admin, Block B peripheral fences look solid after the CCTV upgrades!", time: 'Yesterday, 05:00 PM' },
@@ -196,7 +196,7 @@ const InstantChat = () => {
       unread: 0,
       blocked: false,
       email: 'gate1.security@school.edu',
-      phone: '+1 (555) 789-0123',
+      phone: '+91 98765 43217',
       location: 'Main Entry Gate House',
       messages: [
         { id: 1, sender: 'them', text: "System Check: Shift transition complete. All peripheral sensors active.", time: '07:00 AM' },
@@ -206,14 +206,14 @@ const InstantChat = () => {
     },
     {
       id: 8,
-      name: 'Dr. Robert Chen',
+      name: 'Dr. Sanjay Gupta',
       role: 'Computer Lab',
       status: 'online',
-      avatar: 'RC',
+      avatar: 'SG',
       unread: 1,
       blocked: false,
-      email: 'robert.chen@school.edu',
-      phone: '+1 (555) 890-1234',
+      email: 'sanjay.gupta@school.edu',
+      phone: '+91 98765 43218',
       location: 'IT Wing, Coding Lab 4',
       messages: [
         { id: 1, sender: 'me', text: "Hi Robert, did the new workstation setups for Grade 12 coding lab get completed?", time: '08:45 AM' },
@@ -231,7 +231,7 @@ const InstantChat = () => {
       unread: 0,
       blocked: false,
       email: 'pta@school.edu',
-      phone: '+1 (555) 901-2345',
+      phone: '+91 98765 43219',
       location: 'Parent Center, Wing B',
       messages: [
         { id: 1, sender: 'them', text: "Hi Admin, we have drafted the volunteer slots for the Annual Charity Gala.", time: 'May 12, 11:00 AM' },
@@ -242,15 +242,15 @@ const InstantChat = () => {
   ];
 
   const availableNewContacts = [
-    { id: 10, name: 'Dean Arthur Pendelton', role: 'Academic Dean', avatar: 'AP', status: 'online', email: 'dean.pendelton@school.edu', phone: '+1 (555) 234-5678', location: 'Administration Block, Office 103', initialMsg: 'Hi Admin, did you review the curriculum proposal?' },
-    { id: 11, name: 'Nurse Clara Oswald', role: 'Campus Health', avatar: 'CO', status: 'offline', email: 'nurse.clara@school.edu', phone: '+1 (555) 345-6789', location: 'Health Clinic, Building D', initialMsg: 'Medical reports for the athletic camp are fully processed.' },
-    { id: 12, name: 'Librarian Marian Paroo', role: 'E-Library', avatar: 'MP', status: 'online', email: 'marian.library@school.edu', phone: '+1 (555) 456-7890', location: 'Central Library, Main Desk', initialMsg: 'The library received the Q2 batch of research journals.' },
-    { id: 13, name: 'Registrar Jane Doe', role: 'Registrar Office', avatar: 'JD', status: 'online', email: 'jane.registrar@school.edu', phone: '+1 (555) 567-8901', location: 'Admissions & Records, Window 1', initialMsg: 'Student enrollment logs are fully synced to database.' }
+    { id: 10, name: 'Dean Anand Verma', role: 'Academic Dean', avatar: 'AV', status: 'online', email: 'dean.verma@school.edu', phone: '+91 98765 43220', location: 'Administration Block, Office 103', initialMsg: 'Hi Admin, did you review the curriculum proposal?' },
+    { id: 11, name: 'Nurse Neha Patel', role: 'Campus Health', avatar: 'NP', status: 'offline', email: 'nurse.neha@school.edu', phone: '+91 98765 43221', location: 'Health Clinic, Building D', initialMsg: 'Medical reports for the athletic camp are fully processed.' },
+    { id: 12, name: 'Librarian Divya Joshi', role: 'E-Library', avatar: 'DJ', status: 'online', email: 'divya.library@school.edu', phone: '+91 98765 43222', location: 'Central Library, Main Desk', initialMsg: 'The library received the Q2 batch of research journals.' },
+    { id: 13, name: 'Registrar Sunita Sharma', role: 'Registrar Office', avatar: 'SS', status: 'online', email: 'sunita.registrar@school.edu', phone: '+91 98765 43223', location: 'Admissions & Records, Window 1', initialMsg: 'Student enrollment logs are fully synced to database.' }
   ];
 
   // States
   const [chats, setChats] = useState(() => {
-    const saved = localStorage.getItem('school_messenger_chats');
+    const saved = localStorage.getItem('school_messenger_chats_v2');
     if (saved) {
       const parsed = JSON.parse(saved);
       const savedIds = parsed.map(c => c.id);
@@ -311,7 +311,7 @@ const InstantChat = () => {
 
   // Sync state to local storage
   useEffect(() => {
-    localStorage.setItem('school_messenger_chats', JSON.stringify(chats));
+    localStorage.setItem('school_messenger_chats_v2', JSON.stringify(chats));
   }, [chats]);
 
   const activeChat = chats.find(c => c.id === activeChatId) || chats[0] || initialChats[0];

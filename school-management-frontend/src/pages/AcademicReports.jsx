@@ -32,11 +32,11 @@ const AcademicReports = () => {
     academicAlertsCount: 3
   });
 
-  // Scholastic warnings triage dataset
+  // Scholastic scholastic warnings triage dataset
   const [triageItems, setTriageItems] = useState([
-    { id: 1, name: 'Marcus Vance', grade: 'Grade 11-B', score: '58% in Pure Mathematics', outreachActive: false, status: 'Outreach Pending' },
-    { id: 2, name: 'Clara Jenkins', grade: 'Grade 10-C', score: '64% in Advanced Physics', outreachActive: false, status: 'Outreach Pending' },
-    { id: 3, name: 'Nathaniel Hall', grade: 'Grade 12-A', score: '62% in World History', outreachActive: false, status: 'Outreach Pending' }
+    { id: 1, name: 'Manish Verma', grade: 'Grade 11-B', score: '58% in Pure Mathematics', outreachActive: false, status: 'Outreach Pending' },
+    { id: 2, name: 'Kirti Sen', grade: 'Grade 10-C', score: '64% in Advanced Physics', outreachActive: false, status: 'Outreach Pending' },
+    { id: 3, name: 'Nitin Handa', grade: 'Grade 12-A', score: '62% in World History', outreachActive: false, status: 'Outreach Pending' }
   ]);
   const [triageOpen, setTriageOpen] = useState(false);
 
@@ -143,27 +143,27 @@ const AcademicReports = () => {
 
     if (template.title.includes('Performance') || template.title.includes('Trend')) {
       rows = [
-        ['STU-2024-001', 'Liam Watson', 'Grade 12-A', 'Spring 2026', '94.2%', 'A+ Elite', 'Optimal'],
-        ['STU-2024-004', 'Sofia Martinez', 'Grade 12-A', 'Spring 2026', '92.8%', 'A+ Elite', 'Optimal'],
-        ['STU-2024-112', 'Alexander Wright', 'Grade 12-A', 'Spring 2026', '88.5%', 'A High', 'High'],
-        ['STU-2024-301', 'Nathaniel Hall', 'Grade 12-A', 'Spring 2026', '62.0%', 'C Warning', 'Lagging'],
-        ['STU-2024-405', 'Isabella Gomez', 'Grade 12-A', 'Spring 2026', '81.4%', 'B+ Standard', 'High']
+        ['STU-2024-001', 'Lokesh Roy', 'Grade 12-A', 'Spring 2026', '94.2%', 'A+ Elite', 'Optimal'],
+        ['STU-2024-004', 'Neha Sharma', 'Grade 12-A', 'Spring 2026', '92.8%', 'A+ Elite', 'Optimal'],
+        ['STU-2024-112', 'Abhishek Singh', 'Grade 12-A', 'Spring 2026', '88.5%', 'A High', 'High'],
+        ['STU-2024-301', 'Nitin Handa', 'Grade 12-A', 'Spring 2026', '62.0%', 'C Warning', 'Lagging'],
+        ['STU-2024-405', 'Geeta Patel', 'Grade 12-A', 'Spring 2026', '81.4%', 'B+ Standard', 'High']
       ];
     } else if (template.title.includes('Pass/Fail') || template.title.includes('Honors')) {
       rows = [
-        ['STU-2024-001', 'Liam Watson', 'Grade 12-A', 'Final Term 2025', '98.5%', 'A+ Topper', 'Optimal'],
-        ['STU-2024-004', 'Sofia Martinez', 'Grade 12-A', 'Final Term 2025', '96.2%', 'A+ Topper', 'Optimal'],
-        ['STU-2024-055', 'Elena Rostova', 'Grade 12-B', 'Final Term 2025', '95.4%', 'A+ Topper', 'Optimal'],
-        ['STU-2024-019', 'Maria Gonzalez', 'Grade 12-A', 'Final Term 2025', '94.8%', 'A+ Elite', 'Optimal'],
-        ['STU-2024-088', 'Oliver Queen', 'Grade 12-B', 'Final Term 2025', '92.5%', 'A+ Elite', 'Optimal']
+        ['STU-2024-001', 'Lokesh Roy', 'Grade 12-A', 'Final Term 2025', '98.5%', 'A+ Topper', 'Optimal'],
+        ['STU-2024-004', 'Neha Sharma', 'Grade 12-A', 'Final Term 2025', '96.2%', 'A+ Topper', 'Optimal'],
+        ['STU-2024-055', 'Priya Patel', 'Grade 12-B', 'Final Term 2025', '95.4%', 'A+ Topper', 'Optimal'],
+        ['STU-2024-019', 'Meera Iyer', 'Grade 12-A', 'Final Term 2025', '94.8%', 'A+ Elite', 'Optimal'],
+        ['STU-2024-088', 'Alok Verma', 'Grade 12-B', 'Final Term 2025', '92.5%', 'A+ Elite', 'Optimal']
       ];
     } else {
       rows = [
-        ['STU-2024-101', 'Emma Stone', 'Grade 11-B', 'Standard Audit', '84.2%', 'B+ Standard', 'High'],
-        ['STU-2024-110', 'Marcus Vance', 'Grade 11-B', 'Standard Audit', '58.0%', 'D Remedial', 'Lagging'],
-        ['STU-2024-210', 'Lucas Brown', 'Grade 11-B', 'Standard Audit', '76.8%', 'B- Standard', 'Moderate'],
-        ['STU-2024-245', 'Clara Jenkins', 'Grade 10-C', 'Standard Audit', '64.0%', 'C- Warning', 'Lagging'],
-        ['STU-2024-302', 'David Banner', 'Grade 10-C', 'Standard Audit', '89.4%', 'A High', 'High']
+        ['STU-2024-101', 'Isha Sen', 'Grade 11-B', 'Standard Audit', '84.2%', 'B+ Standard', 'High'],
+        ['STU-2024-110', 'Manish Verma', 'Grade 11-B', 'Standard Audit', '58.0%', 'D Remedial', 'Lagging'],
+        ['STU-2024-210', 'Lokesh Roy', 'Grade 11-B', 'Standard Audit', '76.8%', 'B- Standard', 'Moderate'],
+        ['STU-2024-245', 'Kirti Sen', 'Grade 10-C', 'Standard Audit', '64.0%', 'C- Warning', 'Lagging'],
+        ['STU-2024-302', 'Deepak Kumar', 'Grade 10-C', 'Standard Audit', '89.4%', 'A High', 'High']
       ];
     }
 

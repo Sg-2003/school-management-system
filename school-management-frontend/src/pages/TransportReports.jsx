@@ -48,10 +48,10 @@ const TransportReports = () => {
       size: '210 KB',
       hash: 'SHA-256-0F928A941BC83B',
       rows: [
-        { route: 'Route North A', activeDriver: 'Alan Miller', schedule: 'Morning Core', avgLatency: '+2 mins', status: 'On Time' },
-        { route: 'Route East B', activeDriver: 'Sarah Jenkins', schedule: 'Morning Core', avgLatency: '+15 mins', status: 'Delayed' },
-        { route: 'Route South-West C', activeDriver: 'David Ray', schedule: 'Afternoon Shuttle', avgLatency: '+0 mins', status: 'On Time' },
-        { route: 'Express Route D', activeDriver: 'Lisa Wong', schedule: 'Faculty Special', avgLatency: '+4 mins', status: 'On Time' }
+        { route: 'Route North A', activeDriver: 'Rajesh Yadav', schedule: 'Morning Core', avgLatency: '+2 mins', status: 'On Time' },
+        { route: 'Route East B', activeDriver: 'Sunita Rao', schedule: 'Morning Core', avgLatency: '+15 mins', status: 'Delayed' },
+        { route: 'Route South-West C', activeDriver: 'Dilip Rao', schedule: 'Afternoon Shuttle', avgLatency: '+0 mins', status: 'On Time' },
+        { route: 'Express Route D', activeDriver: 'Lata Sharma', schedule: 'Faculty Special', avgLatency: '+4 mins', status: 'On Time' }
       ]
     },
     { 
@@ -61,10 +61,10 @@ const TransportReports = () => {
       size: '95 KB',
       hash: 'SHA-256-77DA102BB9E094',
       rows: [
-        { driver: 'Alan Miller', tenure: '4 Years', score: '98/100', incidents: '0', standing: 'Excellent' },
-        { driver: 'Sarah Jenkins', tenure: '6 Years', score: '99/100', incidents: '0', standing: 'Excellent' },
-        { driver: 'David Ray', tenure: '1 Year', score: '76/100', incidents: '1 (Hard Brake)', standing: 'Review Needed' },
-        { driver: 'Lisa Wong', tenure: '3 Years', score: '95/100', incidents: '0', standing: 'Good' }
+        { driver: 'Rajesh Yadav', tenure: '4 Years', score: '98/100', incidents: '0', standing: 'Excellent' },
+        { driver: 'Sunita Rao', tenure: '6 Years', score: '99/100', incidents: '0', standing: 'Excellent' },
+        { driver: 'Dilip Rao', tenure: '1 Year', score: '76/100', incidents: '1 (Hard Brake)', standing: 'Review Needed' },
+        { driver: 'Lata Sharma', tenure: '3 Years', score: '95/100', incidents: '0', standing: 'Good' }
       ]
     },
     { 

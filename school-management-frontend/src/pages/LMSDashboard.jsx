@@ -31,30 +31,30 @@ const earningsData = [
 ];
 
 const instructors = [
-  { id: 1, name: 'Dr. Sarah Wilson', courses: 12, rating: 4.9, students: 1250, avatar: 'SW' },
-  { id: 2, name: 'Prof. James Miller', courses: 8, rating: 4.8, students: 850, avatar: 'JM' },
-  { id: 3, name: 'Emma Thompson', courses: 15, rating: 4.7, students: 2100, avatar: 'ET' },
-  { id: 4, name: 'Michael Chen', courses: 6, rating: 4.9, students: 600, avatar: 'MC' },
+  { id: 1, name: 'Dr. Priya Malhotra', courses: 12, rating: 4.9, students: 1250, avatar: 'PM' },
+  { id: 2, name: 'Prof. Rajesh Kumar', courses: 8, rating: 4.8, students: 850, avatar: 'RK' },
+  { id: 3, name: 'Meena Iyer', courses: 15, rating: 4.7, students: 2100, avatar: 'MI' },
+  { id: 4, name: 'Amit Bose', courses: 6, rating: 4.9, students: 600, avatar: 'AB' },
 ];
 
 const topStudents = [
-  { id: 1, name: 'Alex Johnson', progress: 95, score: 'A+', avatar: 'AJ', color: '#10b981' },
-  { id: 2, name: 'Maria Garcia', progress: 88, score: 'A', avatar: 'MG', color: '#3b82f6' },
-  { id: 3, name: 'Kevin Lee', progress: 82, score: 'B+', avatar: 'KL', color: '#f59e0b' },
-  { id: 4, name: 'Sophia Chen', progress: 78, score: 'B', avatar: 'SC', color: '#8b5cf6' },
+  { id: 1, name: 'Aman Verma', progress: 95, score: 'A+', avatar: 'AV', color: '#10b981' },
+  { id: 2, name: 'Divya Joshi', progress: 88, score: 'A', avatar: 'DJ', color: '#3b82f6' },
+  { id: 3, name: 'Karan Mehta', progress: 82, score: 'B+', avatar: 'KM', color: '#f59e0b' },
+  { id: 4, name: 'Neha Sharma', progress: 78, score: 'B', avatar: 'NS', color: '#8b5cf6' },
 ];
 
 const upcomingSessions = [
-  { id: 1, title: 'React Performance Optimization', date: 'Today, 02:00 PM', instructor: 'Dr. Sarah Wilson', type: 'Live' },
-  { id: 2, title: 'Advanced UI Design Patterns', date: 'Tomorrow, 10:00 AM', instructor: 'Emma Thompson', type: 'Webinar' },
-  { id: 3, title: 'Data Analysis with Python', date: 'May 12, 03:30 PM', instructor: 'Michael Chen', type: 'Live' },
+  { id: 1, title: 'React Performance Optimization', date: 'Today, 02:00 PM', instructor: 'Dr. Priya Malhotra', type: 'Live' },
+  { id: 2, title: 'Advanced UI Design Patterns', date: 'Tomorrow, 10:00 AM', instructor: 'Meena Iyer', type: 'Webinar' },
+  { id: 3, title: 'Data Analysis with Python', date: 'May 12, 03:30 PM', instructor: 'Amit Bose', type: 'Live' },
 ];
 
 const userActivities = [
-  { id: 1, user: 'Alex J.', action: 'completed "Module 4"', time: '2 mins ago', icon: <CircleCheck size={14} />, color: 'var(--success)' },
-  { id: 2, user: 'Maria G.', action: 'started "UX Case Study"', time: '15 mins ago', icon: <Play size={14} />, color: 'var(--primary)' },
-  { id: 3, user: 'Kevin L.', action: 'uploaded "Assignment 2"', time: '1 hour ago', icon: <FileText size={14} />, color: '#8b5cf6' },
-  { id: 4, user: 'Sophia C.', action: 'joined "Digital Marketing"', time: '3 hours ago', icon: <UserPlus size={14} />, color: '#f59e0b' },
+  { id: 1, user: 'Aman V.', action: 'completed "Module 4"', time: '2 mins ago', icon: <CircleCheck size={14} />, color: 'var(--success)' },
+  { id: 2, user: 'Divya J.', action: 'started "UX Case Study"', time: '15 mins ago', icon: <Play size={14} />, color: 'var(--primary)' },
+  { id: 3, user: 'Karan M.', action: 'uploaded "Assignment 2"', time: '1 hour ago', icon: <FileText size={14} />, color: '#8b5cf6' },
+  { id: 4, user: 'Neha S.', action: 'joined "Digital Marketing"', time: '3 hours ago', icon: <UserPlus size={14} />, color: '#f59e0b' },
 ];
 
 const subjectDistribution = [
@@ -170,17 +170,17 @@ const LMSDashboard = () => {
   const [enrolledCount, setEnrolledCount] = useState(500);
   const [studentsCount, setStudentsCount] = useState(3570);
   const [coursesList, setCoursesList] = useState([
-    { id: 1, name: 'React Performance Optimization', category: 'Development', students: 1250, instructor: 'Dr. Sarah Wilson' },
-    { id: 2, name: 'Advanced UI Design Patterns', category: 'Design', students: 2100, instructor: 'Emma Thompson' },
-    { id: 3, name: 'Data Analysis with Python', category: 'Science', students: 600, instructor: 'Michael Chen' },
-    { id: 4, name: 'Ethical Hacking Vectors', category: 'Development', students: 850, instructor: 'Prof. James Miller' }
+    { id: 1, name: 'React Performance Optimization', category: 'Development', students: 1250, instructor: 'Dr. Priya Malhotra' },
+    { id: 2, name: 'Advanced UI Design Patterns', category: 'Design', students: 2100, instructor: 'Meena Iyer' },
+    { id: 3, name: 'Data Analysis with Python', category: 'Science', students: 600, instructor: 'Amit Bose' },
+    { id: 4, name: 'Ethical Hacking Vectors', category: 'Development', students: 850, instructor: 'Prof. Rajesh Kumar' }
   ]);
   const [earningsAmount, setEarningsAmount] = useState(67000);
 
   // Creation forms states
   const [newCourseName, setNewCourseName] = useState('');
   const [newCourseCategory, setNewCourseCategory] = useState('Development');
-  const [newCourseInstructor, setNewCourseInstructor] = useState('Dr. Sarah Wilson');
+  const [newCourseInstructor, setNewCourseInstructor] = useState('Dr. Priya Malhotra');
   
   const [quickEnrollName, setQuickEnrollName] = useState('');
   const [quickEnrollCourse, setQuickEnrollCourse] = useState('React Performance Optimization');
@@ -227,12 +227,12 @@ const LMSDashboard = () => {
       ]);
       
       const mockMessages = [
-        { sender: 'Alex Johnson', text: 'Dr. Sarah, will the rendering profiling checklist be exported to LMS?' },
-        { sender: 'Maria Garcia', text: 'The React 19 compiler optimization speeds are absolutely stunning!' },
-        { sender: 'Kevin Lee', text: 'Is it best practice to wrap all expensive vectors inside useMemo?' },
-        { sender: 'Sophia Chen', text: 'I completed homework module 3, the live diagnostics makes so much sense now.' },
-        { sender: 'Alex Johnson', text: 'Can we review code splitting configurations for massive dashboard applications?' },
-        { sender: 'Emma Wilson', text: 'Excellent citation block on useTransition latency metrics!' }
+        { sender: 'Aman Verma', text: 'Dr. Priya, will the rendering profiling checklist be exported to LMS?' },
+        { sender: 'Divya Joshi', text: 'The React 19 compiler optimization speeds are absolutely stunning!' },
+        { sender: 'Karan Mehta', text: 'Is it best practice to wrap all expensive vectors inside useMemo?' },
+        { sender: 'Neha Sharma', text: 'I completed homework module 3, the live diagnostics makes so much sense now.' },
+        { sender: 'Aman Verma', text: 'Can we review code splitting configurations for massive dashboard applications?' },
+        { sender: 'Isha Sen', text: 'Excellent citation block on useTransition latency metrics!' }
       ];
       
       let index = 0;
@@ -278,10 +278,10 @@ const LMSDashboard = () => {
 
     // Base instructor configurations
     const instructorStats = {
-      'Dr. Sarah Wilson': { courses: coursesList.filter(c=>c.instructor==='Dr. Sarah Wilson').length, enrolled: Math.round(enrolledCount*0.38), students: 1250, earnings: Math.round(earningsAmount*0.38), subject: 'Development' },
-      'Prof. James Miller': { courses: coursesList.filter(c=>c.instructor==='Prof. James Miller').length, enrolled: Math.round(enrolledCount*0.22), students: 850, earnings: Math.round(earningsAmount*0.22), subject: 'Development' },
-      'Emma Thompson': { courses: coursesList.filter(c=>c.instructor==='Emma Thompson').length, enrolled: Math.round(enrolledCount*0.35), students: 2100, earnings: Math.round(earningsAmount*0.35), subject: 'Design' },
-      'Michael Chen': { courses: coursesList.filter(c=>c.instructor==='Michael Chen').length, enrolled: Math.round(enrolledCount*0.15), students: 600, earnings: Math.round(earningsAmount*0.15), subject: 'Science' }
+      'Dr. Priya Malhotra': { courses: coursesList.filter(c=>c.instructor==='Dr. Priya Malhotra').length, enrolled: Math.round(enrolledCount*0.38), students: 1250, earnings: Math.round(earningsAmount*0.38), subject: 'Development' },
+      'Prof. Rajesh Kumar': { courses: coursesList.filter(c=>c.instructor==='Prof. Rajesh Kumar').length, enrolled: Math.round(enrolledCount*0.22), students: 850, earnings: Math.round(earningsAmount*0.22), subject: 'Development' },
+      'Meena Iyer': { courses: coursesList.filter(c=>c.instructor==='Meena Iyer').length, enrolled: Math.round(enrolledCount*0.35), students: 2100, earnings: Math.round(earningsAmount*0.35), subject: 'Design' },
+      'Amit Bose': { courses: coursesList.filter(c=>c.instructor==='Amit Bose').length, enrolled: Math.round(enrolledCount*0.15), students: 600, earnings: Math.round(earningsAmount*0.15), subject: 'Science' }
     };
 
     let activeSubject = filters.subject;
@@ -432,7 +432,7 @@ const LMSDashboard = () => {
       scale *= (subjectScale[filters.subject] || 1.0);
     }
     if (filters.instructor !== 'All') {
-      const instructorScale = { 'Dr. Sarah Wilson': 0.35, 'Prof. James Miller': 0.22, 'Emma Thompson': 0.38, 'Michael Chen': 0.15 };
+      const instructorScale = { 'Dr. Priya Malhotra': 0.35, 'Prof. Rajesh Kumar': 0.22, 'Meena Iyer': 0.38, 'Amit Bose': 0.15 };
       scale *= (instructorScale[filters.instructor] || 1.0);
     }
     if (filters.timeframe === 'Today') {
@@ -485,9 +485,9 @@ const LMSDashboard = () => {
   const getFilteredEnrollments = () => {
     return recentEnrolled.filter(enrollment => {
       const enrollmentMap = {
-        'Cloud Architecture': { subject: 'Development', instructor: 'Dr. Sarah Wilson' },
-        'Ethical Hacking': { subject: 'Development', instructor: 'Prof. James Miller' },
-        'Mobile App Dev': { subject: 'Design', instructor: 'Emma Thompson' }
+        'Cloud Architecture': { subject: 'Development', instructor: 'Dr. Priya Malhotra' },
+        'Ethical Hacking': { subject: 'Development', instructor: 'Prof. Rajesh Kumar' },
+        'Mobile App Dev': { subject: 'Design', instructor: 'Meena Iyer' }
       };
       const details = enrollmentMap[enrollment.name];
       if (!details) return true;
@@ -500,10 +500,10 @@ const LMSDashboard = () => {
   // Filter Top Students
   const getFilteredStudents = () => {
     const studentSubjectMap = {
-      'Alex Johnson': 'Development',
-      'Maria Garcia': 'Design',
-      'Kevin Lee': 'Development',
-      'Sophia Chen': 'Marketing'
+      'Aman Verma': 'Development',
+      'Divya Joshi': 'Design',
+      'Karan Mehta': 'Development',
+      'Neha Sharma': 'Marketing'
     };
     return topStudents.filter(student => {
       if (filters.subject !== 'All') {
@@ -516,10 +516,10 @@ const LMSDashboard = () => {
   // Filter Top Instructors
   const getFilteredInstructors = () => {
     const instructorSubjectMap = {
-      'Dr. Sarah Wilson': 'Development',
-      'Prof. James Miller': 'Development',
-      'Emma Thompson': 'Design',
-      'Michael Chen': 'Science'
+      'Dr. Priya Malhotra': 'Development',
+      'Prof. Rajesh Kumar': 'Development',
+      'Meena Iyer': 'Design',
+      'Amit Bose': 'Science'
     };
     return instructors.filter(inst => {
       if (filters.instructor !== 'All' && inst.name !== filters.instructor) return false;
@@ -792,7 +792,7 @@ const LMSDashboard = () => {
                       transition: 'border-color 0.2s'
                     }}
                   >
-                    {['All', 'Dr. Sarah Wilson', 'Prof. James Miller', 'Emma Thompson', 'Michael Chen'].map(inst => (
+                    {['All', 'Dr. Priya Malhotra', 'Prof. Rajesh Kumar', 'Meena Iyer', 'Amit Bose'].map(inst => (
                       <option key={inst} value={inst}>{inst}</option>
                     ))}
                   </select>

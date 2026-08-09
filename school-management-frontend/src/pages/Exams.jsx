@@ -9,9 +9,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Exams = () => {
   // Core Exams Roster State
   const [exams, setExams] = useState([
-    { id: 'EXM-001', name: 'Mid-Term Examination 2026', type: 'Main', startDate: '2026-05-15', endDate: '2026-05-25', status: 'Upcoming', students: 450, color: 'var(--primary)', room: 'Hall A', invigilators: ['Dr. Sarah Wilson'] },
-    { id: 'EXM-002', name: 'Weekly Quiz - Mathematics', type: 'Quiz', startDate: '2026-05-10', endDate: '2026-05-10', status: 'Ongoing', students: 42, color: '#10B981', room: 'Hall B', invigilators: ['Emma Thompson'] },
-    { id: 'EXM-003', name: 'Pre-Board Assessment', type: 'Internal', startDate: '2026-06-01', endDate: '2026-06-15', status: 'Scheduled', students: 120, color: '#F59E0B', room: 'Science Lab 3', invigilators: ['Prof. James Miller'] },
+    { id: 'EXM-001', name: 'Mid-Term Examination 2026', type: 'Main', startDate: '2026-05-15', endDate: '2026-05-25', status: 'Upcoming', students: 450, color: 'var(--primary)', room: 'Hall A', invigilators: ['Dr. Sunita Rao'] },
+    { id: 'EXM-002', name: 'Weekly Quiz - Mathematics', type: 'Quiz', startDate: '2026-05-10', endDate: '2026-05-10', status: 'Ongoing', students: 42, color: '#10B981', room: 'Hall B', invigilators: ['Devi Joshi'] },
+    { id: 'EXM-003', name: 'Pre-Board Assessment', type: 'Internal', startDate: '2026-06-01', endDate: '2026-06-15', status: 'Scheduled', students: 120, color: '#F59E0B', room: 'Science Lab 3', invigilators: ['Prof. Amit Bose'] },
   ]);
 
   // Filtering & Dropdown States
@@ -44,7 +44,7 @@ const Exams = () => {
 
   // Manage Exam Extra Local States
   const [roomAllocation, setRoomAllocation] = useState('Hall A');
-  const [rosteredInvigilators, setRosteredInvigilators] = useState(['Dr. Sarah Wilson']);
+  const [rosteredInvigilators, setRosteredInvigilators] = useState(['Dr. Sunita Rao']);
 
   // Handle Toast helper
   const triggerToast = (msg) => {
@@ -187,7 +187,7 @@ const Exams = () => {
         students: Number(createForm.students) || 0,
         color: typeColor,
         room: 'Hall A',
-        invigilators: ['Dr. Sarah Wilson']
+        invigilators: ['Dr. Sunita Rao']
       };
 
       setExams(prev => [newExam, ...prev]);
@@ -712,7 +712,7 @@ const Exams = () => {
                 <div>
                   <h3 style={{ fontSize: '0.95rem', fontWeight: 900, marginBottom: '12px', color: 'var(--text-main)' }}>Assign Invigilators</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {['Dr. Sarah Wilson', 'Prof. James Miller', 'Emma Thompson', 'Robert Fox'].map((name) => {
+                    {['Dr. Sunita Rao', 'Prof. Amit Bose', 'Devi Joshi', 'Rajinder Singh'].map((name) => {
                       const isAssigned = currentInvigilators.includes(name);
                       return (
                         <div 

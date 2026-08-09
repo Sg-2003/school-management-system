@@ -4,22 +4,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([
-    { id: 1, name: 'Mathematics', code: 'MATH101', type: 'Core', classes: ['10th', '11th', '12th'], teacher: 'Dr. Michael Chen' },
-    { id: 2, name: 'Physics', code: 'PHY202', type: 'Core', classes: ['11th', '12th'], teacher: 'Prof. Robert Frost' },
-    { id: 3, name: 'English Literature', code: 'ENG105', type: 'Language', classes: ['9th', '10th'], teacher: 'Ms. Emily Bronte' },
-    { id: 4, name: 'Computer Science', code: 'CS303', type: 'Elective', classes: ['11th', '12th'], teacher: 'Mr. Alan Turing' },
-    { id: 5, name: 'History', code: 'HIS102', type: 'Humanities', classes: ['8th', '9th', '10th'], teacher: 'Dr. Yuval Noah' },
+    { id: 1, name: 'Mathematics', code: 'MATH101', type: 'Core', classes: ['10th', '11th', '12th'], teacher: 'Dr. Rajesh Malhotra' },
+    { id: 2, name: 'Physics', code: 'PHY202', type: 'Core', classes: ['11th', '12th'], teacher: 'Prof. Sanjay Gupta' },
+    { id: 3, name: 'English Literature', code: 'ENG105', type: 'Language', classes: ['9th', '10th'], teacher: 'Ms. Sunita Rao' },
+    { id: 4, name: 'Computer Science', code: 'CS303', type: 'Elective', classes: ['11th', '12th'], teacher: 'Mr. Amit Bose' },
+    { id: 5, name: 'History', code: 'HIS102', type: 'Humanities', classes: ['8th', '9th', '10th'], teacher: 'Dr. Devendra Mishra' },
   ]);
 
   const teachersList = [
-    'Dr. Michael Chen',
-    'Prof. Robert Frost',
-    'Ms. Emily Bronte',
-    'Mr. Alan Turing',
-    'Dr. Yuval Noah',
-    'Jane Smith',
-    'Robert Wilson',
-    'Emily Davis'
+    'Dr. Rajesh Malhotra',
+    'Prof. Sanjay Gupta',
+    'Ms. Sunita Rao',
+    'Mr. Amit Bose',
+    'Dr. Devendra Mishra',
+    'Meeta Devi',
+    'Rajesh Verma',
+    'Ananya Iyer'
   ];
 
   const typesList = ['Core', 'Language', 'Elective', 'Humanities'];

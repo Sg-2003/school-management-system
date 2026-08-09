@@ -192,14 +192,14 @@ const Events = () => {
 
   // Roster details generator for "Manage" option
   const mockRosters = {
-    1: { expected: 450, accepted: 380, pending: 50, declined: 20, lead: 'Coach Mike Miller', participants: ['John Doe (Student)', 'Sarah Wilson (Parent)', 'Prof. John Smith (Faculty)'] },
-    2: { expected: 120, accepted: 95, pending: 15, declined: 10, lead: 'Dr. Robert Chen', participants: ['Alex Mercer (Researcher)', 'Prof. Emily Davis (Faculty)', 'Emma Stone (Student)'] },
-    3: { expected: 300, accepted: 240, pending: 40, declined: 20, lead: 'Principal Office', participants: ['Sarah Wilson (Parent)', 'David Beckham (Parent)', 'Prof. John Smith (Faculty)'] },
-    4: { expected: 50, accepted: 35, pending: 10, declined: 5, lead: 'Prof. Emily Davis', participants: ['John Doe (Student)', 'Clara Oswald (Student)', 'Prof. Emily Davis (Faculty)'] }
+    1: { expected: 450, accepted: 380, pending: 50, declined: 20, lead: 'Coach Rajesh Malhotra', participants: ['Amit Sharma (Student)', 'Aditi Nair (Parent)', 'Prof. Amit Sharma (Faculty)'] },
+    2: { expected: 120, accepted: 95, pending: 15, declined: 10, lead: 'Dr. Sanjay Gupta', participants: ['Aarav Gupta (Researcher)', 'Prof. Priya Sharma (Faculty)', 'Isha Sen (Student)'] },
+    3: { expected: 300, accepted: 240, pending: 40, declined: 20, lead: 'Principal Office', participants: ['Aditi Nair (Parent)', 'Rajesh Verma (Parent)', 'Prof. Amit Sharma (Faculty)'] },
+    4: { expected: 50, accepted: 35, pending: 10, declined: 5, lead: 'Prof. Priya Sharma', participants: ['Amit Sharma (Student)', 'Neha Patel (Student)', 'Prof. Priya Sharma (Faculty)'] }
   };
 
   const handleOpenRoster = (event) => {
-    const defaultRoster = { expected: 100, accepted: 75, pending: 20, declined: 5, lead: 'Administration', participants: ['Sarah Wilson (Parent)', 'John Doe (Student)', 'Prof. John Smith (Faculty)'] };
+    const defaultRoster = { expected: 100, accepted: 75, pending: 20, declined: 5, lead: 'Administration', participants: ['Aditi Nair (Parent)', 'Amit Sharma (Student)', 'Prof. Amit Sharma (Faculty)'] };
     const roster = mockRosters[event.id] || defaultRoster;
     setSelectedEventForRoster({ event, roster });
     setShowRosterModal(true);

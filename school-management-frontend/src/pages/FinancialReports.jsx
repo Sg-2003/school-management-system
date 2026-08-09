@@ -24,11 +24,11 @@ const FinancialReports = () => {
 
   // Outstanding Arrears Triage dataset
   const [arrearsItems, setArrearsItems] = useState([
-    { id: 1, name: 'Nathaniel Hall', grade: 'Grade 12-A', amount: 1200, type: 'Tuition Arrears', outreachActive: false, status: 'Unpaid' },
-    { id: 2, name: 'Clara Jenkins', grade: 'Grade 10-C', amount: 450, type: 'Science Lab Dues', outreachActive: false, status: 'Unpaid' },
-    { id: 3, name: 'Marcus Vance', grade: 'Grade 11-B', amount: 320, type: 'Transport Fee', outreachActive: false, status: 'Unpaid' },
-    { id: 4, name: 'Elena Rostova', grade: 'Grade 9-A', amount: 600, type: 'Tuition Arrears', outreachActive: false, status: 'Unpaid' },
-    { id: 5, name: 'Tyler Durden', grade: 'Grade 12-B', amount: 850, type: 'Mess Subscription', outreachActive: false, status: 'Unpaid' }
+    { id: 1, name: 'Nikhil Sharma', grade: 'Grade 12-A', amount: 1200, type: 'Tuition Arrears', outreachActive: false, status: 'Unpaid' },
+    { id: 2, name: 'Kiran Sharma', grade: 'Grade 10-C', amount: 450, type: 'Science Lab Dues', outreachActive: false, status: 'Unpaid' },
+    { id: 3, name: 'Manish Verma', grade: 'Grade 11-B', amount: 320, type: 'Transport Fee', outreachActive: false, status: 'Unpaid' },
+    { id: 4, name: 'Ekta Rawat', grade: 'Grade 9-A', amount: 600, type: 'Tuition Arrears', outreachActive: false, status: 'Unpaid' },
+    { id: 5, name: 'Tejas Deshmukh', grade: 'Grade 12-B', amount: 850, type: 'Mess Subscription', outreachActive: false, status: 'Unpaid' }
   ]);
 
   const [triageOpen, setTriageOpen] = useState(false);
@@ -96,20 +96,20 @@ const FinancialReports = () => {
     } else if (template.title === 'Fee Collection Reconciliation') {
       headers = ['Receipt ID', 'Student ID', 'Full Name', 'Term', 'Amount Paid', 'Payment Method', 'Reconciliation'];
       rows = [
-        ['REC-9821', 'STU-2024-089', 'Liam Watson', 'Spring 2026', '4200', 'Credit Card', 'RECONCILED'],
-        ['REC-9822', 'STU-2025-112', 'Emma Stone', 'Spring 2026', '4200', 'ACH Transfer', 'RECONCILED'],
-        ['REC-9823', 'STU-2024-301', 'Nathaniel Hall', 'Spring 2026', '3000', 'Check', 'PENDING_MATCH'],
-        ['REC-9824', 'STU-2026-004', 'Sofia Martinez', 'Spring 2026', '4200', 'Credit Card', 'RECONCILED'],
-        ['REC-9825', 'STU-2025-241', 'Lucas Brown', 'Spring 2026', '2100', 'Cash', 'RECONCILED']
+        ['REC-9821', 'STU-2024-089', 'Lakshya Verma', 'Spring 2026', '4200', 'Credit Card', 'RECONCILED'],
+        ['REC-9822', 'STU-2025-112', 'Isha Sen', 'Spring 2026', '4200', 'ACH Transfer', 'RECONCILED'],
+        ['REC-9823', 'STU-2024-301', 'Nikhil Sharma', 'Spring 2026', '3000', 'Check', 'PENDING_MATCH'],
+        ['REC-9824', 'STU-2026-004', 'Sonal Mishra', 'Spring 2026', '4200', 'Credit Card', 'RECONCILED'],
+        ['REC-9825', 'STU-2025-241', 'Lalit Bose', 'Spring 2026', '2100', 'Cash', 'RECONCILED']
       ];
     } else if (template.title === 'Staff Payroll Disbursement') {
       headers = ['Disbursement ID', 'Staff ID', 'Name', 'Department', 'Base Salary', 'Tax Deductions', 'Net Paid'];
       rows = [
-        ['PAY-0526-01', 'TCH-004', 'Dr Sarah Jenkins', 'Science', '6500', '975', '5525'],
-        ['PAY-0526-02', 'TCH-012', 'Prof Robert Miller', 'Mathematics', '5800', '870', '4930'],
-        ['PAY-0526-03', 'TCH-044', 'Alice Thompson', 'Languages', '4900', '735', '4165'],
-        ['PAY-0526-04', 'ADM-002', 'Richard Davies', 'Administration', '7200', '1080', '6120'],
-        ['PAY-0526-05', 'ADM-019', 'Maria Gonzalez', 'Finance', '5400', '810', '4590']
+        ['PAY-0526-01', 'TCH-004', 'Dr. Sunita Rao', 'Science', '6500', '975', '5525'],
+        ['PAY-0526-02', 'TCH-012', 'Dr. Rajesh Malhotra', 'Mathematics', '5800', '870', '4930'],
+        ['PAY-0526-03', 'TCH-044', 'Ananya Iyer', 'Languages', '4900', '735', '4165'],
+        ['PAY-0526-04', 'ADM-002', 'Amit Bose', 'Administration', '7200', '1080', '6120'],
+        ['PAY-0526-05', 'ADM-019', 'Meeta Devi', 'Finance', '5400', '810', '4590']
       ];
     } else if (template.title === 'Inventory Procurement Audit') {
       headers = ['Asset ID', 'Item Description', 'Vendor', 'Qty Purchased', 'Unit Cost', 'Total Cost', 'Status'];

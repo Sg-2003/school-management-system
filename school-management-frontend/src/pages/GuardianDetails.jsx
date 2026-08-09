@@ -21,7 +21,7 @@ import {
   PieChart, Pie, Cell
 } from 'recharts';
 
-import robertAvatar from '../assets/robert_avatar.png';
+import robertAvatar from '../assets/indian_man_portrait_1.png';
 
 const GuardianDetails = () => {
   const navigate = useNavigate();
@@ -102,14 +102,14 @@ const GuardianDetails = () => {
           img: found.id === 'GDN-2026-001' ? robertAvatar : (found.avatarUrl || found.img || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(found.name || found.id)}`),
           color: found.color || '#10B981',
           email: found.email || 'guardian@example.com',
-          phone: found.phone || '+1 (234) 567-8901',
-          address: found.address || '123 School Lane, City, NY',
+          phone: found.phone || '+91 98765 43290',
+          address: found.address || '123 School Lane, Noida, UP',
           gender: found.gender || 'Male',
           dob: found.dob || '01 Jan 1980',
           occupation: found.occupation || 'Professional',
           company: found.company || 'N/A',
           joiningDate: found.joiningDate || '01 Jan 2020',
-          emergencyContact: found.emergencyContact || '+1 (234) 567-8999',
+          emergencyContact: found.emergencyContact || '+91 98765 43290',
           linkedStudents: found.linkedStudents || (found.students || []).map((s, i) => ({
             id: `STU-2026-0${45 + i}`,
             name: s,
@@ -125,23 +125,23 @@ const GuardianDetails = () => {
     // Default fallback
     return {
       id: targetId,
-      name: 'Robert Wilson',
+      name: 'Rajesh Verma',
       relation: 'Father',
       status: 'Active',
       img: robertAvatar,
       color: '#4880FF',
-      email: 'robert.w@example.com',
-      phone: '+1 (234) 567-8901',
-      address: '123 Oak Lane, Chicago, IL 60601',
+      email: 'rajesh.v@example.com',
+      phone: '+91 98765 43299',
+      address: 'Block C, Sector 62, Noida, UP 201301',
       gender: 'Male',
       dob: '15 Mar 1980',
-      occupation: 'Senior Software Engineer',
-      company: 'TechCorp Solutions',
+      occupation: 'Senior Software Architect',
+      company: 'Tech Solutions India',
       joiningDate: '10 Jan 2020',
-      emergencyContact: '+1 (234) 567-8999',
+      emergencyContact: '+91 98765 43290',
       linkedStudents: [
-        { id: 'STU-2026-045', name: 'Sarah Wilson', grade: '10A', attendance: '98%', perf: 'A+' },
-        { id: 'STU-2026-089', name: 'Emma Wilson', grade: '07B', attendance: '95%', perf: 'B+' }
+        { id: 'STU101', name: 'Aman Verma', grade: '10A', attendance: '98%', perf: 'A+' },
+        { id: 'STU108', name: 'Neha Sharma', grade: '12C', attendance: '95%', perf: 'B+' }
       ],
       lastActive: '2 hours ago',
       accountType: 'Premium Parent Portal'
@@ -184,11 +184,11 @@ const GuardianDetails = () => {
     }
 
     const defaultLogs = [
-      { id: 1, date: '08 May 2024', time: '10:45 AM', action: 'Successful Login', ip: '192.168.1.1', device: 'Chrome 124 / Windows 11', location: 'Chicago, IL', status: 'Authorized', iconName: 'Globe2', color: '#10B981', details: 'Session started from registered workplace IP.' },
-      { id: 2, date: '07 May 2024', time: '02:30 PM', action: 'Student Profile View', ip: '192.168.1.1', device: 'Safari Mobile / iPhone 15', location: 'Chicago, IL', status: 'Authorized', iconName: 'Smartphone', color: '#4880FF', details: 'Viewed academic performance for Sarah Wilson.' },
-      { id: 3, date: '06 May 2024', time: '09:15 AM', action: 'Password Change', ip: '192.168.1.1', device: 'Chrome 124 / Windows 11', location: 'Chicago, IL', status: 'Secure', iconName: 'Lock', color: '#F59E0B', details: 'Manual password update through dashboard settings.' },
+      { id: 1, date: '08 May 2024', time: '10:45 AM', action: 'Successful Login', ip: '192.168.1.1', device: 'Chrome 124 / Windows 11', location: 'Noida, UP', status: 'Authorized', iconName: 'Globe2', color: '#10B981', details: 'Session started from registered workplace IP.' },
+      { id: 2, date: '07 May 2024', time: '02:30 PM', action: 'Student Profile View', ip: '192.168.1.1', device: 'Safari Mobile / iPhone 15', location: 'Noida, UP', status: 'Authorized', iconName: 'Smartphone', color: '#4880FF', details: 'Viewed academic performance for Aman Verma.' },
+      { id: 3, date: '06 May 2024', time: '09:15 AM', action: 'Password Change', ip: '192.168.1.1', device: 'Chrome 124 / Windows 11', location: 'Noida, UP', status: 'Secure', iconName: 'Lock', color: '#F59E0B', details: 'Manual password update through dashboard settings.' },
       { id: 4, date: '05 May 2024', time: '11:20 PM', action: 'Failed Login Attempt', ip: '110.23.45.67', device: 'Firefox / Unknown OS', location: 'Moscow, RU', status: 'Blocked', iconName: 'ShieldAlert', color: '#EF4444', details: 'Suspicious login attempt blocked by institutional firewall.' },
-      { id: 5, date: '04 May 2024', time: '08:10 AM', action: 'Attendance View', ip: '192.168.1.1', device: 'Chrome 124 / Windows 11', location: 'Chicago, IL', status: 'Authorized', iconName: 'CircleCheck', color: '#10B981', details: 'Checked weekly attendance logs for linked students.' }
+      { id: 5, date: '04 May 2024', time: '08:10 AM', action: 'Attendance View', ip: '192.168.1.1', device: 'Chrome 124 / Windows 11', location: 'Noida, UP', status: 'Authorized', iconName: 'CircleCheck', color: '#10B981', details: 'Checked weekly attendance logs for linked students.' }
     ];
 
     localStorage.setItem(key, JSON.stringify(defaultLogs));
@@ -585,7 +585,7 @@ const GuardianDetails = () => {
     setPaymentStepIndex(0);
     setCardForm({
       number: '',
-      name: 'Robert Wilson',
+      name: 'Rajesh Verma',
       expiry: '',
       cvv: ''
     });
@@ -599,7 +599,7 @@ const GuardianDetails = () => {
     setPaymentStepIndex(0);
     setCardForm({
       number: '',
-      name: 'Robert Wilson',
+      name: 'Rajesh Verma',
       expiry: '',
       cvv: ''
     });
@@ -2167,7 +2167,7 @@ const GuardianDetails = () => {
                      <input
                        value={editForm.name}
                        onChange={e => setEditForm(p => ({ ...p, name: e.target.value }))}
-                       placeholder="e.g. Robert Wilson"
+                       placeholder="e.g. Rajesh Verma"
                        style={{ width: '100%', padding: '11px 14px', borderRadius: '12px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-body)', fontWeight: 700, outline: 'none', color: 'var(--text-main)', fontSize: '0.9rem' }}
                      />
                    </div>

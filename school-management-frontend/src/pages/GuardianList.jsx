@@ -8,7 +8,10 @@ import {
   Briefcase, Save
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import robertAvatar from '../assets/robert_avatar.png';
+import indianMan1 from '../assets/indian_man_portrait_1.png';
+import indianMan2 from '../assets/indian_man_portrait_2.png';
+import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import indianWoman2 from '../assets/indian_woman_portrait_2.png';
 
 const GuardianList = () => {
   const navigate = useNavigate();
@@ -17,103 +20,103 @@ const GuardianList = () => {
   const [guardians, setGuardians] = useState(() => {
     // Version check: if stored data is old (no avatarUrl), clear it so rich profiles load
     const storedVersion = localStorage.getItem('guardians_version');
-    if (storedVersion !== '2026-v4') {
+    if (storedVersion !== '2026-v5') {
       localStorage.removeItem('guardians');
-      localStorage.setItem('guardians_version', '2026-v4');
+      localStorage.setItem('guardians_version', '2026-v5');
     }
     const stored = localStorage.getItem('guardians');
     if (stored) return JSON.parse(stored);
     const defaultList = [
       {
-        id: 'GDN-2026-001', name: 'Robert Wilson', email: 'robert.w@example.com', phone: '+1 (234) 567-8901',
-        students: ['Sarah Wilson', 'Emma Wilson'], status: 'active', lastLogin: '2 hours ago',
-        role: 'Parent', avatar: 'RW',
-        avatarUrl: robertAvatar,
-        address: '123 Oak Lane, Chicago, IL 60601',
-        occupation: 'Senior Software Engineer', company: 'TechCorp Solutions',
-        gender: 'Male', dob: '15 Mar 1980', emergencyContact: '+1 (234) 567-8999',
+        id: 'GDN-2026-001', name: 'Rajesh Verma', email: 'rajesh.v@example.com', phone: '+91 98765 43299',
+        students: ['Aman Verma', 'Neha Sharma'], status: 'active', lastLogin: '2 hours ago',
+        role: 'Parent', avatar: 'RV',
+        avatarUrl: indianMan1,
+        address: 'Block C, Sector 62, Noida, UP 201301',
+        occupation: 'Senior Software Architect', company: 'Tech Solutions India',
+        gender: 'Male', dob: '15 Mar 1980', emergencyContact: '+91 98765 43290',
         accountType: 'Premium Parent Portal', relation: 'Father',
         joiningDate: '10 Jan 2020',
         color: '#4880FF',
         lastActive: '2 hours ago',
         linkedStudents: [
-          { id: 'STU-2026-045', name: 'Sarah Wilson', grade: '10A', attendance: '98%', perf: 'A+' },
-          { id: 'STU-2026-089', name: 'Emma Wilson', grade: '07B', attendance: '95%', perf: 'B+' }
+          { id: 'STU101', name: 'Aman Verma', grade: '10A', attendance: '98%', perf: 'A+' },
+          { id: 'STU108', name: 'Neha Sharma', grade: '12C', attendance: '95%', perf: 'B+' }
         ]
       },
       {
-        id: 'GDN-2026-002', name: 'Linda Thompson', email: 'linda.t@example.com', phone: '+1 (234) 567-8902',
-        students: ['Emma Thompson', 'James Thompson'], status: 'active', lastLogin: '1 day ago',
-        role: 'Guardian', avatar: 'LT',
-        avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face',
-        address: '456 Maple Street, San Francisco, CA 94102',
-        occupation: 'Marketing Director', company: 'Creative Agency Co.',
-        gender: 'Female', dob: '22 Jun 1978', emergencyContact: '+1 (234) 567-8998',
+        id: 'GDN-2026-002', name: 'Meeta Devi', email: 'meeta.d@example.com', phone: '+91 98765 43296',
+        students: ['Divya Joshi', 'Rohan Das'], status: 'active', lastLogin: '1 day ago',
+        role: 'Guardian', avatar: 'MD',
+        avatarUrl: indianWoman1,
+        address: 'Preet Vihar, New Delhi 110092',
+        occupation: 'Principal Consultant', company: 'Devi & Associates',
+        gender: 'Female', dob: '22 Jun 1978', emergencyContact: '+91 98765 43290',
         accountType: 'Standard Parent Portal', relation: 'Mother',
         joiningDate: '05 Mar 2021',
         color: '#10B981',
         lastActive: '1 day ago',
         linkedStudents: [
-          { id: 'STU-2026-078', name: 'Emma Thompson', grade: '11C', attendance: '92%', perf: 'A-' },
-          { id: 'STU-2026-112', name: 'James Thompson', grade: '09A', attendance: '89%', perf: 'B' }
+          { id: 'STU102', name: 'Divya Joshi', grade: '11A', attendance: '92%', perf: 'A-' },
+          { id: 'STU103', name: 'Rohan Das', grade: '10A', attendance: '89%', perf: 'B' }
         ]
       },
       {
-        id: 'GDN-2026-003', name: 'Michael Chen', email: 'm.chen@example.com', phone: '+1 (234) 567-8903',
-        students: ['Kevin Chen'], status: 'suspended', lastLogin: '5 days ago',
-        role: 'Parent', avatar: 'MC',
-        avatarUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=200&h=200&fit=crop&crop=face',
-        address: '789 Pine Road, Houston, TX 77001',
-        occupation: 'Cardiologist', company: 'Houston City Medical Center',
-        gender: 'Male', dob: '08 Nov 1975', emergencyContact: '+1 (234) 567-8997',
+        id: 'GDN-2026-003', name: 'Sanjay Gupta', email: 'sanjay.g@example.com', phone: '+91 98765 43297',
+        students: ['Karan Mehta'], status: 'suspended', lastLogin: '5 days ago',
+        role: 'Parent', avatar: 'SG',
+        avatarUrl: indianMan2,
+        address: 'Andheri West, Mumbai, MH 400053',
+        occupation: 'Cardiologist', company: 'Kokilaben Hospital',
+        gender: 'Male', dob: '08 Nov 1975', emergencyContact: '+91 98765 43290',
         accountType: 'Standard Parent Portal', relation: 'Father',
         joiningDate: '18 Aug 2019',
         color: '#F59E0B',
         lastActive: '5 days ago',
         linkedStudents: [
-          { id: 'STU-2026-033', name: 'Kevin Chen', grade: '12B', attendance: '79%', perf: 'C+' }
+          { id: 'STU104', name: 'Karan Mehta', grade: '12B', attendance: '79%', perf: 'C+' }
         ]
       },
       {
-        id: 'GDN-2026-004', name: 'Sarah Garcia', email: 's.garcia@example.com', phone: '+1 (234) 567-8904',
-        students: ['Maria Garcia'], status: 'active', lastLogin: '30 mins ago',
-        role: 'Parent', avatar: 'SG',
-        avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face',
-        address: '101 Cedar Boulevard, Miami, FL 33101',
-        occupation: 'Financial Business Analyst', company: 'Global Finance Corp',
-        gender: 'Female', dob: '03 Apr 1982', emergencyContact: '+1 (234) 567-8996',
+        id: 'GDN-2026-004', name: 'Priya Patel', email: 'priya.p@example.com', phone: '+91 98765 43294',
+        students: ['Neha Sharma'], status: 'active', lastLogin: '30 mins ago',
+        role: 'Parent', avatar: 'PP',
+        avatarUrl: indianWoman2,
+        address: 'Satellite, Ahmedabad, GJ 380015',
+        occupation: 'Financial Analyst', company: 'GIFT City Finance',
+        gender: 'Female', dob: '03 Apr 1982', emergencyContact: '+91 98765 43290',
         accountType: 'Premium Parent Portal', relation: 'Mother',
         joiningDate: '22 Feb 2022',
         color: '#8B5CF6',
         lastActive: '30 mins ago',
         linkedStudents: [
-          { id: 'STU-2026-067', name: 'Maria Garcia', grade: '10A', attendance: '96%', perf: 'A' }
+          { id: 'STU108', name: 'Neha Sharma', grade: '12C', attendance: '96%', perf: 'A' }
         ]
       },
       {
-        id: 'GDN-2026-005', name: 'David Okafor', email: 'd.okafor@example.com', phone: '+1 (234) 567-8905',
-        students: ['Chidi Okafor'], status: 'active', lastLogin: '3 hours ago',
-        role: 'Parent', avatar: 'DO',
-        avatarUrl: 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=200&h=200&fit=crop&crop=face',
-        address: '250 Harbor View Drive, Atlanta, GA 30301',
-        occupation: 'Civil Engineer', company: 'Apex Infrastructure Ltd.',
-        gender: 'Male', dob: '19 Sep 1977', emergencyContact: '+1 (234) 567-8995',
+        id: 'GDN-2026-005', name: 'Devendra Mishra', email: 'devendra.m@example.com', phone: '+91 98765 43221',
+        students: ['Sameer Khan'], status: 'active', lastLogin: '3 hours ago',
+        role: 'Parent', avatar: 'DM',
+        avatarUrl: 'https://api.dicebear.com/7.x/initials/svg?seed=Devendra%20Mishra',
+        address: 'Gomti Nagar, Lucknow, UP 226010',
+        occupation: 'Civil Engineer', company: 'UP PWD',
+        gender: 'Male', dob: '19 Sep 1977', emergencyContact: '+91 98765 43290',
         accountType: 'Premium Parent Portal', relation: 'Father',
         joiningDate: '14 Jul 2020',
         color: '#EF4444',
         lastActive: '3 hours ago',
         linkedStudents: [
-          { id: 'STU-2026-091', name: 'Chidi Okafor', grade: '11A', attendance: '97%', perf: 'A+' }
+          { id: 'STU216', name: 'Sameer Khan', grade: '10A', attendance: '97%', perf: 'A+' }
         ]
       },
       {
-        id: 'GDN-2026-006', name: 'Priya Nair', email: 'p.nair@example.com', phone: '+1 (234) 567-8906',
+        id: 'GDN-2026-006', name: 'Priya Nair', email: 'p.nair@example.com', phone: '+91 98765 43215',
         students: ['Arjun Nair', 'Divya Nair'], status: 'pending', lastLogin: 'Never',
         role: 'Guardian', avatar: 'PN',
-        avatarUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&h=200&fit=crop&crop=face',
-        address: '77 Rosewood Court, Seattle, WA 98101',
-        occupation: 'University Professor', company: 'Seattle State University',
-        gender: 'Female', dob: '11 Feb 1979', emergencyContact: '+1 (234) 567-8994',
+        avatarUrl: 'https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Nair',
+        address: 'Adyar, Chennai, TN 600020',
+        occupation: 'University Professor', company: 'IIT Madras',
+        gender: 'Female', dob: '11 Feb 1979', emergencyContact: '+91 98765 43290',
         accountType: 'Standard Parent Portal', relation: 'Mother',
         joiningDate: '01 Jan 2026',
         color: '#06B6D4',
@@ -787,7 +790,7 @@ const GuardianList = () => {
                           fontWeight: 900, fontSize: '0.8rem', overflow: 'hidden' 
                         }}>
                           {(g.avatarUrl || g.img) ? (
-                            <img src={g.id === 'GDN-2026-001' ? robertAvatar : (g.avatarUrl || g.img)} alt={g.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={g.id === 'GDN-2026-001' ? indianMan1 : (g.avatarUrl || g.img)} alt={g.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                           ) : g.avatar}
                         </div>
                         <div>
