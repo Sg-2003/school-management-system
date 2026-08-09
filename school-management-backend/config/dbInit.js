@@ -1,6 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const { open } = require('sqlite');
 require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
 
 const initDb = async () => {
     const dbName = process.env.DB_NAME || 'school_db';
@@ -8,8 +10,12 @@ const initDb = async () => {
     console.log(`Connecting to database at ${process.env.DB_HOST || '127.0.0.1'} as ${process.env.DB_USER || 'root'} (Database: ${dbName})...`);
     let connection;
     try {
+        let dbPath = path.join(__dirname, '../database.sqlite');
+        if (process.env.FUNCTION_TARGET || process.env.FUNCTIONS_EMULATOR === 'true') {
+            dbPath = '/tmp/database.sqlite';
+        }
         connection = await open({
-            filename: './database.sqlite',
+            filename: dbPath,
             driver: sqlite3.Database
         });
         connection.query = async (sql, params) => {

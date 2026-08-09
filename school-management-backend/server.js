@@ -3,6 +3,9 @@ const cors = require('cors');
 const jwt = require('jwt-simple');
 require('dotenv').config();
 const initDb = require('./config/dbInit');
+const functions = require('firebase-functions');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(cors());
@@ -24,8 +27,15 @@ let dbInstance;
 const pool = {
     query: async (sql, params) => {
         if (!dbInstance) {
+            let dbPath = path.join(__dirname, 'database.sqlite');
+            if (process.env.FUNCTION_TARGET || process.env.FUNCTIONS_EMULATOR === 'true') {
+                dbPath = '/tmp/database.sqlite';
+                if (!fs.existsSync(dbPath)) {
+                    fs.copyFileSync(path.join(__dirname, 'database.sqlite'), dbPath);
+                }
+            }
             dbInstance = await open({
-                filename: './database.sqlite',
+                filename: dbPath,
                 driver: sqlite3.Database
             });
         }
@@ -465,6 +475,13 @@ app.post('/api/messages', async (req, res) => {
 
 // Start Server
 const PORT = process.env.PORT || 5000;
-initDb().then(() => {
-    app.listen(PORT, () => console.log(`🚀 Legendary API running on port ${PORT}`));
-});
+if (process.env.FUNCTION_TARGET || process.env.FUNCTIONS_EMULATOR === 'true') {
+    // Export for Firebase Functions
+    initDb().catch(console.error); // Init non-blocking
+    exports.api = functions.https.onRequest(app);
+} else {
+    // Run standalone
+    initDb().then(() => {
+        app.listen(PORT, () => console.log(`🚀 Legendary API running on port ${PORT}`));
+    });
+}
