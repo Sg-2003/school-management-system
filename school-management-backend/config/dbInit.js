@@ -90,7 +90,7 @@ const initDb = async () => {
     const [existing] = await connection.query('SELECT * FROM users WHERE email = ?', ['admin@school.com']);
     if (existing.length === 0) {
         await connection.query('INSERT INTO users (name, email, password, role, profilePic) VALUES (?, ?, ?, ?, ?)', 
-            ['Super Admin Aarav Sharma', 'admin@school.com', 'demo123', 'admin', 'https://api.dicebear.com/7.x/initials/svg?seed=Aarav%20Sharma']);
+            ['Aarav Sharma (admin)', 'admin@school.com', 'demo123', 'admin', 'https://api.dicebear.com/7.x/initials/svg?seed=Aarav%20Sharma']);
         await connection.query('INSERT INTO users (name, email, password, role, profilePic) VALUES (?, ?, ?, ?, ?)', 
             ['Rajesh Verma', 'parent@school.com', 'demo123', 'parent', 'https://api.dicebear.com/7.x/initials/svg?seed=Rajesh%20Verma']);
         console.log('🌱 Seeded Demo Accounts with profile pics: admin@school.com & parent@school.com');
