@@ -385,9 +385,20 @@ const IssueReturn = () => {
                             animate={{ opacity: 1, y: 0 }}
                             style={{ padding: '20px', backgroundColor: 'var(--primary-light)', borderRadius: '16px', border: '1px solid var(--primary-light)', display: 'flex', gap: '16px', alignItems: 'center', marginTop: '12px' }}
                           >
-                             <div style={{ width: '40px', height: '56px', borderRadius: '8px', backgroundColor: mode === 'issue' ? 'var(--primary)' : '#ec4899', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Book size={20} />
-                             </div>
+                               <div style={{ width: '48px', height: '64px', backgroundColor: mode === 'issue' ? 'var(--primary)' : '#ec4899', borderRadius: '2px 6px 6px 2px', flexShrink: 0, boxShadow: 'inset 2px 0 5px rgba(0,0,0,0.2), inset -1px 0 1px rgba(255,255,255,0.4), 3px 3px 8px rgba(0,0,0,0.15)', borderLeft: '2px solid rgba(255,255,255,0.25)', position: 'relative', overflow: 'hidden' }}>
+                                  <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4px', textAlign: 'center', color: 'white' }}>
+                                    <Book size={16} style={{ opacity: 0.8 }} />
+                                  </div>
+                                  {matchedBook.isbn && (
+                                    <img 
+                                      src={`https://covers.openlibrary.org/b/isbn/${matchedBook.isbn.replace(/-/g, '')}-S.jpg`} 
+                                      alt={matchedBook.title}
+                                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
+                                      onError={(e) => e.target.style.display = 'none'}
+                                    />
+                                  )}
+                                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 20%)', zIndex: 3, pointerEvents: 'none' }} />
+                               </div>
                              <div style={{ flex: 1 }}>
                                 <h4 style={{ margin: 0, fontWeight: 900, fontSize: '0.95rem' }}>{matchedBook.title}</h4>
                                 <p style={{ margin: 0, fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>by {matchedBook.author} • Shelf {matchedBook.shelf}</p>
