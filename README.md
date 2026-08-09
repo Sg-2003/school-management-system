@@ -55,10 +55,10 @@ graph TD
     FirebaseHost["🌐 Firebase Hosting\n(CDN & SSL)"]:::hosting
 
     %% Relationships
-    User -->|Accesses via Browser| FirebaseHost
-    FirebaseHost -->|Serves Static Build| ReactApp
-    ReactApp -->|REST API Requests (Axios)| ExpressServer
-    ExpressServer -->|SQL Queries (mysql2)| MySQLDB
+    User -- "Accesses via Browser" --> FirebaseHost
+    FirebaseHost -- "Serves Static Build" --> ReactApp
+    ReactApp -- "REST API Requests (Axios)" --> ExpressServer
+    ExpressServer -- "SQL Queries (mysql2)" --> MySQLDB
 ```
 
 ---
