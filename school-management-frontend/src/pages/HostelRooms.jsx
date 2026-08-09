@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react';
+
+import devonAvatar from '../assets/devon_avatar.png';
+import janeAvatar from '../assets/jane_avatar.png';
+import eleanorAvatar from '../assets/eleanor_avatar.png';
+import robertAvatar from '../assets/robert_avatar.png';
+import ninaPatelAvatar from '../assets/nina_patel_avatar.png';
+import elenaAvatar from '../assets/elena_avatar.png';
+import marcusAvatar from '../assets/marcus_avatar.png';
+import sophiaAvatar from '../assets/sophia_avatar.png';
+import studentAvatar from '../assets/student_avatar.png';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -12,56 +22,56 @@ import {
 } from '../components/RoomAppearanceModal';
 
 const MOCK_STUDENTS_POOL = [
-  { name: 'Ethan Hunt', id: 'ADM-2026-001', class: '10-A', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop' },
-  { name: 'Olivia Wilde', id: 'ADM-2026-002', class: '10-B', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop' },
-  { name: 'Liam Neeson', id: 'ADM-2026-003', class: '11-A', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop' },
-  { name: 'Emma Stone', id: 'ADM-2026-004', class: '12-C', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop' },
-  { name: 'Noah Centineo', id: 'ADM-2026-005', class: '9-B', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' },
-  { name: 'Sophia Loren', id: 'ADM-2026-006', class: '10-C', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop' },
-  { name: 'Jackson Rathbone', id: 'ADM-2026-007', class: '11-B', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop' },
-  { name: 'Mia Farrow', id: 'ADM-2026-008', class: '12-A', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop' },
-  { name: 'Lucas Hedges', id: 'ADM-2026-009', class: '9-A', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop' },
-  { name: 'Isabella Rossellini', id: 'ADM-2026-010', class: '10-A', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' },
-  { name: 'Mason Mount', id: 'ADM-2026-011', class: '11-C', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop' },
-  { name: 'Amelia Earhart', id: 'ADM-2026-012', class: '12-B', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop' },
-  { name: 'Logan Lerman', id: 'ADM-2026-013', class: '10-B', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop' },
-  { name: 'Harper Lee', id: 'ADM-2026-014', class: '11-A', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop' },
-  { name: 'Jacob Elordi', id: 'ADM-2026-015', class: '12-A', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop' },
-  { name: 'Evelyn Glennie', id: 'ADM-2026-016', class: '9-B', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop' },
-  { name: 'Ethan Hawke', id: 'ADM-2026-017', class: '10-C', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop' },
-  { name: 'Abigail Breslin', id: 'ADM-2026-018', class: '11-C', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop' },
-  { name: 'Daniel Radcliffe', id: 'ADM-2026-019', class: '12-C', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop' },
-  { name: 'Emily Blunt', id: 'ADM-2026-020', class: '10-A', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop' },
-  { name: 'Matthew McConaughey', id: 'ADM-2026-021', class: '11-B', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop' },
-  { name: 'Elizabeth Olsen', id: 'ADM-2026-022', class: '12-B', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop' },
-  { name: 'Alexander Skarsgard', id: 'ADM-2026-023', class: '9-C', avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=150&h=150&fit=crop' },
-  { name: 'Scarlett Johansson', id: 'ADM-2026-024', class: '10-B', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop' },
-  { name: 'William Levy', id: 'ADM-2026-025', class: '11-A', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop' },
-  { name: 'Victoria Beckham', id: 'ADM-2026-026', class: '12-A', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop' },
-  { name: 'Henry Cavill', id: 'ADM-2026-027', class: '10-C', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' },
-  { name: 'Grace Kelly', id: 'ADM-2026-028', class: '11-C', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop' },
-  { name: 'James Dean', id: 'ADM-2026-029', class: '12-C', avatar: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=150&h=150&fit=crop' },
-  { name: 'Audrey Hepburn', id: 'ADM-2026-030', class: '9-A', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' },
-  { name: 'Marlon Brando', id: 'ADM-2026-031', class: '10-A', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop' },
-  { name: 'Vivien Leigh', id: 'ADM-2026-032', class: '11-B', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop' },
-  { name: 'Paul Newman', id: 'ADM-2026-033', class: '12-B', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop' },
-  { name: 'Ingrid Bergman', id: 'ADM-2026-034', class: '10-B', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop' },
-  { name: 'Humphrey Bogart', id: 'ADM-2026-035', class: '11-A', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop' },
-  { name: 'Bette Davis', id: 'ADM-2026-036', class: '12-A', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop' },
-  { name: 'Cary Grant', id: 'ADM-2026-037', class: '9-B', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop' },
-  { name: 'Katharine Hepburn', id: 'ADM-2026-038', class: '10-C', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop' },
-  { name: 'Clark Gable', id: 'ADM-2026-039', class: '11-C', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop' },
-  { name: 'Judy Garland', id: 'ADM-2026-040', class: '12-C', avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?w=150&h=150&fit=crop' },
-  { name: 'Gregory Peck', id: 'ADM-2026-041', class: '10-A', avatar: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=150&h=150&fit=crop' },
-  { name: 'Joan Crawford', id: 'ADM-2026-042', class: '11-B', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop' },
-  { name: 'Spencer Tracy', id: 'ADM-2026-043', class: '12-B', avatar: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?w=150&h=150&fit=crop' },
-  { name: 'Elizabeth Taylor', id: 'ADM-2026-044', class: '9-C', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop' },
-  { name: 'Laurence Olivier', id: 'ADM-2026-045', class: '10-B', avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=150&h=150&fit=crop' },
-  { name: 'Greta Garbo', id: 'ADM-2026-046', class: '11-A', avatar: 'https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?w=150&h=150&fit=crop' },
-  { name: 'James Stewart', id: 'ADM-2026-047', class: '12-A', avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop' },
-  { name: 'Ginger Rogers', id: 'ADM-2026-048', class: '10-C', avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&h=150&fit=crop' },
-  { name: 'John Wayne', id: 'ADM-2026-049', class: '11-C', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop' },
-  { name: 'Shirley Temple', id: 'ADM-2026-050', class: '12-C', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop' }
+  { name: 'Ethan Hunt', id: 'ADM-2026-001', class: '10-A', avatar: elenaAvatar },
+  { name: 'Olivia Wilde', id: 'ADM-2026-002', class: '10-B', avatar: devonAvatar },
+  { name: 'Liam Neeson', id: 'ADM-2026-003', class: '11-A', avatar: robertAvatar },
+  { name: 'Emma Stone', id: 'ADM-2026-004', class: '12-C', avatar: elenaAvatar },
+  { name: 'Noah Centineo', id: 'ADM-2026-005', class: '9-B', avatar: devonAvatar },
+  { name: 'Sophia Loren', id: 'ADM-2026-006', class: '10-C', avatar: ninaPatelAvatar },
+  { name: 'Jackson Rathbone', id: 'ADM-2026-007', class: '11-B', avatar: robertAvatar },
+  { name: 'Mia Farrow', id: 'ADM-2026-008', class: '12-A', avatar: elenaAvatar },
+  { name: 'Lucas Hedges', id: 'ADM-2026-009', class: '9-A', avatar: studentAvatar },
+  { name: 'Isabella Rossellini', id: 'ADM-2026-010', class: '10-A', avatar: janeAvatar },
+  { name: 'Mason Mount', id: 'ADM-2026-011', class: '11-C', avatar: ninaPatelAvatar },
+  { name: 'Amelia Earhart', id: 'ADM-2026-012', class: '12-B', avatar: janeAvatar },
+  { name: 'Logan Lerman', id: 'ADM-2026-013', class: '10-B', avatar: elenaAvatar },
+  { name: 'Harper Lee', id: 'ADM-2026-014', class: '11-A', avatar: sophiaAvatar },
+  { name: 'Jacob Elordi', id: 'ADM-2026-015', class: '12-A', avatar: eleanorAvatar },
+  { name: 'Evelyn Glennie', id: 'ADM-2026-016', class: '9-B', avatar: sophiaAvatar },
+  { name: 'Ethan Hawke', id: 'ADM-2026-017', class: '10-C', avatar: sophiaAvatar },
+  { name: 'Abigail Breslin', id: 'ADM-2026-018', class: '11-C', avatar: elenaAvatar },
+  { name: 'Daniel Radcliffe', id: 'ADM-2026-019', class: '12-C', avatar: ninaPatelAvatar },
+  { name: 'Emily Blunt', id: 'ADM-2026-020', class: '10-A', avatar: sophiaAvatar },
+  { name: 'Matthew McConaughey', id: 'ADM-2026-021', class: '11-B', avatar: devonAvatar },
+  { name: 'Elizabeth Olsen', id: 'ADM-2026-022', class: '12-B', avatar: sophiaAvatar },
+  { name: 'Alexander Skarsgard', id: 'ADM-2026-023', class: '9-C', avatar: studentAvatar },
+  { name: 'Scarlett Johansson', id: 'ADM-2026-024', class: '10-B', avatar: marcusAvatar },
+  { name: 'William Levy', id: 'ADM-2026-025', class: '11-A', avatar: janeAvatar },
+  { name: 'Victoria Beckham', id: 'ADM-2026-026', class: '12-A', avatar: devonAvatar },
+  { name: 'Henry Cavill', id: 'ADM-2026-027', class: '10-C', avatar: ninaPatelAvatar },
+  { name: 'Grace Kelly', id: 'ADM-2026-028', class: '11-C', avatar: sophiaAvatar },
+  { name: 'James Dean', id: 'ADM-2026-029', class: '12-C', avatar: devonAvatar },
+  { name: 'Audrey Hepburn', id: 'ADM-2026-030', class: '9-A', avatar: elenaAvatar },
+  { name: 'Marlon Brando', id: 'ADM-2026-031', class: '10-A', avatar: janeAvatar },
+  { name: 'Vivien Leigh', id: 'ADM-2026-032', class: '11-B', avatar: elenaAvatar },
+  { name: 'Paul Newman', id: 'ADM-2026-033', class: '12-B', avatar: studentAvatar },
+  { name: 'Ingrid Bergman', id: 'ADM-2026-034', class: '10-B', avatar: elenaAvatar },
+  { name: 'Humphrey Bogart', id: 'ADM-2026-035', class: '11-A', avatar: robertAvatar },
+  { name: 'Bette Davis', id: 'ADM-2026-036', class: '12-A', avatar: marcusAvatar },
+  { name: 'Cary Grant', id: 'ADM-2026-037', class: '9-B', avatar: ninaPatelAvatar },
+  { name: 'Katharine Hepburn', id: 'ADM-2026-038', class: '10-C', avatar: ninaPatelAvatar },
+  { name: 'Clark Gable', id: 'ADM-2026-039', class: '11-C', avatar: sophiaAvatar },
+  { name: 'Judy Garland', id: 'ADM-2026-040', class: '12-C', avatar: eleanorAvatar },
+  { name: 'Gregory Peck', id: 'ADM-2026-041', class: '10-A', avatar: marcusAvatar },
+  { name: 'Joan Crawford', id: 'ADM-2026-042', class: '11-B', avatar: eleanorAvatar },
+  { name: 'Spencer Tracy', id: 'ADM-2026-043', class: '12-B', avatar: sophiaAvatar },
+  { name: 'Elizabeth Taylor', id: 'ADM-2026-044', class: '9-C', avatar: elenaAvatar },
+  { name: 'Laurence Olivier', id: 'ADM-2026-045', class: '10-B', avatar: ninaPatelAvatar },
+  { name: 'Greta Garbo', id: 'ADM-2026-046', class: '11-A', avatar: ninaPatelAvatar },
+  { name: 'James Stewart', id: 'ADM-2026-047', class: '12-A', avatar: devonAvatar },
+  { name: 'Ginger Rogers', id: 'ADM-2026-048', class: '10-C', avatar: elenaAvatar },
+  { name: 'John Wayne', id: 'ADM-2026-049', class: '11-C', avatar: ninaPatelAvatar },
+  { name: 'Shirley Temple', id: 'ADM-2026-050', class: '12-C', avatar: janeAvatar }
 ];
 
 const SEED_ROOMS = [
@@ -94,7 +104,7 @@ const populateRoomsWithUniqueStudents = (roomsList) => {
           name: `Student #${randId}`,
           id: `ADM-2026-${randId}`,
           class: '10-A',
-          avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop'
+          avatar: devonAvatar
         });
       }
     }
@@ -320,7 +330,7 @@ const HostelRooms = () => {
         name: `Student #${randId}`,
         id: `ADM-2026-${randId}`,
         class: '10-A',
-        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop'
+        avatar: studentAvatar
       };
     }
 

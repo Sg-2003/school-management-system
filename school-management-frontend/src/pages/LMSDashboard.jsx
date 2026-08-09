@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react';
+
+import devonAvatar from '../assets/devon_avatar.png';
+import janeAvatar from '../assets/jane_avatar.png';
+import eleanorAvatar from '../assets/eleanor_avatar.png';
+import robertAvatar from '../assets/robert_avatar.png';
+import ninaPatelAvatar from '../assets/nina_patel_avatar.png';
+import elenaAvatar from '../assets/elena_avatar.png';
+import marcusAvatar from '../assets/marcus_avatar.png';
+import sophiaAvatar from '../assets/sophia_avatar.png';
+import studentAvatar from '../assets/student_avatar.png';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -31,17 +41,17 @@ const earningsData = [
 ];
 
 const instructors = [
-  { id: 1, name: 'Dr. Priya Malhotra', courses: 12, rating: 4.9, students: 1250, avatar: 'PM' },
-  { id: 2, name: 'Prof. Rajesh Kumar', courses: 8, rating: 4.8, students: 850, avatar: 'RK' },
-  { id: 3, name: 'Meena Iyer', courses: 15, rating: 4.7, students: 2100, avatar: 'MI' },
-  { id: 4, name: 'Amit Bose', courses: 6, rating: 4.9, students: 600, avatar: 'AB' },
+  { id: 1, name: 'Dr. Priya Malhotra', courses: 12, rating: 4.9, students: 1250, avatar: ninaPatelAvatar },
+  { id: 2, name: 'Prof. Rajesh Kumar', courses: 8, rating: 4.8, students: 850, avatar: robertAvatar },
+  { id: 3, name: 'Meena Iyer', courses: 15, rating: 4.7, students: 2100, avatar: eleanorAvatar },
+  { id: 4, name: 'Amit Bose', courses: 6, rating: 4.9, students: 600, avatar: marcusAvatar },
 ];
 
 const topStudents = [
-  { id: 1, name: 'Aman Verma', progress: 95, score: 'A+', avatar: 'AV', color: '#10b981' },
-  { id: 2, name: 'Divya Joshi', progress: 88, score: 'A', avatar: 'DJ', color: '#3b82f6' },
-  { id: 3, name: 'Karan Mehta', progress: 82, score: 'B+', avatar: 'KM', color: '#f59e0b' },
-  { id: 4, name: 'Neha Sharma', progress: 78, score: 'B', avatar: 'NS', color: '#8b5cf6' },
+  { id: 1, name: 'Aman Verma', progress: 95, score: 'A+', avatar: devonAvatar, color: '#10b981' },
+  { id: 2, name: 'Divya Joshi', progress: 88, score: 'A', avatar: elenaAvatar, color: '#3b82f6' },
+  { id: 3, name: 'Karan Mehta', progress: 82, score: 'B+', avatar: robertAvatar, color: '#f59e0b' },
+  { id: 4, name: 'Neha Sharma', progress: 78, score: 'B', avatar: sophiaAvatar, color: '#8b5cf6' },
 ];
 
 const upcomingSessions = [
@@ -1154,20 +1164,7 @@ const LMSDashboard = () => {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           <div style={{ width: '40px', height: '40px', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)' }}>
                             <img 
-                              src={`https://images.unsplash.com/photo-${[
-                                '1534528741775-53994a69daeb',
-                                '1539571696357-5a69c17a67c6',
-                                '1494790108377-be9c29b29330',
-                                '1507003211169-0a1dd7228f2d',
-                                '1500648767791-00dcc994a43e',
-                                '1438761681033-6461ffad8d80',
-                                '1544005313-94ddf0286df2',
-                                '1517841905240-472988babdf9',
-                                '1506794778202-cad84cf45f1d',
-                                '1522075469751-3a6694fb2f61',
-                                '1524504388940-b1c1722653e1',
-                                '1531746020798-e6953c6e8e04'
-                              ][(student.id % 12)]}?w=150&h=150&fit=crop`} 
+                              src={janeAvatar} 
                               alt={student.name} 
                               onError={(e) => {
                                 e.currentTarget.onerror = null;
@@ -1274,20 +1271,7 @@ const LMSDashboard = () => {
                     boxShadow: '0 4px 12px rgba(69, 179, 224, 0.1)'
                   }}>
                     <img 
-                      src={`https://images.unsplash.com/photo-${[
-                        '1494790108377-be9c29b29330',
-                        '1507003211169-0a1dd7228f2d',
-                        '1438761681033-6461ffad8d80',
-                        '1517841905240-472988babdf9',
-                        '1544005313-94ddf0286df2',
-                        '1534528741775-53994a69daeb',
-                        '1539571696357-5a69c17a67c6',
-                        '1500648767791-00dcc994a43e',
-                        '1506794778202-cad84cf45f1d',
-                        '1522075469751-3a6694fb2f61',
-                        '1524504388940-b1c1722653e1',
-                        '1531746020798-e6953c6e8e04'
-                      ][(inst.id % 12)]}?w=150&h=150&fit=crop`} 
+                      src={eleanorAvatar} 
                       alt={inst.name} 
                       onError={(e) => {
                         e.currentTarget.onerror = null;
@@ -1629,20 +1613,7 @@ const LMSDashboard = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '28px' }}>
                 <div style={{ width: '64px', height: '64px', borderRadius: '20px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)' }}>
                   <img 
-                    src={`https://images.unsplash.com/photo-${[
-                      '1534528741775-53994a69daeb',
-                      '1539571696357-5a69c17a67c6',
-                      '1494790108377-be9c29b29330',
-                      '1507003211169-0a1dd7228f2d',
-                      '1500648767791-00dcc994a43e',
-                      '1438761681033-6461ffad8d80',
-                      '1544005313-94ddf0286df2',
-                      '1517841905240-472988babdf9',
-                      '1506794778202-cad84cf45f1d',
-                      '1522075469751-3a6694fb2f61',
-                      '1524504388940-b1c1722653e1',
-                      '1531746020798-e6953c6e8e04'
-                    ][(activeStudent.id % 12)]}?w=150&h=150&fit=crop`} 
+                    src={sophiaAvatar} 
                     alt={activeStudent.name} 
                     onError={(e) => {
                       e.currentTarget.onerror = null;
@@ -1777,20 +1748,7 @@ const LMSDashboard = () => {
                   boxShadow: '0 4px 12px rgba(69, 179, 224, 0.1)'
                 }}>
                   <img 
-                    src={`https://images.unsplash.com/photo-${[
-                      '1494790108377-be9c29b29330',
-                      '1507003211169-0a1dd7228f2d',
-                      '1438761681033-6461ffad8d80',
-                      '1517841905240-472988babdf9',
-                      '1544005313-94ddf0286df2',
-                      '1534528741775-53994a69daeb',
-                      '1539571696357-5a69c17a67c6',
-                      '1500648767791-00dcc994a43e',
-                      '1506794778202-cad84cf45f1d',
-                      '1522075469751-3a6694fb2f61',
-                      '1524504388940-b1c1722653e1',
-                      '1531746020798-e6953c6e8e04'
-                    ][(activeInstructorCard.id % 12)]}?w=150&h=150&fit=crop`} 
+                    src={elenaAvatar} 
                     alt={activeInstructorCard.name} 
                     onError={(e) => {
                       e.currentTarget.onerror = null;

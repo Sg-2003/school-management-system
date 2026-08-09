@@ -7,6 +7,10 @@ import janeAvatar from '../assets/jane_avatar.png';
 import eleanorAvatar from '../assets/eleanor_avatar.png';
 import robertAvatar from '../assets/robert_avatar.png';
 import ninaPatelAvatar from '../assets/nina_patel_avatar.png';
+import elenaAvatar from '../assets/elena_avatar.png';
+import marcusAvatar from '../assets/marcus_avatar.png';
+import sophiaAvatar from '../assets/sophia_avatar.png';
+import studentAvatar from '../assets/student_avatar.png';
 
 const getMemberAvatar = (memberName) => {
   const name = memberName.toLowerCase();
@@ -18,11 +22,11 @@ const getMemberAvatar = (memberName) => {
 
   // Falling back to high quality matching portrait face-shots for other members
   const fallbacks = {
-    'luna lovegood': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
-    'draco malfoy': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
-    'severus snape': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
-    'minerva mcgonagall': 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop',
-    'james bond': 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=100&h=100&fit=crop'
+    'elena smith': elenaAvatar,
+    'marcus johnson': marcusAvatar,
+    'sophia williams': sophiaAvatar,
+    'nina patel': ninaPatelAvatar,
+    'robert brown': robertAvatar
   };
 
   return fallbacks[name] || null;
@@ -30,11 +34,11 @@ const getMemberAvatar = (memberName) => {
 
 
 const SEED_MEMBERS = [
-  { id: 'LIB-M-001', name: 'Harry Potter', role: 'Student', class: 'Grade 10-A', booksIssued: 2, status: 'Active', joinDate: '2025-09-01' },
-  { id: 'LIB-M-002', name: 'Hermione Granger', role: 'Student', class: 'Grade 10-A', booksIssued: 5, status: 'Active', joinDate: '2025-09-01' },
+  { id: 'LIB-M-001', name: 'Devon Lane', role: 'Student', class: 'Grade 10-A', booksIssued: 2, status: 'Active', joinDate: '2025-09-01' },
+  { id: 'LIB-M-002', name: 'Jane Doe', role: 'Student', class: 'Grade 10-A', booksIssued: 5, status: 'Active', joinDate: '2025-09-01' },
   { id: 'LIB-M-003', name: 'Robert Lane', role: 'Guardian', class: 'Ward: Devon Lane (10A)', booksIssued: 1, status: 'Active', joinDate: '2025-09-05' },
   { id: 'LIB-M-004', name: 'Albus Dumbledore', role: 'Teacher', dept: 'Administration', booksIssued: 12, status: 'Elite', joinDate: '2024-01-10' },
-  { id: 'LIB-M-005', name: 'James Bond', role: 'Driver', route: 'Route: South Connect', booksIssued: 3, status: 'Active', joinDate: '2025-10-12' },
+  { id: 'LIB-M-005', name: 'Robert Brown', role: 'Driver', route: 'Route: South Connect', booksIssued: 3, status: 'Active', joinDate: '2025-10-12' },
 ];
 
 const LibraryMembers = () => {

@@ -4,13 +4,22 @@ import {
   CheckCircle2, X, AlertCircle, FileText, Trash2, Shield 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import devonAvatar from '../assets/devon_avatar.png';
+import janeAvatar from '../assets/jane_avatar.png';
+import eleanorAvatar from '../assets/eleanor_avatar.png';
+import robertAvatar from '../assets/robert_avatar.png';
+import ninaPatelAvatar from '../assets/nina_patel_avatar.png';
+import elenaAvatar from '../assets/elena_avatar.png';
+import marcusAvatar from '../assets/marcus_avatar.png';
+import sophiaAvatar from '../assets/sophia_avatar.png';
+import studentAvatar from '../assets/student_avatar.png';
 
 const PRESET_APPROVED_AVATARS = {
-  'Prof. Albus Dumbledore': 'https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=150&h=150&fit=crop',
-  'Ms. Minerva McGonagall': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop',
-  'Mr. Severus Snape': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop',
-  'Dr. Gregory House': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
-  'Default': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop'
+  'Prof. Eleanor Pena': eleanorAvatar,
+  'Ms. Nina Patel': ninaPatelAvatar,
+  'Mr. Marcus Johnson': marcusAvatar,
+  'Dr. Robert Brown': robertAvatar,
+  'Default': studentAvatar
 };
 
 const SEED_APPROVED_LEAVES = [

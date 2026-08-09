@@ -5,6 +5,15 @@ import {
   MessageSquare, Plus, Play, Pause, Download, Mail, Volume2, FileDown 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import devonAvatar from '../assets/devon_avatar.png';
+import janeAvatar from '../assets/jane_avatar.png';
+import eleanorAvatar from '../assets/eleanor_avatar.png';
+import robertAvatar from '../assets/robert_avatar.png';
+import ninaPatelAvatar from '../assets/nina_patel_avatar.png';
+import elenaAvatar from '../assets/elena_avatar.png';
+import marcusAvatar from '../assets/marcus_avatar.png';
+import sophiaAvatar from '../assets/sophia_avatar.png';
+import studentAvatar from '../assets/student_avatar.png';
 
 // ─── Contact Avatar Helper Component ─────────────────────────────────────────
 const ContactAvatar = ({ name, size = 40, borderRadius = '12px', border = '2px solid var(--border-color)', fallbackText = '' }) => {
@@ -881,7 +890,7 @@ const InstantChat = () => {
                                  onClick={() => {
                                    if (msg.isImage) {
                                      setPreviewImage({
-                                       src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop',
+                                       src: eleanorAvatar,
                                        name: msg.fileName
                                      });
                                    } else {
