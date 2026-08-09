@@ -1,4 +1,5 @@
-const mysql = require('mysql2/promise');
+const sqlite3 = require('sqlite3').verbose();
+const { open } = require('sqlite');
 require('dotenv').config();
 
 const initDb = async () => {
@@ -7,30 +8,23 @@ const initDb = async () => {
     console.log(`Connecting to database at ${process.env.DB_HOST || '127.0.0.1'} as ${process.env.DB_USER || 'root'} (Database: ${dbName})...`);
     let connection;
     try {
-        connection = await mysql.createConnection({
-            host: process.env.DB_HOST || '127.0.0.1',
-            port: process.env.DB_PORT || 3306,
-            user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || '',
-            database: undefined,
-            connectTimeout: 10000 // 10s
+        connection = await open({
+            filename: './database.sqlite',
+            driver: sqlite3.Database
         });
+        connection.query = async (sql, params) => {
+            if (/^\s*(SELECT|SHOW|DESCRIBE|PRAGMA)/i.test(sql)) {
+               const rows = await connection.all(sql, params);
+               return [rows];
+            } else {
+               const result = await connection.run(sql, params);
+               return [result];
+            }
+        };
     } catch (err) {
-        if (err.code === 'ECONNREFUSED') {
-            console.error('\x1b[31m%s\x1b[0m', '❌ ERROR: Database connection refused!');
-            console.error('\x1b[33m%s\x1b[0m', `👉 Please ensure your MySQL server (XAMPP, Laragon, or MySQL Service) is running on ${process.env.DB_HOST || '127.0.0.1'}:${process.env.DB_PORT || 3306}`);
-        } else {
-            console.error('\x1b[31m%s\x1b[0m', '❌ ERROR: Failed to connect to database:');
-            console.error(err);
-        }
+        console.error('\x1b[31m%s\x1b[0m', '❌ ERROR: Failed to create SQLite database:');
+        console.error(err);
         process.exit(1);
-    }
-
-    try {
-        await connection.query(`CREATE DATABASE IF NOT EXISTS ${dbName}`);
-        await connection.query(`USE ${dbName}`);
-    } catch (err) {
-        console.log('⚠️ Could not create/use database explicitly, attempting to continue...');
     }
 
     // Helper to add column if not exists
@@ -42,38 +36,38 @@ const initDb = async () => {
 
     const tables = [
         // 1. Users & RBAC
-        `CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100) UNIQUE, password VARCHAR(255), role ENUM('admin', 'teacher', 'student', 'parent'), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, profilePic TEXT)`,
+        `CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), email VARCHAR(100) UNIQUE, password VARCHAR(255), role TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, profilePic TEXT)`,
         
         // 2. Academics
         `CREATE TABLE IF NOT EXISTS classes (class_id INT PRIMARY KEY, class_name VARCHAR(50), teacher_id INT)`,
-        `CREATE TABLE IF NOT EXISTS sections (section_id INT AUTO_INCREMENT PRIMARY KEY, class_id INT, section_name VARCHAR(10), INDEX (class_id))`,
-        `CREATE TABLE IF NOT EXISTS subjects (subject_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), class_id INT, teacher_id INT)`,
+        `CREATE TABLE IF NOT EXISTS sections (section_id INTEGER PRIMARY KEY AUTOINCREMENT, class_id INT, section_name VARCHAR(10))`,
+        `CREATE TABLE IF NOT EXISTS subjects (subject_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), class_id INT, teacher_id INT)`,
         
         // 3. Students & Parents
         `CREATE TABLE IF NOT EXISTS students (student_id VARCHAR(20) PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), phone VARCHAR(20), class_id INT, section_id INT, dob DATE, gender VARCHAR(10), address TEXT, blood_group VARCHAR(5), admission_date DATE, avatar LONGTEXT)`,
-        `CREATE TABLE IF NOT EXISTS parents (parent_id INT AUTO_INCREMENT PRIMARY KEY, student_id VARCHAR(20), name VARCHAR(100), phone VARCHAR(20), email VARCHAR(100))`,
+        `CREATE TABLE IF NOT EXISTS parents (parent_id INTEGER PRIMARY KEY AUTOINCREMENT, student_id VARCHAR(20), name VARCHAR(100), phone VARCHAR(20), email VARCHAR(100))`,
         
         // 4. Attendance
-        `CREATE TABLE IF NOT EXISTS attendance (id INT AUTO_INCREMENT PRIMARY KEY, student_id VARCHAR(20), date DATE, status ENUM('Present', 'Absent', 'Late', 'Leave'), type ENUM('Manual', 'QR', 'Face'))`,
-        `CREATE TABLE IF NOT EXISTS staff_attendance (id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, date DATE, check_in TIME, check_out TIME, status VARCHAR(20))`,
+        `CREATE TABLE IF NOT EXISTS attendance (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id VARCHAR(20), date DATE, status TEXT, type TEXT)`,
+        `CREATE TABLE IF NOT EXISTS staff_attendance (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INT, date DATE, check_in TIME, check_out TIME, status VARCHAR(20))`,
         
         // 5. Finance
-        `CREATE TABLE IF NOT EXISTS fees (id INT AUTO_INCREMENT PRIMARY KEY, student_id VARCHAR(20), category VARCHAR(50), amount DECIMAL(10,2), status ENUM('Paid', 'Unpaid', 'Partial'), due_date DATE, payment_method VARCHAR(20))`,
+        `CREATE TABLE IF NOT EXISTS fees (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id VARCHAR(20), category VARCHAR(50), amount DECIMAL(10,2), status TEXT, due_date DATE, payment_method VARCHAR(20))`,
         
         // 6. Examination
-        `CREATE TABLE IF NOT EXISTS exams (id INT AUTO_INCREMENT PRIMARY KEY, exam_name VARCHAR(100), date DATE, class_id INT)`,
-        `CREATE TABLE IF NOT EXISTS exam_marks (id INT AUTO_INCREMENT PRIMARY KEY, exam_id INT, student_id VARCHAR(20), subject_id INT, marks_obtained INT, total_marks INT)`,
+        `CREATE TABLE IF NOT EXISTS exams (id INTEGER PRIMARY KEY AUTOINCREMENT, exam_name VARCHAR(100), date DATE, class_id INT)`,
+        `CREATE TABLE IF NOT EXISTS exam_marks (id INTEGER PRIMARY KEY AUTOINCREMENT, exam_id INT, student_id VARCHAR(20), subject_id INT, marks_obtained INT, total_marks INT)`,
         
         // 7. Logistics
-        `CREATE TABLE IF NOT EXISTS library_books (id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(200), author VARCHAR(100), category VARCHAR(50), status ENUM('Available', 'Issued'))`,
-        `CREATE TABLE IF NOT EXISTS transport (id INT AUTO_INCREMENT PRIMARY KEY, route_name VARCHAR(100), driver_name VARCHAR(100), vehicle_no VARCHAR(20), phone VARCHAR(20))`,
-        `CREATE TABLE IF NOT EXISTS hostel (id INT AUTO_INCREMENT PRIMARY KEY, room_no VARCHAR(10), student_id VARCHAR(20), block VARCHAR(20), fee_status VARCHAR(20))`,
+        `CREATE TABLE IF NOT EXISTS library_books (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(200), author VARCHAR(100), category VARCHAR(50), status TEXT)`,
+        `CREATE TABLE IF NOT EXISTS transport (id INTEGER PRIMARY KEY AUTOINCREMENT, route_name VARCHAR(100), driver_name VARCHAR(100), vehicle_no VARCHAR(20), phone VARCHAR(20))`,
+        `CREATE TABLE IF NOT EXISTS hostel (id INTEGER PRIMARY KEY AUTOINCREMENT, room_no VARCHAR(10), student_id VARCHAR(20), block VARCHAR(20), fee_status VARCHAR(20))`,
         
         // 8. Communication
-        `CREATE TABLE IF NOT EXISTS notices (id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(200), content TEXT, type VARCHAR(20), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`,
-        `CREATE TABLE IF NOT EXISTS messages (id INT AUTO_INCREMENT PRIMARY KEY, sender_id INT, receiver_id INT, content TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`,
-        `CREATE TABLE IF NOT EXISTS admissions (id INT AUTO_INCREMENT PRIMARY KEY, full_name VARCHAR(100), email VARCHAR(100), phone VARCHAR(20), status VARCHAR(20) DEFAULT 'Pending')`,
-        `CREATE TABLE IF NOT EXISTS drivers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), license VARCHAR(50), experience VARCHAR(20), rating DECIMAL(2,1), status VARCHAR(20), phone VARCHAR(20), email VARCHAR(100), assignment VARCHAR(100), avatar TEXT)`,
+        `CREATE TABLE IF NOT EXISTS notices (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(200), content TEXT, type VARCHAR(20), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`,
+        `CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, sender_id INT, receiver_id INT, content TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`,
+        `CREATE TABLE IF NOT EXISTS admissions (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name VARCHAR(100), email VARCHAR(100), phone VARCHAR(20), status VARCHAR(20) DEFAULT 'Pending')`,
+        `CREATE TABLE IF NOT EXISTS drivers (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), license VARCHAR(50), experience VARCHAR(20), rating DECIMAL(2,1), status VARCHAR(20), phone VARCHAR(20), email VARCHAR(100), assignment VARCHAR(100), avatar TEXT)`,
         `CREATE TABLE IF NOT EXISTS quizzes (id VARCHAR(20) PRIMARY KEY, title VARCHAR(150), subject VARCHAR(100), questions INT, time VARCHAR(20), timeLimitSec INT, difficulty VARCHAR(20), status VARCHAR(20), color VARCHAR(20))`
     ];
 
@@ -115,7 +109,7 @@ const initDb = async () => {
     }
 
     // Seed students
-    await connection.query(`INSERT IGNORE INTO students (student_id, name, email, phone, class_id, section_id, dob, gender, address, blood_group, admission_date) VALUES 
+    await connection.query(`INSERT OR IGNORE INTO students (student_id, name, email, phone, class_id, section_id, dob, gender, address, blood_group, admission_date) VALUES 
     ("STU101", "Aman Verma", "aman.verma@edupro.edu", "+91 98765 43210", 10, 3, "2010-05-12", "Male", "Block C, Sector 62, Noida, UP", "O+", "2026-01-12"),
     ("STU102", "Divya Joshi", "divya.joshi@edupro.edu", "+91 98765 43211", 11, 3, "2009-08-18", "Female", "Preet Vihar, New Delhi", "A-", "2026-01-15"),
     ("STU103", "Rohan Das", "rohan.das@edupro.edu", "+91 98765 43212", 10, 3, "2010-03-05", "Male", "Salt Lake, Kolkata, WB", "B+", "2026-02-02"),
@@ -224,7 +218,7 @@ const initDb = async () => {
         ("QZ-008", "Business Law Essentials", "Business", 2, "30 mins", 1800, "Hard", "Ongoing", "#F59E0B")`);
     }
 
-    await connection.end();
+    await connection.close();
 };
 
 module.exports = initDb;

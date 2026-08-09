@@ -1,5 +1,4 @@
 const express = require('express');
-const mysql = require('mysql2/promise');
 const cors = require('cors');
 const jwt = require('jwt-simple');
 require('dotenv').config();
@@ -18,15 +17,27 @@ app.get('/', (req, res) => {
 });
 
 // Database Pool
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: process.env.DB_PORT || 3306,
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'school_db',
-    waitForConnections: true,
-    connectionLimit: 10
-});
+const sqlite3 = require('sqlite3').verbose();
+const { open } = require('sqlite');
+let dbInstance;
+
+const pool = {
+    query: async (sql, params) => {
+        if (!dbInstance) {
+            dbInstance = await open({
+                filename: './database.sqlite',
+                driver: sqlite3.Database
+            });
+        }
+        if (/^\s*(SELECT|SHOW|DESCRIBE|PRAGMA)/i.test(sql)) {
+           const rows = await dbInstance.all(sql, params);
+           return [rows];
+        } else {
+           const result = await dbInstance.run(sql, params);
+           return [result];
+        }
+    }
+};
 
 // Auth Routes
 app.post('/api/login', async (req, res) => {
