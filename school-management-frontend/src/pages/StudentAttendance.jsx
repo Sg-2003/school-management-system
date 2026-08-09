@@ -7,7 +7,7 @@ import {
   Flag, Loader2, RotateCcw, Bell, FileBarChart2, ClipboardList,
   SlidersHorizontal, X, CheckCircle, Send
 } from 'lucide-react';
-import { getStudents } from '../services/service';
+import { getStudents, AttendanceApi } from '../services/service';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useNavigate } from 'react-router-dom';
@@ -139,7 +139,14 @@ const StudentAttendance = () => {
   const fetchData = async () => {
     try {
       const data = await getStudents();
-      const list = data && data.length > 0 ? data : MOCK_STUDENTS;
+      const list = (data && data.length > 0 ? data : MOCK_STUDENTS).map(s => {
+        if (!s.grade) {
+          const classStr = s.class_id ? String(s.class_id).replace(/\D/g, '') : '10';
+          const sectionStr = s.section || 'A';
+          s.grade = `${parseInt(classStr)}${sectionStr}`;
+        }
+        return s;
+      });
       setStudents(list);
       
       const init = {};
@@ -147,9 +154,10 @@ const StudentAttendance = () => {
       setAttendance(init);
       originalRef.current = { ...init };
     } catch {
-      setStudents(MOCK_STUDENTS);
+      const list = MOCK_STUDENTS;
+      setStudents(list);
       const init = {};
-      MOCK_STUDENTS.forEach(s => { init[s.student_id] = s.initialStatus; });
+      list.forEach(s => { init[s.student_id] = s.initialStatus || 'Present'; });
       setAttendance(init);
       originalRef.current = { ...init };
     } finally {
@@ -159,21 +167,44 @@ const StudentAttendance = () => {
 
   // ── Sync state when date or class changes ──
   useEffect(() => {
-    const key = `student_attendance_${date}_${selectedClass}`;
-    const stored = localStorage.getItem(key);
-    
-    const classStudents = students.filter(s => s.grade === selectedClass);
-    
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setAttendance(parsed);
-      originalRef.current = { ...parsed };
-    } else {
-      const init = {};
-      classStudents.forEach(s => { init[s.student_id] = s.initialStatus || 'Present'; });
-      setAttendance(init);
-      originalRef.current = { ...init };
-    }
+    const syncAttendance = async () => {
+      const classStudents = students.filter(s => s.grade === selectedClass);
+      if (classStudents.length === 0) return;
+
+      const key = `student_attendance_${date}_${selectedClass}`;
+      
+      try {
+        const records = await AttendanceApi.getRecords(date);
+        if (records && records.length > 0) {
+          const dbInit = {};
+          classStudents.forEach(s => { dbInit[s.student_id] = 'Present'; });
+          records.forEach(r => {
+            if (dbInit[r.student_id] !== undefined) {
+              dbInit[r.student_id] = r.status;
+            }
+          });
+          setAttendance(dbInit);
+          originalRef.current = { ...dbInit };
+          return;
+        }
+      } catch (err) {
+        console.warn("Backend attendance API offline/failed, using localStorage:", err);
+      }
+
+      const stored = localStorage.getItem(key);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setAttendance(parsed);
+        originalRef.current = { ...parsed };
+      } else {
+        const init = {};
+        classStudents.forEach(s => { init[s.student_id] = s.initialStatus || 'Present'; });
+        setAttendance(init);
+        originalRef.current = { ...init };
+      }
+    };
+
+    syncAttendance();
 
     // Load stored notes
     const storedNotes = localStorage.getItem(`student_notes_${date}_${selectedClass}`);
@@ -211,22 +242,38 @@ const StudentAttendance = () => {
     showToast('All changes discarded', 'warn');
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true);
-    setTimeout(() => {
-      const key = `student_attendance_${date}_${selectedClass}`;
-      localStorage.setItem(key, JSON.stringify(attendance));
-      
-      // Save notes & flags
-      localStorage.setItem(`student_notes_${date}_${selectedClass}`, JSON.stringify(notes));
-      localStorage.setItem(`student_flags_${date}_${selectedClass}`, JSON.stringify(flaggedStudents));
+    const classStudents = students.filter(s => s.grade === selectedClass);
+    const records = classStudents.map(s => ({
+      student_id: s.student_id,
+      status: attendance[s.student_id] || 'Present',
+      date: date
+    }));
 
-      originalRef.current = { ...attendance };
-      setIsSaving(false);
-      setSaveSuccess(true);
-      showToast(`Attendance for Class ${selectedClass} saved!`);
-      setTimeout(() => setSaveSuccess(false), 2500);
-    }, 1200);
+    let apiSuccess = false;
+    try {
+      await AttendanceApi.markAttendance(records);
+      apiSuccess = true;
+    } catch (err) {
+      console.warn("Backend API sync offline/failed, using localStorage fallback:", err);
+    }
+
+    const key = `student_attendance_${date}_${selectedClass}`;
+    localStorage.setItem(key, JSON.stringify(attendance));
+    
+    localStorage.setItem(`student_notes_${date}_${selectedClass}`, JSON.stringify(notes));
+    localStorage.setItem(`student_flags_${date}_${selectedClass}`, JSON.stringify(flaggedStudents));
+
+    originalRef.current = { ...attendance };
+    setIsSaving(false);
+    setSaveSuccess(true);
+    if (apiSuccess) {
+      showToast(`Attendance for Class ${selectedClass} saved to database!`);
+    } else {
+      showToast(`Attendance saved offline (API offline).`, 'warn');
+    }
+    setTimeout(() => setSaveSuccess(false), 2500);
   };
 
   const handleExportCSV = () => {

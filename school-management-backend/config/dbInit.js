@@ -9,6 +9,7 @@ const initDb = async () => {
     try {
         connection = await mysql.createConnection({
             host: process.env.DB_HOST || '127.0.0.1',
+            port: process.env.DB_PORT || 3306,
             user: process.env.DB_USER || 'root',
             password: process.env.DB_PASSWORD || '',
             database: undefined,
@@ -17,7 +18,7 @@ const initDb = async () => {
     } catch (err) {
         if (err.code === 'ECONNREFUSED') {
             console.error('\x1b[31m%s\x1b[0m', '❌ ERROR: Database connection refused!');
-            console.error('\x1b[33m%s\x1b[0m', `👉 Please ensure your MySQL server (XAMPP, Laragon, or MySQL Service) is running on ${process.env.DB_HOST || '127.0.0.1'}:3306`);
+            console.error('\x1b[33m%s\x1b[0m', `👉 Please ensure your MySQL server (XAMPP, Laragon, or MySQL Service) is running on ${process.env.DB_HOST || '127.0.0.1'}:${process.env.DB_PORT || 3306}`);
         } else {
             console.error('\x1b[31m%s\x1b[0m', '❌ ERROR: Failed to connect to database:');
             console.error(err);
@@ -49,11 +50,11 @@ const initDb = async () => {
         `CREATE TABLE IF NOT EXISTS subjects (subject_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), class_id INT, teacher_id INT)`,
         
         // 3. Students & Parents
-        `CREATE TABLE IF NOT EXISTS students (student_id VARCHAR(20) PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), phone VARCHAR(20), class_id INT, section_id INT, dob DATE, gender VARCHAR(10), address TEXT, blood_group VARCHAR(5), admission_date DATE)`,
+        `CREATE TABLE IF NOT EXISTS students (student_id VARCHAR(20) PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), phone VARCHAR(20), class_id INT, section_id INT, dob DATE, gender VARCHAR(10), address TEXT, blood_group VARCHAR(5), admission_date DATE, avatar LONGTEXT)`,
         `CREATE TABLE IF NOT EXISTS parents (parent_id INT AUTO_INCREMENT PRIMARY KEY, student_id VARCHAR(20), name VARCHAR(100), phone VARCHAR(20), email VARCHAR(100))`,
         
         // 4. Attendance
-        `CREATE TABLE IF NOT EXISTS attendance (id INT AUTO_INCREMENT PRIMARY KEY, student_id VARCHAR(20), date DATE, status ENUM('Present', 'Absent', 'Late'), type ENUM('Manual', 'QR', 'Face'))`,
+        `CREATE TABLE IF NOT EXISTS attendance (id INT AUTO_INCREMENT PRIMARY KEY, student_id VARCHAR(20), date DATE, status ENUM('Present', 'Absent', 'Late', 'Leave'), type ENUM('Manual', 'QR', 'Face'))`,
         `CREATE TABLE IF NOT EXISTS staff_attendance (id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, date DATE, check_in TIME, check_out TIME, status VARCHAR(20))`,
         
         // 5. Finance

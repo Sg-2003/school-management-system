@@ -124,8 +124,8 @@ export const NoticesApi = {
 };
 
 export const AttendanceApi = {
-    getRecords: async () => {
-        const response = await axios.get(`${API_URL}/attendance`);
+    getRecords: async (date) => {
+        const response = await axios.get(`${API_URL}/attendance`, { params: { date } });
         return response.data;
     },
     markAttendance: async (data) => {

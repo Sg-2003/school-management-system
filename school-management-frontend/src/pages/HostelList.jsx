@@ -87,6 +87,10 @@ const HostelList = () => {
       }
     } catch (error) {
       console.error('Error:', error);
+      const stored = localStorage.getItem('hostel_buildings');
+      if (stored) {
+        setHostels(JSON.parse(stored));
+      }
     } finally {
       setLoading(false);
     }

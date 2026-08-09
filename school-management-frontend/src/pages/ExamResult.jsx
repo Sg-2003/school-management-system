@@ -682,6 +682,235 @@ const ExamResult = () => {
     return "Satisfactory performance. Shows growth, but requires additional hours of self-study and targeted study sessions to build firm foundations in key areas.";
   };
 
+  const handlePrintCard = (student) => {
+    if (!student) return;
+    const printWindow = window.open('', '_blank', 'width=800,height=900');
+    if (!printWindow) {
+      triggerToast("Failed to open print window. Please allow popups.");
+      return;
+    }
+
+    const subjectsHtml = student.subjects ? Object.entries(student.subjects).map(([subj, marks]) => {
+      let tag = 'Pass';
+      let letter = 'D';
+      let gpaVal = '2.00';
+      let color = '#6366F1';
+      
+      if (marks >= 95) { tag = 'Distinction'; letter = 'A+'; gpaVal = '4.00'; color = '#10B981'; }
+      else if (marks >= 90) { tag = 'Distinction'; letter = 'A'; gpaVal = '3.90'; color = '#10B981'; }
+      else if (marks >= 85) { tag = 'Merit'; letter = 'B+'; gpaVal = '3.70'; color = '#4880FF'; }
+      else if (marks >= 80) { tag = 'Merit'; letter = 'B'; gpaVal = '3.50'; color = '#4880FF'; }
+      else if (marks >= 70) { tag = 'Credit'; letter = 'C'; gpaVal = '3.00'; color = '#F59E0B'; }
+      else if (marks < 60) { tag = 'Fail'; letter = 'F'; gpaVal = '0.00'; color = '#EF4444'; }
+
+      return `
+        <tr>
+          <td style="padding: 12px 15px; border-bottom: 1px solid #E2E8F0; font-weight: 700; color: #1E293B;">${subj}</td>
+          <td style="padding: 12px 15px; border-bottom: 1px solid #E2E8F0; font-weight: 600; color: #475569; text-align: center;">${marks} / 100</td>
+          <td style="padding: 12px 15px; border-bottom: 1px solid #E2E8F0; text-align: center;">
+            <span style="font-weight: 800; color: white; background-color: ${color}; padding: 3px 8px; border-radius: 4px; display: inline-block; min-width: 24px;">${letter}</span>
+          </td>
+          <td style="padding: 12px 15px; border-bottom: 1px solid #E2E8F0; font-weight: 600; color: #475569; text-align: center;">${gpaVal}</td>
+          <td style="padding: 12px 15px; border-bottom: 1px solid #E2E8F0; text-align: right;">
+            <span style="font-weight: 700; color: ${color}; font-size: 11px; text-transform: uppercase;">${tag}</span>
+          </td>
+        </tr>
+      `;
+    }).join('') : `<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748B;">No subjects recorded</td></tr>`;
+
+    const remarks = getReportRemarks(student.gpa);
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Report Card - ${student.name}</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+            body {
+              font-family: 'Outfit', sans-serif;
+              color: #1E293B;
+              margin: 0;
+              padding: 40px;
+              background-color: #ffffff;
+            }
+            .report-card {
+              max-width: 700px;
+              margin: 0 auto;
+              border: 2px solid #E2E8F0;
+              border-radius: 20px;
+              padding: 30px;
+              box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            }
+            .header {
+              text-align: center;
+              border-bottom: 2px solid #E2E8F0;
+              padding-bottom: 20px;
+              margin-bottom: 25px;
+            }
+            .school-name {
+              font-size: 24px;
+              font-weight: 900;
+              letter-spacing: -0.5px;
+              color: #4880FF;
+              margin: 0;
+            }
+            .doc-title {
+              font-size: 14px;
+              font-weight: 800;
+              text-transform: uppercase;
+              letter-spacing: 1.5px;
+              color: #64748B;
+              margin: 5px 0 0 0;
+            }
+            .student-info {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 15px;
+              margin-bottom: 25px;
+              background-color: #F8FAFC;
+              padding: 18px;
+              border-radius: 12px;
+              border: 1px solid #E2E8F0;
+            }
+            .info-item {
+              font-size: 14px;
+              font-weight: 600;
+              color: #475569;
+            }
+            .info-item span {
+              font-weight: 800;
+              color: #0F172A;
+            }
+            .grade-table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 25px;
+            }
+            .grade-table th {
+              background-color: #F1F5F9;
+              color: #475569;
+              font-weight: 800;
+              font-size: 11px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              padding: 12px 15px;
+              text-align: left;
+              border-bottom: 2px solid #E2E8F0;
+            }
+            .remarks-section {
+              background-color: #F8FAFC;
+              border-left: 4px solid #4880FF;
+              padding: 15px;
+              border-radius: 0 12px 12px 0;
+              margin-bottom: 35px;
+              font-size: 14px;
+              line-height: 1.5;
+            }
+            .remarks-title {
+              font-weight: 800;
+              color: #0F172A;
+              margin-bottom: 5px;
+              font-size: 12px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+            .signatures {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 50px;
+              padding-top: 20px;
+              border-top: 1px dashed #E2E8F0;
+            }
+            .sig-block {
+              text-align: center;
+              width: 200px;
+            }
+            .sig-line {
+              border-bottom: 1px solid #94A3B8;
+              height: 40px;
+              margin-bottom: 8px;
+            }
+            .sig-title {
+              font-size: 12px;
+              font-weight: 800;
+              color: #64748B;
+              text-transform: uppercase;
+            }
+            @media print {
+              body {
+                padding: 0;
+              }
+              .report-card {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="report-card">
+            <div class="header">
+              <h1 class="school-name">EDUPRO ACADEMY</h1>
+              <p class="doc-title">Official Student Report Card</p>
+            </div>
+            
+            <div class="student-info">
+              <div class="info-item">Student Name: <span>${student.name}</span></div>
+              <div class="info-item">Student ID: <span>${student.id}</span></div>
+              <div class="info-item">Academic Class: <span>Class ${selectedClass}</span></div>
+              <div class="info-item">Class Rank: <span>${student.rank}</span></div>
+              <div class="info-item">Cumulative GPA: <span>${student.gpa} / 4.00</span></div>
+              <div class="info-item">Aggregate Percentage: <span>${student.percentage}</span></div>
+            </div>
+
+            <table class="grade-table">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th style="text-align: center;">Acquired Marks</th>
+                  <th style="text-align: center;">Grade</th>
+                  <th style="text-align: center;">GPA Points</th>
+                  <th style="text-align: right;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${subjectsHtml}
+              </tbody>
+            </table>
+
+            <div class="remarks-section">
+              <div class="remarks-title">Counsellor Remarks</div>
+              <div style="color: #475569; font-weight: 500;">${remarks}</div>
+            </div>
+
+            <div class="signatures">
+              <div class="sig-block">
+                <div class="sig-line"></div>
+                <div class="sig-title">Class Counsellor</div>
+              </div>
+              <div class="sig-block">
+                <div class="sig-line"></div>
+                <div class="sig-title">School Principal</div>
+              </div>
+            </div>
+          </div>
+          <script>
+            window.onload = function() {
+              window.focus();
+              setTimeout(function() {
+                window.print();
+                window.close();
+              }, 500);
+            };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    triggerToast(`Generated printable report card for ${student.name}!`);
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
@@ -906,6 +1135,14 @@ const ExamResult = () => {
                            </td>
                            <td style={{ padding: '20px 24px', textAlign: 'right' }}>
                               <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                                 <button 
+                                    className="btn" 
+                                    style={{ fontSize: '0.75rem', fontWeight: 850, padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '4px' }}
+                                    onClick={() => handlePrintCard(res)}
+                                    title="Print Report Card"
+                                 >
+                                    <Printer size={14} />
+                                 </button>
                                  <button 
                                     className="btn btn-primary" 
                                     style={{ fontSize: '0.75rem', fontWeight: 850, padding: '8px 16px', borderRadius: '8px' }}

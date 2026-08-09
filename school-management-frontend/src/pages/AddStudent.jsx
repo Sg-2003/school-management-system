@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   User, GraduationCap, MapPin, Phone, Mail, Calendar, 
   Upload, Save, X, ChevronRight, Info, Users as UsersIcon,
-  ShieldCheck, FileText, Camera
+  ShieldCheck, FileText, Camera, CloudUpload, CheckCircle2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { addStudent } from '../services/service';
@@ -11,13 +11,24 @@ import { addStudent } from '../services/service';
 const AddStudent = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('personal');
+  const [isSaving, setIsSaving] = useState(false);
+  const [savePhase, setSavePhase] = useState(0);
+  const { toast, showToast, hideToast } = useToast();
+
+  const savePhases = [
+    'Analyzing student academic records...',
+    'Validating enrollment criteria & class quotas...',
+    'Generating student identity credential locks...',
+    'Syncing student record with institutional ledger...'
+  ];
 
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', gender: '', dob: '', bloodGroup: '', religion: '', nationality: 'Indian',
     admissionId: '', rollNo: '', class: '', section: '',
     parentName: '', parentOccupation: '', parentPhone: '', parentEmail: '',
     presentAddress: '', permanentAddress: '',
-    phone: '', email: '', admissionDate: new Date().toISOString().split('T')[0]
+    phone: '', email: '', avatar: '',
+    admissionDate: new Date().toISOString().split('T')[0]
   });
 
   const handleInputChange = (e) => {
@@ -135,7 +146,7 @@ const AddStudent = () => {
           </p>
         </div>
         <div style={{ display: 'flex', gap: '16px' }}>
-          <button className="btn" style={{ border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-card)', padding: '12px 24px', borderRadius: '14px' }} onClick={() => navigate('/dashboard/students')}>
+          <button type="button" className="btn" style={{ border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-card)', padding: '12px 24px', borderRadius: '14px', cursor: 'pointer' }} onClick={() => navigate('/dashboard/students')}>
             Cancel
           </button>
           <button type="submit" form="student-form" className="btn btn-primary" style={{ padding: '12px 32px', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 10px 20px -5px rgba(69, 179, 224, 0.4)' }}>
@@ -148,15 +159,26 @@ const AddStudent = () => {
         {/* Left Sidebar: Form Navigation & Photo Upload */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <div className="card" style={{ padding: '32px', borderRadius: '24px', textAlign: 'center' }}>
-            <div style={{ 
-              width: '140px', height: '140px', borderRadius: '40px', backgroundColor: 'var(--bg-body)', 
-              border: '2px dashed var(--border-color)', margin: '0 auto 24px', display: 'flex', 
-              flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)',
-              cursor: 'pointer', transition: '0.3s', overflow: 'hidden', position: 'relative'
-            }} onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--primary)'} onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}>
-              <Camera size={40} style={{ marginBottom: '8px' }} />
-              <span style={{ fontSize: '0.75rem', fontWeight: 800 }}>UPLOAD PHOTO</span>
-              <input type="file" style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }} />
+            <input type="file" id="student-photo-input" accept="image/*" style={{ display: 'none' }} onChange={handlePhotoUpload} />
+            <div 
+              onClick={() => document.getElementById('student-photo-input').click()}
+              style={{ 
+                width: '140px', height: '140px', borderRadius: '40px', backgroundColor: 'var(--bg-body)', 
+                border: '2px dashed var(--border-color)', margin: '0 auto 24px', display: 'flex', 
+                flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)',
+                cursor: 'pointer', transition: '0.3s', overflow: 'hidden', position: 'relative'
+              }} 
+              onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--primary)'} 
+              onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
+            >
+              {formData.avatar ? (
+                <img src={formData.avatar} alt="Avatar Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <>
+                  <Camera size={40} style={{ marginBottom: '8px' }} />
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800 }}>UPLOAD PHOTO</span>
+                </>
+              )}
             </div>
             <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 900 }}>Student Portrait</h4>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '8px', lineHeight: 1.5 }}>Supported formats: JPG, PNG. Max size: 2MB.</p>
@@ -166,6 +188,7 @@ const AddStudent = () => {
             {tabs.map(tab => (
               <button 
                 key={tab.id}
+                type="button"
                 onClick={() => setActiveTab(tab.id)}
                 style={{ 
                   width: '100%', padding: '16px 20px', borderRadius: '16px', border: 'none',
@@ -348,7 +371,7 @@ const AddStudent = () => {
                 style={{ 
                   backgroundColor: 'var(--bg-body)', border: '1px solid var(--border-color)', 
                   padding: '14px 28px', borderRadius: '14px', fontWeight: 700,
-                  opacity: activeTab === 'personal' ? 0.5 : 1
+                  opacity: activeTab === 'personal' ? 0.5 : 1, cursor: activeTab === 'personal' ? 'not-allowed' : 'pointer'
                 }}
               >
                 Previous Section
@@ -361,12 +384,12 @@ const AddStudent = () => {
                     const idx = tabs.findIndex(t => t.id === activeTab);
                     setActiveTab(tabs[idx+1].id);
                   }}
-                  style={{ padding: '14px 32px', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '10px' }}
+                  style={{ padding: '14px 32px', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
                 >
                   Continue to Next <ChevronRight size={18} />
                 </button>
               ) : (
-                <button type="submit" className="btn btn-primary" style={{ padding: '14px 40px', borderRadius: '14px', fontWeight: 900, boxShadow: '0 10px 20px -5px rgba(69, 179, 224, 0.4)' }}>
+                <button type="submit" className="btn btn-primary" style={{ padding: '14px 40px', borderRadius: '14px', fontWeight: 900, cursor: 'pointer', boxShadow: '0 10px 20px -5px rgba(69, 179, 224, 0.4)' }}>
                   Complete Registration
                 </button>
               )}
@@ -374,6 +397,94 @@ const AddStudent = () => {
           </form>
         </div>
       </div>
+
+      {/* Simulated Ledger Saving Overlay */}
+      <AnimatePresence>
+        {isSaving && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.45)',
+              backdropFilter: 'blur(10px)',
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '24px'
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 10 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 10 }}
+              style={{
+                width: '100%',
+                maxWidth: '520px',
+                backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                backdropFilter: 'blur(20px)',
+                borderRadius: '32px',
+                border: '1px solid rgba(255, 255, 255, 0.4)',
+                boxShadow: '0 30px 60px rgba(0,0,0,0.2)',
+                padding: '40px',
+                color: '#1f2937'
+              }}
+            >
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 950, margin: '0 0 24px 0', textAlign: 'center' }}>
+                Registering Student Ledger
+              </h3>
+              
+              {/* Dynamic steps indicator */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {savePhases.map((phase, idx) => {
+                  const isPending = idx > savePhase;
+                  const isCurrent = idx === savePhase;
+                  const isDone = idx < savePhase;
+
+                  return (
+                    <div 
+                      key={idx} 
+                      style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '16px',
+                        opacity: isPending ? 0.35 : 1,
+                        transition: 'opacity 0.3s'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {isDone ? (
+                          <div style={{ color: '#10B981', display: 'flex', alignItems: 'center' }}>
+                            <CheckCircle2 size={24} />
+                          </div>
+                        ) : isCurrent ? (
+                          <div className="spinner" style={{ width: '20px', height: '20px', border: '3px solid var(--primary-light)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                        ) : (
+                          <div style={{ width: '20px', height: '20px', borderRadius: '50%', border: '2px solid var(--border-color)' }}></div>
+                        )}
+                      </div>
+                      <span style={{ 
+                        fontSize: '0.95rem', 
+                        fontWeight: isCurrent ? 800 : 600,
+                        color: isCurrent ? 'var(--primary)' : isDone ? '#1f2937' : '#4b5563'
+                      }}>
+                        {phase}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <ToastRenderer toast={toast} onClose={hideToast} />
     </motion.div>
   );
 };
