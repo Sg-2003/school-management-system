@@ -440,8 +440,19 @@ const ELibrary = () => {
                     return (
                       <div key={book.id} style={{ padding: '20px', borderRadius: '24px', backgroundColor: 'var(--bg-body)', border: '1px solid var(--border-color)' }}>
                         <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                          <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                            <Book size={20} />
+                          <div style={{ width: '40px', height: '56px', backgroundColor: 'var(--primary)', borderRadius: '2px 6px 6px 2px', flexShrink: 0, boxShadow: 'inset 2px 0 5px rgba(0,0,0,0.2), inset -1px 0 1px rgba(255,255,255,0.4), 3px 3px 8px rgba(0,0,0,0.15)', borderLeft: '2px solid rgba(255,255,255,0.25)', position: 'relative', overflow: 'hidden' }}>
+                            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2px', textAlign: 'center', color: 'white' }}>
+                              <Book size={14} style={{ opacity: 0.8 }} />
+                            </div>
+                            {book.isbn && (
+                              <img 
+                                src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-S.jpg`} 
+                                alt={book.title}
+                                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
+                                onError={(e) => e.target.style.display = 'none'}
+                              />
+                            )}
+                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 20%)', zIndex: 3, pointerEvents: 'none' }} />
                           </div>
                           <div style={{ flex: 1 }}>
                             <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 900, color: 'var(--text-main)', lineHeight: 1.3 }}>{book.title}</h4>
