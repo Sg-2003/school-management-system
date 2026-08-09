@@ -10,18 +10,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 const ELibrary = () => {
   // Core Books Dataset
   const [books] = useState([
-    { id: 1, title: 'Advanced Calculus & Logic', author: 'Dr. Leonard Euler', category: 'Science', size: '12.4 MB', type: 'PDF', rating: 4.9, coverUrl: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&q=80' },
-    { id: 2, title: 'English Literature: The Classics', author: 'William Shakespeare', category: 'Arts', size: '8.1 MB', type: 'EPUB', rating: 4.7, coverUrl: 'https://images.unsplash.com/photo-1474366521946-c3d4b507abf2?w=400&q=80' },
-    { id: 3, title: 'Introduction to Modern Physics', author: 'Isaac Newton', category: 'Science', size: '15.8 MB', type: 'PDF', rating: 4.8, coverUrl: 'https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=400&q=80' },
-    { id: 4, title: 'World History: Ancient Civilizations', author: 'Herodotus', category: 'History', size: '22.3 MB', type: 'PDF', rating: 4.6, coverUrl: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=400&q=80' },
-    { id: 5, title: 'Data Structures & Algorithms', author: 'Thomas Cormen', category: 'Technology', size: '18.2 MB', type: 'PDF', rating: 4.9, coverUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&q=80' },
-    { id: 6, title: 'Organic Chemistry Principles', author: 'Linus Pauling', category: 'Science', size: '14.5 MB', type: 'PDF', rating: 4.5, coverUrl: 'https://images.unsplash.com/photo-1603126859738-1639f75f92ff?w=400&q=80' },
-    { id: 7, title: 'Nature: Quantum Computing 2026', author: 'Various Authors', category: 'Journals', size: '4.2 MB', type: 'Journal', rating: 4.9, coverUrl: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&q=80' },
-    { id: 8, title: 'AI in Modern Healthcare', author: 'Stanford Research', category: 'Technology', size: '5.1 MB', type: 'Paper', rating: 4.8, coverUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80' },
-    { id: 9, title: 'The Industrial Revolution', author: 'Adam Smith', category: 'History', size: '12.8 MB', type: 'PDF', rating: 4.7, coverUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=80' },
-    { id: 10, title: 'Sustainable Energy Systems', author: 'MIT Press', category: 'Science', size: '18.5 MB', type: 'Paper', rating: 4.9, coverUrl: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=400&q=80' },
-    { id: 11, title: 'IEEE: Neural Networks Vol 12', author: 'IEEE Publishing', category: 'Journals', size: '6.7 MB', type: 'Journal', rating: 4.8, coverUrl: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&q=80' },
-    { id: 12, title: 'Macbeth: A Deep Analysis', author: 'Harold Bloom', category: 'Arts', size: '3.9 MB', type: 'PDF', rating: 4.6, coverUrl: 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=400&q=80' },
+    { id: 1, title: 'Advanced Calculus & Logic', author: 'Dr. Leonard Euler', category: 'Science', size: '12.4 MB', type: 'PDF', rating: 4.9, isbn: '9780538497817' },
+    { id: 2, title: 'English Literature: The Classics', author: 'William Shakespeare', category: 'Arts', size: '8.1 MB', type: 'EPUB', rating: 4.7, isbn: '9780199535668' },
+    { id: 3, title: 'Introduction to Modern Physics', author: 'Isaac Newton', category: 'Science', size: '15.8 MB', type: 'PDF', rating: 4.8, isbn: '9780465024148' },
+    { id: 4, title: 'World History: Ancient Civilizations', author: 'Herodotus', category: 'History', size: '22.3 MB', type: 'PDF', rating: 4.6, isbn: '9780062316097' },
+    { id: 5, title: 'Data Structures & Algorithms', author: 'Thomas Cormen', category: 'Technology', size: '18.2 MB', type: 'PDF', rating: 4.9, isbn: '9780262033848' },
+    { id: 6, title: 'Organic Chemistry Principles', author: 'Linus Pauling', category: 'Science', size: '14.5 MB', type: 'PDF', rating: 4.5, isbn: '9780321768414' },
+    { id: 7, title: 'Nature: Quantum Computing 2026', author: 'Various Authors', category: 'Journals', size: '4.2 MB', type: 'Journal', rating: 4.9, isbn: '9781107002173' },
+    { id: 8, title: 'AI in Modern Healthcare', author: 'Stanford Research', category: 'Technology', size: '5.1 MB', type: 'Paper', rating: 4.8, isbn: '9781541644632' },
+    { id: 9, title: 'The Industrial Revolution', author: 'Adam Smith', category: 'History', size: '12.8 MB', type: 'PDF', rating: 4.7, isbn: '9780553585971' },
+    { id: 10, title: 'Sustainable Energy Systems', author: 'MIT Press', category: 'Science', size: '18.5 MB', type: 'Paper', rating: 4.9, isbn: '9780954452933' },
+    { id: 11, title: 'IEEE: Neural Networks Vol 12', author: 'IEEE Publishing', category: 'Journals', size: '6.7 MB', type: 'Journal', rating: 4.8, isbn: '9780262035613' },
+    { id: 12, title: 'Macbeth: A Deep Analysis', author: 'Harold Bloom', category: 'Arts', size: '3.9 MB', type: 'PDF', rating: 4.6, isbn: '9780791098424' },
   ]);
 
   // Filtering & UI State
@@ -326,14 +326,14 @@ const ELibrary = () => {
                         <span style={{ fontSize: '0.7rem', fontWeight: 600, opacity: 0.8, marginTop: '8px' }}>{book.author}</span>
                       </div>
                       
-                      {book.coverUrl && (
-                        <img 
-                          src={book.coverUrl} 
-                          alt={book.title}
-                          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
-                          onError={(e) => e.target.style.display = 'none'}
-                        />
-                      )}
+                      {book.isbn && (
+                          <img 
+                            src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} 
+                            alt={book.title}
+                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
+                            onError={(e) => e.target.style.display = 'none'}
+                          />
+                        )}
                       
                       {/* Book Glare Overlay */}
                       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 20%)', zIndex: 3, pointerEvents: 'none' }} />
@@ -444,9 +444,9 @@ const ELibrary = () => {
                             <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2px', textAlign: 'center', color: 'white' }}>
                               <Book size={14} style={{ opacity: 0.8 }} />
                             </div>
-                            {book.coverUrl && (
+                            {book.isbn && (
                               <img 
-                                src={book.coverUrl} 
+                                src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-S.jpg`} 
                                 alt={book.title}
                                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
                                 onError={(e) => e.target.style.display = 'none'}
