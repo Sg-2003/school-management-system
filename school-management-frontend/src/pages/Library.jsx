@@ -192,8 +192,31 @@ const Library = () => {
             whileHover={{ y: -5, boxShadow: 'var(--shadow-lg)', borderColor: 'var(--primary)' }}
           >
             <div style={{ display: 'flex', gap: '24px', padding: '24px' }}>
-               <div style={{ width: '100px', height: '140px', backgroundColor: 'var(--primary-light)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', flexShrink: 0 }}>
-                  <Book size={48} />
+               <div style={{ 
+                  width: '100px', 
+                  height: '140px', 
+                  backgroundColor: 'var(--primary)', 
+                  borderRadius: '4px 12px 12px 4px', 
+                  flexShrink: 0,
+                  boxShadow: 'inset 4px 0 10px rgba(0,0,0,0.2), inset -1px 0 2px rgba(255,255,255,0.4), 6px 6px 15px rgba(0,0,0,0.15)',
+                  borderLeft: '4px solid rgba(255,255,255,0.25)',
+                  position: 'relative',
+                  overflow: 'hidden'
+               }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '8px', textAlign: 'center', color: 'white' }}>
+                    <Book size={24} style={{ marginBottom: '8px', opacity: 0.8 }} />
+                    <span style={{ fontSize: '0.6rem', fontWeight: 700, lineHeight: 1.2 }}>{book.title}</span>
+                  </div>
+                  {book.isbn && (
+                    <img 
+                      src={`https://covers.openlibrary.org/b/isbn/${book.isbn.replace(/-/g, '')}-M.jpg`} 
+                      alt={book.title}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  )}
+                  {/* Book Glare Overlay */}
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 20%)', zIndex: 3, pointerEvents: 'none' }} />
                </div>
                <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
