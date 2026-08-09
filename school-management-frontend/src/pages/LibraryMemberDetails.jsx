@@ -71,9 +71,9 @@ const LibraryMemberDetails = () => {
   }, [id]);
 
   const [loans, setLoans] = useState([
-    { id: 1, title: 'Introduction to Algorithms', issued: '2026-05-01', due: '2026-05-15', status: 'On Track' },
-    { id: 2, title: 'History of Magic', issued: '2026-04-28', due: '2026-05-12', status: 'Due Soon' },
-    { id: 3, title: 'Advanced Potion-Making', issued: '2026-04-15', due: '2026-04-29', status: 'Overdue' },
+    { id: 1, title: 'Introduction to Algorithms', issued: '2026-05-01', due: '2026-05-15', status: 'On Track', isbn: '9780262033848' },
+    { id: 2, title: 'History of Magic', issued: '2026-04-28', due: '2026-05-12', status: 'Due Soon', isbn: '9780590353427' },
+    { id: 3, title: 'Advanced Potion-Making', issued: '2026-04-15', due: '2026-04-29', status: 'Overdue', isbn: '9780439785969' },
   ]);
 
   const handleRenew = (id, title) => {
@@ -263,9 +263,20 @@ const LibraryMemberDetails = () => {
                       style={{ padding: '24px', backgroundColor: 'var(--bg-body)', borderRadius: '24px', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     >
                        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                          <div style={{ padding: '12px', backgroundColor: 'var(--primary-light)', borderRadius: '14px', color: 'var(--primary)' }}>
-                             <Book size={24} />
-                          </div>
+                           <div style={{ width: '48px', height: '64px', backgroundColor: 'var(--primary)', borderRadius: '2px 6px 6px 2px', flexShrink: 0, boxShadow: 'inset 2px 0 5px rgba(0,0,0,0.2), inset -1px 0 1px rgba(255,255,255,0.4), 3px 3px 8px rgba(0,0,0,0.15)', borderLeft: '2px solid rgba(255,255,255,0.25)', position: 'relative', overflow: 'hidden' }}>
+                              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4px', textAlign: 'center', color: 'white' }}>
+                                <Book size={16} style={{ opacity: 0.8 }} />
+                              </div>
+                              {loan.isbn && (
+                                <img 
+                                  src={`https://covers.openlibrary.org/b/isbn/${loan.isbn}-M.jpg`} 
+                                  alt={loan.title}
+                                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2 }}
+                                  onError={(e) => e.target.style.display = 'none'}
+                                />
+                              )}
+                              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0) 20%)', zIndex: 3, pointerEvents: 'none' }} />
+                           </div>
                           <div>
                              <h5 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '4px' }}>{loan.title}</h5>
                              <div style={{ display: 'flex', gap: '16px', color: 'var(--text-muted)', fontSize: '0.8rem' }}>

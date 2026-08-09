@@ -1,5 +1,1 @@
-{
-  "projects": {
-    "default": "edupro-portal-ankit"
-  }
-}
+{ "projects": { "default": "edupro-school-portal" } }
