@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import indianMan1 from '../assets/indian_man_portrait_1.png';
 import indianMan2 from '../assets/indian_man_portrait_2.png';
 import indianWoman1 from '../assets/indian_woman_portrait_1.png';
+import janeAvatar from '../assets/jane_avatar.png';
 import indianWoman2 from '../assets/indian_woman_portrait_2.png';
 
 const TeacherDetails = () => {
