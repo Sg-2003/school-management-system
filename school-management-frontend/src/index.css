@@ -480,11 +480,21 @@ body {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
 }
-/* Aggressive Global Mobile Overrides */
+/* Responsive Utility Classes */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-2-1-1 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 24px; }
+
+.flex-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+
+/* Safe Global Mobile Overrides (Grids, Padding, Tables) */
 @media (max-width: 992px) {
   .main-content [style*="grid-template-columns: repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
   .main-content [style*="grid-template-columns: repeat(3"] { grid-template-columns: repeat(2, 1fr) !important; }
   .main-content [style*="grid-template-columns: 2fr 1fr 1fr"] { grid-template-columns: 1fr 1fr !important; }
+  .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-2-1-1 { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -492,13 +502,25 @@ body {
     grid-template-columns: 1fr !important;
   }
   
+  .grid-4, .grid-3, .grid-2, .grid-2-1-1 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .flex-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
   .main-content table, 
-  .main-content .table-container {
+  .main-content .table-container,
+  .table-responsive-container {
     display: block !important;
     width: 100% !important;
     overflow-x: auto !important;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
   }
   
   .main-content [style*="padding: 40px"],
@@ -517,17 +539,6 @@ body {
     box-sizing: border-box !important;
     max-width: 100% !important;
     overflow-wrap: break-word !important;
-  }
-  
-  /* Specific overrides for flex layouts that break on mobile */
-  .main-content [style*="display: flex"] {
-    flex-wrap: wrap !important;
-  }
-  
-  .main-content [style*="justify-content: space-between"] {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 16px !important;
   }
   
   .main-content .btn, .main-content input, .main-content select {
